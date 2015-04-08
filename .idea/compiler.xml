@@ -26,5 +26,8 @@
         <module name="MovieTimeProject" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="MovieTimeProject" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>

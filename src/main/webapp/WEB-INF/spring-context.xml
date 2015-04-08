@@ -11,7 +11,7 @@
     <mvc:annotation-driven/>
 
     <!-- Classpath scanning of @Component, @Service, etc annotated class -->
-    <context:component-scan base-package="movietime" />
+    <context:component-scan base-package="com.movietime" />
 
     <!-- Resolve view name into jsp file located on /WEB-INF/pages/ -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
