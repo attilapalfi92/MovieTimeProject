@@ -1,5 +1,10 @@
 package com.movietime.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -8,13 +13,17 @@ import java.util.List;
  */
 @Entity
 @Table(name = "movies", schema = "", catalog = "movietime2")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "movieid")
 public class MoviesEntity {
     private int movieid;
     private String title;
     private String year;
     private String imdbid;
+    @JsonManagedReference
     private List<ActorsEntity> actors;
+    @JsonManagedReference
     private List<WritersEntity> writers;
+    @JsonManagedReference
     private List<ProducersEntity> producers;
 
     @Id
@@ -81,7 +90,8 @@ public class MoviesEntity {
         return result;
     }
 
-    @ManyToMany
+    //@JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "movies2actors", catalog = "movietime2", schema = "", joinColumns = @JoinColumn(name = "movieid", referencedColumnName = "movieid", nullable = false), inverseJoinColumns = @JoinColumn(name = "actorid", referencedColumnName = "actorid", nullable = false))
     public List<ActorsEntity> getActors() {
         return actors;
@@ -91,7 +101,8 @@ public class MoviesEntity {
         this.actors = actors;
     }
 
-    @ManyToMany
+    //@JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "movies2writers", catalog = "movietime2", schema = "", joinColumns = @JoinColumn(name = "movieid", referencedColumnName = "movieid", nullable = false), inverseJoinColumns = @JoinColumn(name = "writerid", referencedColumnName = "writerid", nullable = false))
     public List<WritersEntity> getWriters() {
         return writers;
@@ -101,7 +112,8 @@ public class MoviesEntity {
         this.writers = writers;
     }
 
-    @ManyToMany
+    //@JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "movies2producers", catalog = "movietime2", schema = "", joinColumns = @JoinColumn(name = "movieid", referencedColumnName = "movieid", nullable = false), inverseJoinColumns = @JoinColumn(name = "producerid", referencedColumnName = "producerid", nullable = false))
     public List<ProducersEntity> getProducers() {
         return producers;

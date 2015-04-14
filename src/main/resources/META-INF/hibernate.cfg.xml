@@ -6,10 +6,10 @@
   <session-factory>
     <property name="connection.url">jdbc:mysql://localhost:3306/movietime2</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-      <mapping class="movietime.model.ActorsEntity"/>
-      <mapping class="movietime.model.MoviesEntity"/>
-      <mapping class="movietime.model.ProducersEntity"/>
-      <mapping class="movietime.model.WritersEntity"/>
+      <mapping class="com.movietime.model.ActorsEntity"/>
+      <mapping class="com.movietime.model.MoviesEntity"/>
+      <mapping class="com.movietime.model.ProducersEntity"/>
+      <mapping class="com.movietime.model.WritersEntity"/>
       <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>

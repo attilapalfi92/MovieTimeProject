@@ -1,5 +1,10 @@
 package com.movietime.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -8,9 +13,11 @@ import java.util.List;
  */
 @Entity
 @Table(name = "producers", schema = "", catalog = "movietime2")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "producerid")
 public class ProducersEntity {
     private int producerid;
     private String name;
+    @JsonBackReference
     private List<MoviesEntity> movies;
 
 
@@ -54,8 +61,8 @@ public class ProducersEntity {
         return result;
     }
 
-
-    @ManyToMany(mappedBy = "producers")
+    //@JsonIgnore
+    @ManyToMany(mappedBy = "producers", fetch = FetchType.LAZY)
     public List<MoviesEntity> getMovies() {
         return movies;
     }

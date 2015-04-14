@@ -6,7 +6,7 @@
     <packaging>war</packaging>
 
     <dependencies>
-        <!-- Spring 3.2.8.RELEASE -->
+        <!-- Spring 3.2.8.RELEASE was in the past -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -23,6 +23,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>4.1.6.RELEASE</version>
+        </dependency>
+
+        <!-- Jackson JSON library -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.5.2</version>
         </dependency>
 
         <!-- Hibernate -->
