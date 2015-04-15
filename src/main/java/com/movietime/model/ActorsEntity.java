@@ -18,7 +18,7 @@ public class ActorsEntity {
     private int actorid;
     private String name;
     private String sex;
-    @JsonBackReference
+    //@JsonBackReference
     private List<MoviesEntity> movies;
 
     @Id

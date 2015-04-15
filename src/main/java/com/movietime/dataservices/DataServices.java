@@ -2,6 +2,7 @@ package com.movietime.dataservices;
 
 import com.movietime.model.ActorsEntity;
 import com.movietime.model.MoviesEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * Created by Attila on 2015-04-06.
  */
-@Service
+@Repository
 public class DataServices {
 
     @PersistenceContext
@@ -40,9 +41,11 @@ public class DataServices {
                 .setParameter("movieId", movieId)
                 .getSingleResult();
 
+        /*
         result.getActors();
         result.getWriters();
         result.getProducers();
+        */
 
         return result;
     }
@@ -54,7 +57,7 @@ public class DataServices {
                 .setParameter("actorId", actorId)
                 .getSingleResult();
 
-        result.getMovies();
+        //result.getMovies();
 
         return result;
     }

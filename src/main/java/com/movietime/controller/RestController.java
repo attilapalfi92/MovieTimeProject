@@ -1,6 +1,9 @@
 package com.movietime.controller;
 
+import com.movietime.businesslogic.FacetProvider;
 import com.movietime.dataservices.DataServices;
+import com.movietime.entityfacets.ActorFacetAllConnections;
+import com.movietime.entityfacets.MovieFacetAllConnections;
 import com.movietime.model.ActorsEntity;
 import com.movietime.model.MoviesEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,22 +24,39 @@ import java.util.List;
 public class RestController {
 
     @Autowired
-    private DataServices dataServices;
+    private FacetProvider facetProvider;
 
-    @Transactional
+    @RequestMapping(value = RestUriConstants.GET_MOVIE_BY_ID, method = RequestMethod.GET)
+    public @ResponseBody
+    MovieFacetAllConnections getMovieById(@PathVariable("id") int movieId) {
+        return facetProvider.getMovieById(movieId);
+    }
+
+    @RequestMapping(value = RestUriConstants.GET_ACTOR_BY_ID, method = RequestMethod.GET)
+    public @ResponseBody
+    ActorFacetAllConnections getActorById(@PathVariable("id") int actorId) {
+        return facetProvider.getActorById(actorId);
+    }
+
+
+    //@Autowired
+    //private DataServices dataServices;
+
+    /*
+    //@Transactional
     @RequestMapping(value = RestUriConstants.GET_MOVIE_BY_ID, method = RequestMethod.GET)
     public @ResponseBody MoviesEntity getMovieById(@PathVariable("id") int movieId) {
         return dataServices.findMovieById(movieId);
     }
 
-    @Transactional
+    //@Transactional
     @RequestMapping(value = RestUriConstants.GET_MOVIES_BY_TITLE, method = RequestMethod.GET)
     public @ResponseBody List<MoviesEntity> getMoviesByTitle(@PathVariable("title") String movieTitle) {
         movieTitle = movieTitle.replaceAll("_", " ");
         return dataServices.findMoviesByTitle(movieTitle);
     }
 
-    @Transactional
+    //@Transactional
     @RequestMapping(value = RestUriConstants.GET_ACTOR_BY_ID, method = RequestMethod.GET)
     public @ResponseBody ActorsEntity getActorById(@PathVariable("id") int actorId) {
 
@@ -47,4 +67,6 @@ public class RestController {
 
         return actorsEntity;
     }
+    */
+
 }
