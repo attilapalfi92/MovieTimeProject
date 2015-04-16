@@ -17,7 +17,8 @@ import java.util.List;
 public class WritersEntity {
     private int writerid;
     private String name;
-    @JsonBackReference
+    //@JsonBackReference
+    @JsonIgnore
     private List<MoviesEntity> movies;
 
     @Id

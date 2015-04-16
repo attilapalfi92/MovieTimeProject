@@ -10,6 +10,9 @@
       <mapping class="com.movietime.model.MoviesEntity"/>
       <mapping class="com.movietime.model.ProducersEntity"/>
       <mapping class="com.movietime.model.WritersEntity"/>
+      <mapping class="com.movietime.model.Movies2ActorsEntity"/>
+      <mapping class="com.movietime.model.MpaaratingsEntity"/>
+      <mapping class="com.movietime.model.GenresEntity"/>
       <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>

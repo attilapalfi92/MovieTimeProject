@@ -19,7 +19,13 @@ public class ActorsEntity {
     private String name;
     private String sex;
     //@JsonBackReference
+    @JsonIgnore
+    @Transient
     private List<MoviesEntity> movies;
+    @JsonIgnore
+    private List<Movies2ActorsEntity> roles;
+    @Transient
+    private String role;
 
     @Id
     @Column(name = "actorid", nullable = false, insertable = true, updatable = true)
@@ -29,6 +35,14 @@ public class ActorsEntity {
 
     public void setActorid(int actorid) {
         this.actorid = actorid;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Basic
@@ -74,13 +88,21 @@ public class ActorsEntity {
         return result;
     }
 
-    //@JsonIgnore
-    @ManyToMany(mappedBy = "actors", fetch = FetchType.LAZY)
+    //@ManyToMany(mappedBy = "actors", fetch = FetchType.LAZY)
     public List<MoviesEntity> getMovies() {
         return movies;
     }
 
     public void setMovies(List<MoviesEntity> movies) {
         this.movies = movies;
+    }
+
+    @OneToMany(mappedBy = "actor")
+    public List<Movies2ActorsEntity> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Movies2ActorsEntity> roles) {
+        this.roles = roles;
     }
 }

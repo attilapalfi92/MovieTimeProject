@@ -17,7 +17,8 @@ import java.util.List;
 public class ProducersEntity {
     private int producerid;
     private String name;
-    @JsonBackReference
+    //@JsonBackReference
+    @JsonIgnore
     private List<MoviesEntity> movies;
 
 

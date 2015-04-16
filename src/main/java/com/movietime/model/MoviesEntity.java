@@ -19,12 +19,20 @@ public class MoviesEntity {
     private String title;
     private String year;
     private String imdbid;
-    @JsonManagedReference
+    //@JsonManagedReference
+    @JsonIgnore
+    @Transient
     private List<ActorsEntity> actors;
-    @JsonManagedReference
+    //@JsonManagedReference
+    @JsonIgnore
     private List<WritersEntity> writers;
-    @JsonManagedReference
+    //@JsonManagedReference
+    @JsonIgnore
     private List<ProducersEntity> producers;
+    @JsonIgnore
+    private List<Movies2ActorsEntity> characters;
+    private MpaaratingsEntity mpaaRating;
+    private List<GenresEntity> genres;
 
     @Id
     @Column(name = "movieid", nullable = false, insertable = true, updatable = true)
@@ -90,9 +98,8 @@ public class MoviesEntity {
         return result;
     }
 
-    //@JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "movies2actors", catalog = "movietime2", schema = "", joinColumns = @JoinColumn(name = "movieid", referencedColumnName = "movieid", nullable = false), inverseJoinColumns = @JoinColumn(name = "actorid", referencedColumnName = "actorid", nullable = false))
+    //@ManyToMany(fetch = FetchType.LAZY)
+    //@JoinTable(name = "movies2actors", catalog = "movietime2", schema = "", joinColumns = @JoinColumn(name = "movieid", referencedColumnName = "movieid", nullable = false), inverseJoinColumns = @JoinColumn(name = "actorid", referencedColumnName = "actorid", nullable = false))
     public List<ActorsEntity> getActors() {
         return actors;
     }
@@ -101,7 +108,6 @@ public class MoviesEntity {
         this.actors = actors;
     }
 
-    //@JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "movies2writers", catalog = "movietime2", schema = "", joinColumns = @JoinColumn(name = "movieid", referencedColumnName = "movieid", nullable = false), inverseJoinColumns = @JoinColumn(name = "writerid", referencedColumnName = "writerid", nullable = false))
     public List<WritersEntity> getWriters() {
@@ -112,7 +118,6 @@ public class MoviesEntity {
         this.writers = writers;
     }
 
-    //@JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "movies2producers", catalog = "movietime2", schema = "", joinColumns = @JoinColumn(name = "movieid", referencedColumnName = "movieid", nullable = false), inverseJoinColumns = @JoinColumn(name = "producerid", referencedColumnName = "producerid", nullable = false))
     public List<ProducersEntity> getProducers() {
@@ -121,5 +126,33 @@ public class MoviesEntity {
 
     public void setProducers(List<ProducersEntity> producers) {
         this.producers = producers;
+    }
+
+    @OneToMany(mappedBy = "movie")
+    public List<Movies2ActorsEntity> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(List<Movies2ActorsEntity> characters) {
+        this.characters = characters;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "movieid", referencedColumnName = "movieid", nullable = false)
+    public MpaaratingsEntity getMpaaRating() {
+        return mpaaRating;
+    }
+
+    public void setMpaaRating(MpaaratingsEntity mpaaRating) {
+        this.mpaaRating = mpaaRating;
+    }
+
+    @OneToMany(mappedBy = "movie")
+    public List<GenresEntity> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<GenresEntity> genres) {
+        this.genres = genres;
     }
 }
