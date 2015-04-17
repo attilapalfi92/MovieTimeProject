@@ -1,32 +1,29 @@
 package com.movietime.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.List;
 
 /**
- * Created by Attila on 2015-04-06.
+ * Created by Attila on 2015-04-17.
  */
 @Entity
-@Table(name = "writers", schema = "", catalog = "movietime2")
-public class WritersEntity {
-    private int writerid;
+@Table(name = "directors", schema = "", catalog = "movietime2")
+public class DirectorsEntity {
+    private int directorid;
     private String name;
     @JsonIgnore
     private List<MoviesEntity> movies;
 
     @Id
-    @Column(name = "writerid", nullable = false, insertable = true, updatable = true)
-    public int getWriterid() {
-        return writerid;
+    @Column(name = "directorid", nullable = false, insertable = true, updatable = true)
+    public int getDirectorid() {
+        return directorid;
     }
 
-    public void setWriterid(int writerid) {
-        this.writerid = writerid;
+    public void setDirectorid(int directorid) {
+        this.directorid = directorid;
     }
 
     @Basic
@@ -44,9 +41,9 @@ public class WritersEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        WritersEntity that = (WritersEntity) o;
+        DirectorsEntity that = (DirectorsEntity) o;
 
-        if (writerid != that.writerid) return false;
+        if (directorid != that.directorid) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
@@ -54,12 +51,13 @@ public class WritersEntity {
 
     @Override
     public int hashCode() {
-        int result = writerid;
+        int result = directorid;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
-    
-    @ManyToMany(mappedBy = "writers", fetch = FetchType.LAZY)
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "movies2directors", catalog = "movietime2", schema = "", joinColumns = @JoinColumn(name = "directorid", referencedColumnName = "directorid", nullable = false), inverseJoinColumns = @JoinColumn(name = "movieid", referencedColumnName = "movieid", nullable = false))
     public List<MoviesEntity> getMovies() {
         return movies;
     }

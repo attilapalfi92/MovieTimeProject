@@ -1,5 +1,7 @@
 package com.movietime.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -12,17 +14,19 @@ public class Movies2ActorsEntity {
     private int movieid;
     private int actorid;
     private String asCharacter;
+    @JsonIgnore
     private ActorsEntity actor;
+    @JsonIgnore
     private MoviesEntity movie;
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "m2aid", nullable = false, insertable = true, updatable = true)
     public int getM2aid() { return m2aid; }
 
     public void setM2aid(int m2aid) { this.m2aid = m2aid; }
 
     @Basic
-    @Column(name = "movieid", nullable = false, insertable = true, updatable = true)
+    @Column(name = "movieid", nullable = false, insertable = false, updatable = false)
     public int getMovieid() {
         return movieid;
     }
@@ -32,7 +36,7 @@ public class Movies2ActorsEntity {
     }
 
     @Basic
-    @Column(name = "actorid", nullable = false, insertable = true, updatable = true)
+    @Column(name = "actorid", nullable = false, insertable = false, updatable = false)
     public int getActorid() {
         return actorid;
     }

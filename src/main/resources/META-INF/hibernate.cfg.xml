@@ -4,6 +4,9 @@
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
+    <!-- DB schema will be updated if needed -->
+    <!-- DB schema will be validated -->
+    <property name="hbm2ddl.auto">validate</property>
     <property name="connection.url">jdbc:mysql://localhost:3306/movietime2</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
       <mapping class="com.movietime.model.ActorsEntity"/>
@@ -13,7 +16,16 @@
       <mapping class="com.movietime.model.Movies2ActorsEntity"/>
       <mapping class="com.movietime.model.MpaaratingsEntity"/>
       <mapping class="com.movietime.model.GenresEntity"/>
-      <!-- DB schema will be updated if needed -->
-    <!-- <property name="hbm2ddl.auto">update</property> -->
+      <!--<mapping class="com.movietime.model.BiographiesEntity"/>-->
+      <mapping class="com.movietime.model.DirectorsEntity"/>
+      <mapping class="com.movietime.model.EditorsEntity"/>
+      <mapping class="com.movietime.model.KeywordsEntity"/>
+      <mapping class="com.movietime.model.LanguageEntity"/>
+      <mapping class="com.movietime.model.LocationsEntity"/>
+      <mapping class="com.movietime.model.QuotesEntity"/>
+      <mapping class="com.movietime.model.RatingsEntity"/>
+      <mapping class="com.movietime.model.ReleasedatesEntity"/>
+      <mapping class="com.movietime.model.RunningtimesEntity"/>
+      <mapping class="com.movietime.model.TaglinesEntity"/>
   </session-factory>
 </hibernate-configuration>

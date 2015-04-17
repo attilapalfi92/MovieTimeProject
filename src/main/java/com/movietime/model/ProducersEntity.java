@@ -13,11 +13,9 @@ import java.util.List;
  */
 @Entity
 @Table(name = "producers", schema = "", catalog = "movietime2")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "producerid")
 public class ProducersEntity {
     private int producerid;
     private String name;
-    //@JsonBackReference
     @JsonIgnore
     private List<MoviesEntity> movies;
 

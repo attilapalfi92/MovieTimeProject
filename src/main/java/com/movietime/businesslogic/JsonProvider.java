@@ -3,11 +3,8 @@ package com.movietime.businesslogic;
 import com.movietime.dataservices.DataServices;
 
 import com.movietime.entitywrappers.ActorWrapper;
-import com.movietime.entitywrappers.MovieWrapper;
-import com.movietime.model.ActorsEntity;
-import com.movietime.model.Movies2ActorsEntity;
-import com.movietime.model.MoviesEntity;
-import com.movietime.model.ProducersEntity;
+import com.movietime.entitywrappers.FullMovieWrapper;
+import com.movietime.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,24 +22,51 @@ public class JsonProvider {
     private DataServices dataServices;
 
     @Transactional
-    public MovieWrapper getMovieById(int movieId) {
+    public FullMovieWrapper getMovieById(int movieId) {
         List<Movies2ActorsEntity> result = dataServices.findMovies2ActorsByMovieId(movieId);
-        List<ActorsEntity> actors = new ArrayList<>(result.size());
         // getting the actors and setting the roles for them
+        List<ActorsEntity> actors = new ArrayList<>(result.size());
         for (Movies2ActorsEntity i : result) {
             ActorsEntity actor = i.getActor();
             actor.setRole(i.getAsCharacter());
             actors.add(i.getActor());
         }
 
-        MovieWrapper movieWrapper = new MovieWrapper();
+        // setting all the other fields
+        FullMovieWrapper fullMovieWrapper = new FullMovieWrapper();
         MoviesEntity movie = result.get(0).getMovie();
-        movieWrapper.setMovie(movie);
-        movieWrapper.setActors(actors);
-        movieWrapper.setProducers(movie.getProducers());
-        movieWrapper.setWriters(movie.getWriters());
+        fullMovieWrapper.setMovie(movie);
+        fullMovieWrapper.setActors(actors);
+        // kicking the hibernate to fetch the required collections
+        movie.getProducers().get(0);
+        movie.getWriters().get(0);
+        movie.getDirectors().get(0);
+        movie.getEditors().get(0);
+        movie.getKeywords().get(0);
+        movie.getLanguages().get(0);
+        movie.getLocations().get(0);
+        movie.getReleaseDates().get(0);
+        movie.getGenres().get(0);
+        //String reasonText = movie.getMpaaRating().getReasontext();
 
-        return movieWrapper;
+        // setting all the other fields
+        fullMovieWrapper.setProducers(movie.getProducers());
+        fullMovieWrapper.setWriters(movie.getWriters());
+        fullMovieWrapper.setDirectors(movie.getDirectors());
+        fullMovieWrapper.setEditors(movie.getEditors());
+        fullMovieWrapper.setKeywords(movie.getKeywords());
+        fullMovieWrapper.setLanguages(movie.getLanguages());
+        fullMovieWrapper.setLocations(movie.getLocations());
+        //fullMovieWrapper.setReleaseDates(movie.getReleaseDates());
+        fullMovieWrapper.setGenres(movie.getGenres());
+        //fullMovieWrapper.setQuote(movie.getQuote());
+        fullMovieWrapper.setRating(movie.getRating());
+        fullMovieWrapper.setRunningTime(movie.getRunningTime());
+        fullMovieWrapper.setTagline(movie.getTagline());
+        fullMovieWrapper.setMpaaRating(movie.getMpaaRating());
+        fullMovieWrapper.setGenres(movie.getGenres());
+
+        return fullMovieWrapper;
     }
 
 

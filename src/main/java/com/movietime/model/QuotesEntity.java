@@ -5,14 +5,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 /**
- * Created by Attila on 2015-04-16.
+ * Created by Attila on 2015-04-17.
  */
 @Entity
-@Table(name = "genres", schema = "", catalog = "movietime2")
-public class GenresEntity {
+@Table(name = "quotes", schema = "", catalog = "movietime2")
+public class QuotesEntity {
     private int movieid;
-    private String genre;
-    private int genre_id;
+    private String quotetext;
+    private int quoteId;
     @JsonIgnore
     private MoviesEntity movie;
 
@@ -27,23 +27,23 @@ public class GenresEntity {
     }
 
     @Basic
-    @Column(name = "genre", nullable = false, insertable = true, updatable = true, length = 50)
-    public String getGenre() {
-        return genre;
+    @Column(name = "quotetext", nullable = true, insertable = true, updatable = true, columnDefinition = "mediumtext", length = 16777215)
+    public String getQuotetext() {
+        return quotetext;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setQuotetext(String quotetext) {
+        this.quotetext = quotetext;
     }
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "genre_id", nullable = false, insertable = true, updatable = true)
-    public int getGenreId() {
-        return genre_id;
+    @Id
+    @Column(name = "quote_id", nullable = false, insertable = true, updatable = true)
+    public int getQuoteId() {
+        return quoteId;
     }
 
-    public void setGenreId(int genreId) {
-        this.genre_id = genreId;
+    public void setQuoteId(int quoteId) {
+        this.quoteId = quoteId;
     }
 
     @Override
@@ -51,11 +51,11 @@ public class GenresEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        GenresEntity that = (GenresEntity) o;
+        QuotesEntity that = (QuotesEntity) o;
 
-        if (genre_id != that.genre_id) return false;
         if (movieid != that.movieid) return false;
-        if (genre != null ? !genre.equals(that.genre) : that.genre != null) return false;
+        if (quoteId != that.quoteId) return false;
+        if (quotetext != null ? !quotetext.equals(that.quotetext) : that.quotetext != null) return false;
 
         return true;
     }
@@ -63,12 +63,12 @@ public class GenresEntity {
     @Override
     public int hashCode() {
         int result = movieid;
-        result = 31 * result + (genre != null ? genre.hashCode() : 0);
-        result = 31 * result + genre_id;
+        result = 31 * result + (quotetext != null ? quotetext.hashCode() : 0);
+        result = 31 * result + quoteId;
         return result;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movieid", referencedColumnName = "movieid", nullable = false)
     public MoviesEntity getMovie() {
         return movie;

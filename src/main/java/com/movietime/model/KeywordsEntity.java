@@ -5,14 +5,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 /**
- * Created by Attila on 2015-04-16.
+ * Created by Attila on 2015-04-17.
  */
 @Entity
-@Table(name = "genres", schema = "", catalog = "movietime2")
-public class GenresEntity {
+@Table(name = "keywords", schema = "", catalog = "movietime2")
+public class KeywordsEntity {
     private int movieid;
-    private String genre;
-    private int genre_id;
+    private String keyword;
+    private int keywordId;
     @JsonIgnore
     private MoviesEntity movie;
 
@@ -27,23 +27,23 @@ public class GenresEntity {
     }
 
     @Basic
-    @Column(name = "genre", nullable = false, insertable = true, updatable = true, length = 50)
-    public String getGenre() {
-        return genre;
+    @Column(name = "keyword", nullable = false, insertable = true, updatable = true, length = 125)
+    public String getKeyword() {
+        return keyword;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "genre_id", nullable = false, insertable = true, updatable = true)
-    public int getGenreId() {
-        return genre_id;
+    @Id
+    @Column(name = "keyword_id", nullable = false, insertable = true, updatable = true)
+    public int getKeywordId() {
+        return keywordId;
     }
 
-    public void setGenreId(int genreId) {
-        this.genre_id = genreId;
+    public void setKeywordId(int keywordId) {
+        this.keywordId = keywordId;
     }
 
     @Override
@@ -51,11 +51,11 @@ public class GenresEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        GenresEntity that = (GenresEntity) o;
+        KeywordsEntity that = (KeywordsEntity) o;
 
-        if (genre_id != that.genre_id) return false;
+        if (keywordId != that.keywordId) return false;
         if (movieid != that.movieid) return false;
-        if (genre != null ? !genre.equals(that.genre) : that.genre != null) return false;
+        if (keyword != null ? !keyword.equals(that.keyword) : that.keyword != null) return false;
 
         return true;
     }
@@ -63,8 +63,8 @@ public class GenresEntity {
     @Override
     public int hashCode() {
         int result = movieid;
-        result = 31 * result + (genre != null ? genre.hashCode() : 0);
-        result = 31 * result + genre_id;
+        result = 31 * result + (keyword != null ? keyword.hashCode() : 0);
+        result = 31 * result + keywordId;
         return result;
     }
 

@@ -13,19 +13,17 @@ import java.util.List;
  */
 @Entity
 @Table(name = "actors", schema = "", catalog = "movietime2")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "actorid")
 public class ActorsEntity {
     private int actorid;
     private String name;
     private String sex;
-    //@JsonBackReference
-    @JsonIgnore
-    @Transient
-    private List<MoviesEntity> movies;
+    //@JsonIgnore
+    //private List<MoviesEntity> movies;
     @JsonIgnore
     private List<Movies2ActorsEntity> roles;
-    @Transient
     private String role;
+    //@JsonIgnore
+    //private BiographiesEntity biography;
 
     @Id
     @Column(name = "actorid", nullable = false, insertable = true, updatable = true)
@@ -37,6 +35,7 @@ public class ActorsEntity {
         this.actorid = actorid;
     }
 
+    @Transient
     public String getRole() {
         return role;
     }
@@ -46,7 +45,7 @@ public class ActorsEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 250)
+    @Column(name = "name", nullable = false, insertable = true, updatable = true, columnDefinition = "varchar(250)", length = 250)
     public String getName() {
         return name;
     }
@@ -88,7 +87,9 @@ public class ActorsEntity {
         return result;
     }
 
+    /*
     //@ManyToMany(mappedBy = "actors", fetch = FetchType.LAZY)
+    @Transient
     public List<MoviesEntity> getMovies() {
         return movies;
     }
@@ -96,8 +97,9 @@ public class ActorsEntity {
     public void setMovies(List<MoviesEntity> movies) {
         this.movies = movies;
     }
+    */
 
-    @OneToMany(mappedBy = "actor")
+    @OneToMany(mappedBy = "actor", fetch = FetchType.LAZY)
     public List<Movies2ActorsEntity> getRoles() {
         return roles;
     }
@@ -105,4 +107,15 @@ public class ActorsEntity {
     public void setRoles(List<Movies2ActorsEntity> roles) {
         this.roles = roles;
     }
+
+    /*
+    @OneToOne(mappedBy = "actor", fetch = FetchType.LAZY)
+    public BiographiesEntity getBiography() {
+        return biography;
+    }
+
+    public void setBiography(BiographiesEntity biography) {
+        this.biography = biography;
+    }
+    */
 }

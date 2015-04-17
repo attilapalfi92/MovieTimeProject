@@ -2,7 +2,7 @@ package com.movietime.controller;
 
 import com.movietime.businesslogic.JsonProvider;
 import com.movietime.entitywrappers.ActorWrapper;
-import com.movietime.entitywrappers.MovieWrapper;
+import com.movietime.entitywrappers.FullMovieWrapper;
 import com.movietime.model.MoviesEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,8 @@ public class RestController {
     private JsonProvider jsonProvider;
 
     @RequestMapping(value = RestUriConstants.GET_MOVIE_BY_ID, method = RequestMethod.GET)
-    public @ResponseBody MovieWrapper getMovieById(@PathVariable("id") int movieId) {
+    public @ResponseBody
+    FullMovieWrapper getMovieById(@PathVariable("id") int movieId) {
         return jsonProvider.getMovieById(movieId);
     }
 
