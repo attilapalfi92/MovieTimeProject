@@ -29,7 +29,7 @@ public class MoviesEntity {
     @JsonIgnore
     private List<Movies2ActorsEntity> characters;
     @JsonIgnore
-    private MpaaratingsEntity mpaaRating;
+    private List<MpaaratingsEntity> mpaaRatings;
     @JsonIgnore
     private List<GenresEntity> genres;
     @JsonIgnore
@@ -49,7 +49,7 @@ public class MoviesEntity {
     @JsonIgnore
     private List<ReleasedatesEntity> releaseDates;
     @JsonIgnore
-    private RunningtimesEntity runningTime;
+    private List<RunningtimesEntity> runningTimes;
     @JsonIgnore
     private TaglinesEntity tagline;
 
@@ -163,16 +163,16 @@ public class MoviesEntity {
         this.characters = characters;
     }
 
-    @OneToOne(mappedBy = "movie", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
     /*@JoinTable(name = "mpaaratings", catalog = "movietime2", schema = "",
         joinColumns = @JoinColumn(name = "movieid", referencedColumnName = "movieid", nullable = false),
         inverseJoinColumns = @JoinColumn(name = "mpaaratings_id", referencedColumnName = "mpaaratings_id", nullable = false))*/
-    public MpaaratingsEntity getMpaaRating() {
-        return mpaaRating;
+    public List<MpaaratingsEntity> getMpaaRatings() {
+        return mpaaRatings;
     }
 
-    public void setMpaaRating(MpaaratingsEntity mpaaRating) {
-        this.mpaaRating = mpaaRating;
+    public void setMpaaRatings(List<MpaaratingsEntity> mpaaRatings) {
+        this.mpaaRatings = mpaaRatings;
     }
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
@@ -256,13 +256,13 @@ public class MoviesEntity {
         this.releaseDates = releaseDates;
     }
 
-    @OneToOne(mappedBy = "movie", fetch = FetchType.LAZY)
-    public RunningtimesEntity getRunningTime() {
-        return runningTime;
+    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
+    public List<RunningtimesEntity> getRunningTimes() {
+        return runningTimes;
     }
 
-    public void setRunningTime(RunningtimesEntity runningTime) {
-        this.runningTime = runningTime;
+    public void setRunningTimes(List<RunningtimesEntity> runningTimes) {
+        this.runningTimes = runningTimes;
     }
 
     @OneToOne(mappedBy = "movie", fetch = FetchType.LAZY)

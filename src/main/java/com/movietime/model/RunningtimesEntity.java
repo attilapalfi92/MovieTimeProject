@@ -81,7 +81,7 @@ public class RunningtimesEntity {
         return result;
     }
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movieid", referencedColumnName = "movieid", nullable = false)
     public MoviesEntity getMovie() {
         return movie;

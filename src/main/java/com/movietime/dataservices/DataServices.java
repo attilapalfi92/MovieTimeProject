@@ -1,11 +1,10 @@
 package com.movietime.dataservices;
 
 import com.movietime.model.ActorsEntity;
+import com.movietime.model.BiographiesEntity;
 import com.movietime.model.Movies2ActorsEntity;
 import com.movietime.model.MoviesEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,10 +28,26 @@ public class DataServices {
         return result;
     }
 
+    public List<Movies2ActorsEntity> findMovies2ActorsByActorId(int actorId) {
+        List<Movies2ActorsEntity> result = em.createQuery("select m2a from Movies2ActorsEntity m2a where m2a.actorid = :actorId", Movies2ActorsEntity.class)
+                .setParameter("actorId", actorId)
+                .getResultList();
+
+        return result;
+    }
+
     public List<MoviesEntity> findMoviesByTitle(String title) {
         List<MoviesEntity> result = em.createQuery("SELECT m FROM MoviesEntity m WHERE m.title LIKE '" + title + "%'", MoviesEntity.class).getResultList();
 
         return result;
+    }
+
+    public BiographiesEntity findBioByName(String name) {
+        BiographiesEntity biography = em.createQuery("select b from BiographiesEntity  b where b.name = :name", BiographiesEntity.class)
+                .setParameter("name", name)
+                .getSingleResult();
+
+        return biography;
     }
 
     public MoviesEntity findMovieById(int movieId) {

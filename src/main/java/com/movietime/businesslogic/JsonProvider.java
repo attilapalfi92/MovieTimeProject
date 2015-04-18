@@ -4,6 +4,7 @@ import com.movietime.dataservices.DataServices;
 
 import com.movietime.entitywrappers.ActorWrapper;
 import com.movietime.entitywrappers.FullMovieWrapper;
+import com.movietime.entitywrappers.LightMovieWrapper;
 import com.movietime.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,9 +62,9 @@ public class JsonProvider {
         fullMovieWrapper.setGenres(movie.getGenres());
         //fullMovieWrapper.setQuote(movie.getQuote());
         fullMovieWrapper.setRating(movie.getRating());
-        fullMovieWrapper.setRunningTime(movie.getRunningTime());
+        fullMovieWrapper.setRunningTime(movie.getRunningTimes().get(0));
         fullMovieWrapper.setTagline(movie.getTagline());
-        fullMovieWrapper.setMpaaRating(movie.getMpaaRating());
+        fullMovieWrapper.setMpaaRating(movie.getMpaaRatings().get(0));
         fullMovieWrapper.setGenres(movie.getGenres());
 
         return fullMovieWrapper;
@@ -72,13 +73,16 @@ public class JsonProvider {
 
     @Transactional
     public ActorWrapper getActorById(int actorId) {
-        List<Movies2ActorsEntity> result = dataServices.findMovies2ActorsByMovieId(actorId);
+        List<Movies2ActorsEntity> result = dataServices.findMovies2ActorsByActorId(actorId);
         ActorWrapper actorWrapper = new ActorWrapper();
         // setting the actor
         actorWrapper.setActor(result.get(0).getActor());
+        BiographiesEntity biography = dataServices.findBioByName(actorWrapper.getActor().getName());
+        //actorWrapper.setBiography(biography);
         // setting the roles of the actor
         for(Movies2ActorsEntity i : result) {
-            actorWrapper.addRole(i.getMovie(), i.getAsCharacter());
+            actorWrapper.addRole(new LightMovieWrapper(i.getMovie().getTitle(),
+                    i.getMovie().getMovieid()), i.getAsCharacter());
         }
 
         return actorWrapper;

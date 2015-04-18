@@ -22,8 +22,10 @@ public class ActorsEntity {
     @JsonIgnore
     private List<Movies2ActorsEntity> roles;
     private String role;
-    //@JsonIgnore
-    //private BiographiesEntity biography;
+    /*
+    @JsonIgnore
+    private BiographiesEntity biography;
+    */
 
     @Id
     @Column(name = "actorid", nullable = false, insertable = true, updatable = true)
@@ -108,8 +110,8 @@ public class ActorsEntity {
         this.roles = roles;
     }
 
+    //@OneToOne(mappedBy = "actor", fetch = FetchType.LAZY)
     /*
-    @OneToOne(mappedBy = "actor", fetch = FetchType.LAZY)
     public BiographiesEntity getBiography() {
         return biography;
     }

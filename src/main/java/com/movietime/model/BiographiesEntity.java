@@ -7,16 +7,16 @@ import javax.persistence.*;
 /**
  * Created by Attila on 2015-04-17.
  */
-public class BiographiesEntity {}
-/*
+//public class BiographiesEntity {}
+
 @Entity
 @Table(name = "biographies", schema = "", catalog = "movietime2")
 public class BiographiesEntity {
     private int bioid;
     private String name;
     private String biotext;
-    @JsonIgnore
-    private ActorsEntity actor;
+    //@JsonIgnore
+    //private ActorsEntity actor;
 
     @Id
     @Column(name = "bioid", nullable = false, insertable = true, updatable = true)
@@ -70,8 +70,9 @@ public class BiographiesEntity {
         return result;
     }
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "name", referencedColumnName = "name", nullable = false)
+    //@OneToOne(fetch = FetchType.LAZY)
+    //@JoinColumn(name = "name", referencedColumnName = "name", nullable = false)
+    /*
     public ActorsEntity getActor() {
         return actor;
     }
@@ -79,5 +80,5 @@ public class BiographiesEntity {
     public void setActor(ActorsEntity actor) {
         this.actor = actor;
     }
+    */
 }
-*/

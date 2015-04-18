@@ -16,7 +16,7 @@
       <mapping class="com.movietime.model.Movies2ActorsEntity"/>
       <mapping class="com.movietime.model.MpaaratingsEntity"/>
       <mapping class="com.movietime.model.GenresEntity"/>
-      <!--<mapping class="com.movietime.model.BiographiesEntity"/>-->
+      <mapping class="com.movietime.model.BiographiesEntity"/>
       <mapping class="com.movietime.model.DirectorsEntity"/>
       <mapping class="com.movietime.model.EditorsEntity"/>
       <mapping class="com.movietime.model.KeywordsEntity"/>

@@ -1,6 +1,7 @@
 package com.movietime.entitywrappers;
 
 import com.movietime.model.ActorsEntity;
+import com.movietime.model.BiographiesEntity;
 import com.movietime.model.MoviesEntity;
 
 import java.util.HashMap;
@@ -12,15 +13,19 @@ import java.util.Map;
  */
 public class ActorWrapper {
     ActorsEntity actor;
-    Map<MoviesEntity, String> roles;
+    Map<LightMovieWrapper, String> roles;
+    BiographiesEntity biography;
 
     public ActorWrapper() {
         roles = new HashMap<>();
     }
 
-    public ActorWrapper(ActorsEntity actor, Map<MoviesEntity, String> roles) {
-        this.actor = actor;
-        this.roles = roles;
+    public BiographiesEntity getBiography() {
+        return biography;
+    }
+
+    public void setBiography(BiographiesEntity biography) {
+        this.biography = biography;
     }
 
     public ActorsEntity getActor() {
@@ -31,11 +36,11 @@ public class ActorWrapper {
         this.actor = actor;
     }
 
-    public void addRole(MoviesEntity movie, String role) {
+    public void addRole(LightMovieWrapper movie, String role) {
         roles.put(movie, role);
     }
 
-    public Map<MoviesEntity, String> getRoles() {
+    public Map<LightMovieWrapper, String> getRoles() {
         return roles;
     }
 }
