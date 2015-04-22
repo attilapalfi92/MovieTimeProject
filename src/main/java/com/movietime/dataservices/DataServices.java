@@ -55,11 +55,14 @@ public class DataServices {
     }
 
     public BiographiesEntity findBioByName(String name) {
-        BiographiesEntity biography = em.createQuery("select b from BiographiesEntity  b where b.name = :name", BiographiesEntity.class)
+        List<BiographiesEntity> biographies = em.createQuery("select b from BiographiesEntity  b where b.name = :name", BiographiesEntity.class)
                 .setParameter("name", name)
-                .getSingleResult();
+                .getResultList();
 
-        return biography;
+        if (biographies.size() == 0)
+            return null;
+
+        return biographies.get(0);
     }
 
     public MoviesEntity findMovieById(int movieId) {

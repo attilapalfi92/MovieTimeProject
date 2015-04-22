@@ -3,7 +3,7 @@
  */
 $(document).ready(function() {
     $.ajax({
-        url: "http://localhost:8080/rest/movie/byId/2402365"
+        url: "http://localhost:8090/rest/movie/byId/2402365"
     }).then(function(data) {
         console.log(data);
         $('.movie-id').append(data.movie.movieid)

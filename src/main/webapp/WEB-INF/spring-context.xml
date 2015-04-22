@@ -21,6 +21,8 @@
 
     <!-- mapping for resource folder -->
     <mvc:resources mapping="/resources/**" location="/resources/" />
+    <!-- mapping for static html files -->
+    <mvc:resources mapping="/static/**" location="/static/" />
 
     <!-- MySQL Datasource with Commons DBCP connection pooling -->
     <beans:bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource">
