@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "actors", schema = "", catalog = "movietime2")
-public class ActorsEntity {
+public class ActorsEntity extends ResourceSupport {
     private int actorid;
     private String name;
     private String sex;

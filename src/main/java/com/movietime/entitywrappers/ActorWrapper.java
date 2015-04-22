@@ -3,6 +3,7 @@ package com.movietime.entitywrappers;
 import com.movietime.model.ActorsEntity;
 import com.movietime.model.BiographiesEntity;
 import com.movietime.model.MoviesEntity;
+import org.springframework.hateoas.ResourceSupport;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Map;
 /**
  * Created by Attila on 2015-04-16.
  */
-public class ActorWrapper {
+public class ActorWrapper extends ResourceSupport {
     ActorsEntity actor;
     Map<LightMovieWrapper, String> roles;
     BiographiesEntity biography;

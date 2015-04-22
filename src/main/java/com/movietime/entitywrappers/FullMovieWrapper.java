@@ -1,6 +1,7 @@
 package com.movietime.entitywrappers;
 
 import com.movietime.model.*;
+import org.springframework.hateoas.ResourceSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 /**
  * Created by Attila on 2015-04-16.
  */
-public class FullMovieWrapper {
+public class FullMovieWrapper extends ResourceSupport {
     private MoviesEntity movie;
     private List<ActorsEntity> actors;
     private List<ProducersEntity> producers;
@@ -27,6 +28,11 @@ public class FullMovieWrapper {
     private TaglinesEntity tagline;
 
     public FullMovieWrapper() {}
+
+    @Override
+    public String toString() {
+        return "FullMovieWrapper";
+    }
 
     public List<DirectorsEntity> getDirectors() {
         return directors;

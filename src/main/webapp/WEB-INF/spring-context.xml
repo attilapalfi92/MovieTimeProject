@@ -19,6 +19,9 @@
         <beans:property name="suffix" value=".jsp" />
     </beans:bean>
 
+    <!-- mapping for resource folder -->
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+
     <!-- MySQL Datasource with Commons DBCP connection pooling -->
     <beans:bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource">
         <beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>

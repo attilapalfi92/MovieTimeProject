@@ -1,9 +1,11 @@
 package com.movietime.entitywrappers;
 
+import org.springframework.hateoas.ResourceSupport;
+
 /**
  * Created by Attila on 2015-04-18.
  */
-public class LightMovieWrapper {
+public class LightMovieWrapper extends ResourceSupport {
     String movieTitle;
     int movieId;
 

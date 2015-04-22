@@ -36,8 +36,20 @@ public class DataServices {
         return result;
     }
 
-    public List<MoviesEntity> findMoviesByTitle(String title) {
-        List<MoviesEntity> result = em.createQuery("SELECT m FROM MoviesEntity m WHERE m.title LIKE '" + title + "%'", MoviesEntity.class).getResultList();
+    /**
+     *
+     * @param title title of the movie to be searched for
+     * @param pageNumber number of the page the user needs. 1st page is 0, 2nd page is 1 and so on
+     * @param pageSize size of each pages
+     * @return
+     */
+    public List<MoviesEntity> findMoviesByTitle(String title, int pageNumber, int pageSize) {
+        title = title + "%";
+        List<MoviesEntity> result = em.createQuery("SELECT m FROM MoviesEntity m WHERE m.title LIKE :title", MoviesEntity.class)
+                .setParameter("title", title)
+                .setFirstResult(pageNumber * pageSize)
+                .setMaxResults(pageSize)
+                .getResultList();
 
         return result;
     }
