@@ -109,7 +109,7 @@ public class JsonProvider {
         MovieList movieList = new MovieList(movies, pageNum, pageSize);
         if (movies.size() >= pageSize)
             movieList.add(linkTo(methodOn(RestController.class).getMoviesByTitle(movieTitle, pageNum + 1, pageSize)).withRel("nextPage"));
-        if(pageNum > 0)
+        if(pageNum > 1)
             movieList.add(linkTo(methodOn(RestController.class).getMoviesByTitle(movieTitle, pageNum - 1, pageSize)).withRel("previousPage"));
 
         return movieList;

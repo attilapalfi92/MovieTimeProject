@@ -1,24 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="UTF-8">
-    <link rel="import" href="/resources/components/polymer/polymer.html">
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <!-- Load platform support before any code that touches the DOM. -->
+    <script src="static/bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <!-- Load the components using HTML import -->
+    <link rel="import" href="static/elements/editable-color-picker.html">
+    <link rel="import" href="static/elements/movie-list.html">
+    <link rel="import" href="static/bower_components/core-header-panel/core-header-panel.html">
+    <link rel="import" href="static/bower_components/core-input/core-input.html">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="/resources/hello.js"></script>
+    <!--<script src="static/hello.js"></script>-->
     <title>MovieTime!</title>
+
+    <style>
+        html,body {
+            height: 100%;
+            margin: 0;
+            background-color: #E5E5E5;
+            font-family: 'RobotoDraft', sans-serif;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-touch-callout: none;
+        }
+        core-header-panel {
+            height: 100%;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .container {
+            width: 80%;
+            margin: 50px auto;
+        }
+        @media (min-width: 481px) {
+            .container {
+                width: 400px;
+            }
+        }
+    </style>
 </head>
-<body>
-    <div>
-        <p class="movie-id">The ID is: </p>
-        <p class="movie-title">The title is: </p>
-        <table class="actors-table" id="actors-table">
-            <tr>
-                <th>Role</th>
-                <th>Name</th>
-                <th>Page</th>
-            </tr>
-        </table>
-    </div>
+
+<body unresolved>
+
+    <!--
+    <core-header-panel>
+    </core-header-panel>
+    -->
+
+        <div class="container" layout vertical center>
+            <input is="core-input" placeholder="search for movies" value="{{movieTitle1}}" committedValue="{{movieTitle2}}">
+            <!--<movie-list movieTitle="Eternal" pageNum="1" pageSize="30"></movie-list>-->
+            <movie-list movieTitle="{{movieTitle2}}" pageNum="1" pageSize="30"></movie-list>
+        </div>
+
+
+
 </body>
 </html>

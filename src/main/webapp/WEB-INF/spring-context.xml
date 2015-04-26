@@ -14,10 +14,12 @@
     <context:component-scan base-package="com.movietime" />
 
     <!-- Resolve view name into jsp file located on /WEB-INF/pages/ -->
+    <!--
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <beans:property name="prefix" value="/WEB-INF/pages/" />
         <beans:property name="suffix" value=".jsp" />
     </beans:bean>
+    -->
 
     <!-- mapping for resource folder -->
     <mvc:resources mapping="/resources/**" location="/resources/" />

@@ -1,0 +1,55 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name="movie-card">
+    <template>
+        <style>
+            :host {
+                display: block;
+                position: relative;
+                background-color: white;
+                padding: 20px;
+                width: 100%;
+                font-size: 1.2rem;
+                font-weight: 300;
+            }
+            .card-header {
+                margin-bottom: 10px;
+            }
+            polyfill-next-selector { content: '.card-header h2'; }
+            .card-header ::content h2 {
+                margin: 0;
+                font-size: 1.8rem;
+                font-weight: 300;
+            }
+            polyfill-next-selector { content: '.card-header2 h3'; }
+            .card-header2 ::content h3 {
+                margin: 0;
+                font-size: 1.5rem;
+                font-weight: 200;
+            }
+            polyfill-next-selector { content: '.link-paragraph p'; }
+            .card-header ::content p {
+                margin: 0;
+                font-size: 1.2rem;
+                font-weight: 100;
+            }
+        </style>
+
+        <div class="card-header" layout horizontal center>
+            <content select="h2"></content>
+        </div>
+        <div class="card-header2" layout horizontal center>
+            <content select="h3"></content>
+        </div>
+        <div class="link-paragraph" layout horizontal center>
+            <content select="p"></content>
+        </div>
+
+        <content></content>
+    </template>
+    <script>
+        Polymer({
+
+        });
+    </script>
+</polymer-element>

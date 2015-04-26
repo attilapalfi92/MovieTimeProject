@@ -39,7 +39,7 @@ public class DataServices {
     /**
      *
      * @param title title of the movie to be searched for
-     * @param pageNumber number of the page the user needs. 1st page is 0, 2nd page is 1 and so on
+     * @param pageNumber number of the page the user needs. 1st page is 1, 2nd page is 1 and so on
      * @param pageSize size of each pages
      * @return
      */
@@ -47,7 +47,7 @@ public class DataServices {
         title = title + "%";
         List<MoviesEntity> result = em.createQuery("SELECT m FROM MoviesEntity m WHERE m.title LIKE :title", MoviesEntity.class)
                 .setParameter("title", title)
-                .setFirstResult(pageNumber * pageSize)
+                .setFirstResult((pageNumber - 1) * pageSize)
                 .setMaxResults(pageSize)
                 .getResultList();
 
