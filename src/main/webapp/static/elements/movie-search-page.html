@@ -1,10 +1,11 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-input/paper-input-decorator.html">
+<link rel="import" href="../bower_components/core-input/core-input.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/core-header-panel/core-header-panel.html">
 <link rel="import" href="movie-list.html">
 
-<polymer-element name="movie-search-page"  attributes="movieTitle">
+<polymer-element name="movie-search-page" attributes="movieTitle1">
 
     <template>
 
@@ -22,7 +23,7 @@
 
 
             <div class="container" layout vertical center>
-                <paper-input label="Movie title" floatingLabel="true" labelVisible="true"
+                <paper-input id="movieInput" label="Movie title" floatingLabel="true" labelVisible="true"
                     value="{{movieTitle1}}" committedValue="{{movieTitle2}}" ></paper-input>
 
                 <movie-list movieTitle="{{movieTitle1}}" pageNum="1" pageSize="30"></movie-list>
@@ -35,6 +36,9 @@
 
     <script>
         Polymer({
+            movieTitle1Changed: function() {
+                this.$.movieInput.focus();
+            }
         });
     </script>
 

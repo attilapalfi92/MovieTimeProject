@@ -21,7 +21,7 @@
         <core-ajax
                 id="ajax"
                 auto="false"
-                url="http://192.168.1.102:8090/rest/movie/byTitle/{{movieTitle}}/{{pageNum}}/{{pageSize}}"
+                url="http://localhost:8090/rest/movie/byTitle/{{movieTitle}}/{{pageNum}}/{{pageSize}}"
                 method="GET"
                 handleAs="json"
                 response="{{movies}}">
@@ -46,11 +46,12 @@
 
             movieTitleChanged: function() {
                 this.$.ajax.go();
-            },
-
+            }
+            /*
             moviesChanged: function(oldValue) {
                 console.log(this.movies['movies'][0]['title'])
             }
+            */
         });
     </script>
 </polymer-element>

@@ -42,17 +42,7 @@
 
 <body unresolved>
 
-<!--
-    <div class="container" layout vertical center>
-        <paper-input label="Movie title" floatingLabel="true" value="{{movieTitle1}}"
-                     committedValue="{{movieTitle2}}" ></paper-input>
-    </div>
-
-    <div class="container" layout vertical center>
-        <movie-list movieTitle="Eternal" pageNum="1" pageSize="30"></movie-list>
-    </div>
--->
-
+    <!--
     <core-header-panel>
         <div class="container" layout vertical center>
             <paper-input label="Movie title" floatingLabel="true" labelVisible="true"
@@ -60,7 +50,14 @@
             <movie-search-page movieTitle="{{movieTitle1}}" ></movie-search-page>
         </div>
     </core-header-panel>
-
+    -->
+    <template is="auto-binding">
+        <div class="container" layout vertical center>
+            <paper-input label="Movie title" floatingLabel="true" labelVisible="true"
+                         value="{{movieTitle1}}" committedValue="{{movieTitle2}}" ></paper-input>
+            <movie-search-page movieTitle="{{movieTitle1}}" ></movie-search-page>
+        </div>
+    </template>
 
     <script>
 
