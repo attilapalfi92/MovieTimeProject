@@ -18,7 +18,6 @@ public class FullMovieWrapper extends ResourceSupport {
     private List<GenresEntity> genres;
     private List<DirectorsEntity> directors;
     private List<EditorsEntity> editors;
-    private List<KeywordsEntity> keywords;
     private List<LanguageEntity> languages;
     private List<LocationsEntity> locations;
     //private QuotesEntity quote;
@@ -48,14 +47,6 @@ public class FullMovieWrapper extends ResourceSupport {
 
     public void setEditors(List<EditorsEntity> editors) {
         this.editors = editors;
-    }
-
-    public List<KeywordsEntity> getKeywords() {
-        return keywords;
-    }
-
-    public void setKeywords(List<KeywordsEntity> keywords) {
-        this.keywords = keywords;
     }
 
     public List<LanguageEntity> getLanguages() {

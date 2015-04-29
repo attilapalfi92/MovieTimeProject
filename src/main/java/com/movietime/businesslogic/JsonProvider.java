@@ -42,19 +42,30 @@ public class JsonProvider {
 
         // setting all the other fields
         FullMovieWrapper fullMovieWrapper = new FullMovieWrapper();
-        MoviesEntity movie = result.get(0).getMovie();
+        //MoviesEntity movie = result.get(0).getMovie();
+        MoviesEntity movie = dataServices.findMovieById(movieId);
         fullMovieWrapper.setMovie(movie);
         fullMovieWrapper.setActors(actors);
         // kicking the hibernate to fetch the required collections
-        movie.getProducers().get(0);
-        movie.getWriters().get(0);
-        movie.getDirectors().get(0);
-        movie.getEditors().get(0);
-        movie.getKeywords().get(0);
-        movie.getLanguages().get(0);
-        movie.getLocations().get(0);
-        movie.getReleaseDates().get(0);
-        movie.getGenres().get(0);
+//        movie.getProducers().get(0);
+//        movie.getWriters().get(0);
+//        movie.getDirectors().get(0);
+//        movie.getEditors().get(0);
+//        movie.getKeywords().get(0);
+//        movie.getLanguages().get(0);
+//        movie.getLocations().get(0);
+//        movie.getReleaseDates().get(0);
+//        movie.getGenres().get(0);
+        movie.getProducers().isEmpty();
+        movie.getWriters().isEmpty();
+        movie.getDirectors().isEmpty();
+        movie.getEditors().isEmpty();
+        movie.getKeywords().isEmpty();
+        movie.getLanguages().isEmpty();
+        movie.getLocations().isEmpty();
+        movie.getReleaseDates().isEmpty();
+        movie.getGenres().isEmpty();
+
         //String reasonText = movie.getMpaaRating().getReasontext();
 
         // setting all the other fields
@@ -62,16 +73,17 @@ public class JsonProvider {
         fullMovieWrapper.setWriters(movie.getWriters());
         fullMovieWrapper.setDirectors(movie.getDirectors());
         fullMovieWrapper.setEditors(movie.getEditors());
-        fullMovieWrapper.setKeywords(movie.getKeywords());
         fullMovieWrapper.setLanguages(movie.getLanguages());
         fullMovieWrapper.setLocations(movie.getLocations());
         //fullMovieWrapper.setReleaseDates(movie.getReleaseDates());
         fullMovieWrapper.setGenres(movie.getGenres());
         //fullMovieWrapper.setQuote(movie.getQuote());
         fullMovieWrapper.setRating(movie.getRating());
-        fullMovieWrapper.setRunningTime(movie.getRunningTimes().get(0));
+        if (!movie.getRunningTimes().isEmpty())
+            fullMovieWrapper.setRunningTime(movie.getRunningTimes().get(0));
         fullMovieWrapper.setTagline(movie.getTagline());
-        fullMovieWrapper.setMpaaRating(movie.getMpaaRatings().get(0));
+        if (!movie.getMpaaRatings().isEmpty())
+            fullMovieWrapper.setMpaaRating(movie.getMpaaRatings().get(0));
         fullMovieWrapper.setGenres(movie.getGenres());
 
         // put a link that points to itself

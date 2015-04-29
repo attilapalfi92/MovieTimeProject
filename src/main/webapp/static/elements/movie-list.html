@@ -33,7 +33,8 @@
                 <movie-card>
                     <h2>{{movie.title}}</h2>
                     <h3>{{movie.movieid}}</h3>
-                    <p>{{movie.links[0].href}}</p>
+                    <p id="link">{{movie.links[0].href}}</p>
+                    <p id="tag">{{movie.tagline.taglinetext}}</p>
                 </movie-card>
             </template>
         </div>
@@ -47,9 +48,9 @@
             movieTitleChanged: function() {
                 this.$.ajax.go();
             }
-            /*
+            /*,
             moviesChanged: function(oldValue) {
-                console.log(this.movies['movies'][0]['title'])
+                console.log(this.movies['movies'][0])
             }
             */
         });

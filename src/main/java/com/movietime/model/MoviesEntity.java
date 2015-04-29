@@ -21,6 +21,8 @@ public class MoviesEntity extends ResourceSupport {
     private String title;
     private String year;
     private String imdbid;
+    @JsonIgnore
+    private TaglinesEntity tagline;
     //@JsonIgnore
     //private List<ActorsEntity> actors;
     @JsonIgnore
@@ -51,8 +53,6 @@ public class MoviesEntity extends ResourceSupport {
     private List<ReleasedatesEntity> releaseDates;
     @JsonIgnore
     private List<RunningtimesEntity> runningTimes;
-    @JsonIgnore
-    private TaglinesEntity tagline;
 
     /*
     //@ManyToMany(fetch = FetchType.LAZY)
