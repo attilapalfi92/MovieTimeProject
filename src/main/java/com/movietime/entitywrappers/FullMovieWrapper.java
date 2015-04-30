@@ -24,7 +24,6 @@ public class FullMovieWrapper extends ResourceSupport {
     private RatingsEntity rating;
     //private List<ReleasedatesEntity> releaseDates;
     private RunningtimesEntity runningTime;
-    private TaglinesEntity tagline;
 
     public FullMovieWrapper() {}
 
@@ -99,14 +98,6 @@ public class FullMovieWrapper extends ResourceSupport {
 
     public void setRunningTime(RunningtimesEntity runningTime) {
         this.runningTime = runningTime;
-    }
-
-    public TaglinesEntity getTagline() {
-        return tagline;
-    }
-
-    public void setTagline(TaglinesEntity tagline) {
-        this.tagline = tagline;
     }
 
     public MpaaratingsEntity getMpaaRating() {

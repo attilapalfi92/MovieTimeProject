@@ -72,7 +72,6 @@ public class JsonProvider {
         fullMovieWrapper.setRating(movie.getRating());
         if (!movie.getRunningTimes().isEmpty())
             fullMovieWrapper.setRunningTime(movie.getRunningTimes().get(0));
-        fullMovieWrapper.setTagline(movie.getTagline());
         if (!movie.getMpaaRatings().isEmpty())
             fullMovieWrapper.setMpaaRating(movie.getMpaaRatings().get(0));
         fullMovieWrapper.setGenres(movie.getGenres());

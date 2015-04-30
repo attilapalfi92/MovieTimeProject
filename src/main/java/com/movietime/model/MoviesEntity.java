@@ -21,7 +21,6 @@ public class MoviesEntity extends ResourceSupport {
     private String title;
     private String year;
     private String imdbid;
-    @JsonIgnore
     private TaglinesEntity tagline;
     //@JsonIgnore
     //private List<ActorsEntity> actors;
