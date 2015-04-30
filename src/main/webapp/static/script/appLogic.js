@@ -11,6 +11,9 @@ $(document).ready(function(){
     $('#next_btn').prop('disabled', true);
     $('#prev_btn').prop('disabled', true);
 
+    // hide movie details table
+    $('#movieDetails_table').hide();
+
     console.log(pSize);
 });
 
@@ -22,6 +25,7 @@ function sliderChanged(value) {
     updateTable($('#mTitle_input').val());
 };
 
+// event handler for the click on next button
 function nextClicked() {
     var pageNumLabel = $('#pageNum_label');
     var pNum = parseInt(pageNumLabel.text());
@@ -32,6 +36,7 @@ function nextClicked() {
     updateTable($('#mTitle_input').val());
 }
 
+// event handler for the click on previous button
 function prevClicked() {
     var pageNumLabel = $('#pageNum_label');
     var pNum = parseInt(pageNumLabel.text());
@@ -43,11 +48,24 @@ function prevClicked() {
     updateTable($('#mTitle_input').val());
 }
 
+// event handler for the title input
 function titleChanged(value) {
     $('#pageNum_label').text('1');
 
     updateTable(value);
 }
+
+// if user clicks on the move details button
+function loadMovieDetails(href) {
+    console.log(href);
+    console.log('button pressed');
+}
+
+$(document).on('click', '.details_button', function(event) {
+    console.log(event.target.name);
+    console.log('button pressed');
+});
+
 
 // if the input text changes, update the table
 function updateTable(value) {
@@ -107,32 +125,36 @@ function updateTable(value) {
 
             console.log(data);
             // uploading the table with data
-            var table = '';
+            var table = document.getElementById('moviesTable');
             var movies = data.movies;
             for(var i = 0; i < movies.length; i++) {
+                var link1 = movies[i].links[0].href;
+
+                var movie = movies[i];
+                var row = table.insertRow(-1);
+                var cell_title = row.insertCell(-1);
+                var cell_tagline = row.insertCell(-1);
+                var cell_movieid = row.insertCell(-1);
+                var cell_btn = row.insertCell(-1);
+
+                $(cell_title).text(movie.title);
                 if (movies[i].tagline) {
-                    $('#moviesTable').append(
-                        '<tr>' +
-                        '<td>' + movies[i].title + '</td>' +
-                        '<td>' + movies[i].tagline.taglinetext + '</td>' +
-                        '<td>' + movies[i].movieid + '</td>' +
-                        '<td>' + movies[i].links[0].href + '</td>' +
-                        '</tr>'
-                    );
+                    $(cell_tagline).text(movie.tagline.taglinetext);
 
                 } else {
-                    $('#moviesTable').append(
-                        '<tr>' +
-                        '<td>' + movies[i].title + '</td>' +
-                        '<td>' + "" + '</td>' +
-                        '<td>' + movies[i].movieid + '</td>' +
-                        '<td>' + movies[i].links[0].href + '</td>' +
-                        '</tr>'
-                    );
+                    $(cell_tagline).text('');
                 }
-            }
+                $(cell_movieid).text(movie.movieid);
 
-            $('#moviesTable').first().after(table);
+                var detailsBtn = document.createElement('input');
+                detailsBtn.setAttribute('type', 'button');
+                detailsBtn.setAttribute('class', 'details_button');
+                detailsBtn.setAttribute('value', 'Show details');
+                detailsBtn.setAttribute('name', link1);
+                cell_btn.appendChild(detailsBtn);
+                //$(detailsBtn).click(loadMovieDetails(link1));
+
+            }
         });
     }
 };

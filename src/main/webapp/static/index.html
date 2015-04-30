@@ -1,27 +1,43 @@
 <!DOCTYPE html>
-<!-- It's an angular.js app -->
 <html>
-    <head lang="en">
-        <meta charset="UTF-8">
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script type="text/javascript" src="/static/script/hello.js"></script>
-        <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>-->
-        <title>MovieTime!</title>
+<head lang="en">
+    <meta charset="UTF-8">
 
-    </head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/script/appLogic.js"></script>
+
+    <title>MovieTime</title>
+</head>
+<body>
+    <h1>Search for movies</h1>
+
+    <label for="mTitle_input">Title: </label>
+    <input id="mTitle_input" type="text" placeholder="movie title" oninput="titleChanged(value)" /> <br/>
+
+    <label for="pageSize_i">Page size: </label>
+    <input id="pageSize_i" type="range" min="10" max="100" step="1"
+           value="30" oninput="sliderChanged(value)">
+    <label id="pSize_label"></label> <br/>
+    <label>page: </label><label id="pageNum_label">1</label>
+    <input id="prev_btn" type="button" name="previous" value="previous" onclick="prevClicked()">
+    <input id="next_btn" type="button" name="next" value="next" onclick="nextClicked()">
+
+    <hr/>
+
+    <table id="movieDetails_table">
+
+    </table>
+
+    <table id="moviesTable">
+        <tr>
+            <th>Title</th>
+            <th>Tagline</th>
+            <th>movieId</th>
+            <th>link</th>
+        </tr>
+    </table>
 
 
-    <body>
-        <h1>MovieTime</h1>
-        <a href="/static/searchMovies.html">Search Movies</a>
 
-        <hr/>
-        <input id="mId_input" type="number" value="2402365">
-        <div>
-            <table id="actors-table"></table>
-        </div>
-
-    </body>
-
-
+</body>
 </html>
