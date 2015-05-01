@@ -37,7 +37,6 @@ public class DataServices {
     }
 
     /**
-     *
      * @param title title of the movie to be searched for
      * @param pageNumber number of the page the user needs. 1st page is 1, 2nd page is 1 and so on
      * @param pageSize size of each pages
@@ -45,7 +44,8 @@ public class DataServices {
      */
     public List<MoviesEntity> findMoviesByTitle(String title, int pageNumber, int pageSize) {
         title = title + "%";
-        List<MoviesEntity> result = em.createQuery("SELECT m FROM MoviesEntity m WHERE m.title LIKE :title", MoviesEntity.class)
+        List<MoviesEntity> result = em.createQuery("SELECT m FROM MoviesEntity m WHERE m.title LIKE :title" +
+                " ORDER BY m.title", MoviesEntity.class)
                 .setParameter("title", title)
                 .setFirstResult((pageNumber - 1) * pageSize)
                 .setMaxResults(pageSize)
@@ -53,6 +53,25 @@ public class DataServices {
 
         return result;
     }
+
+    /**
+     * @param title part of the title of the movie to be searched for
+     * @param pageNumber number of the page the user needs. 1st page is 1, 2nd page is 1 and so on
+     * @param pageSize size of each pages
+     * @return
+     */
+    public List<MoviesEntity> findMoviesByPartTitle(String title, int pageNumber, int pageSize) {
+        title = "%" + title + "%";
+        List<MoviesEntity> result = em.createQuery("SELECT m FROM MoviesEntity m WHERE m.title LIKE :title" +
+                " ORDER BY m.title", MoviesEntity.class)
+                .setParameter("title", title)
+                .setFirstResult((pageNumber - 1) * pageSize)
+                .setMaxResults(pageSize)
+                .getResultList();
+
+        return result;
+    }
+
 
     public BiographiesEntity findBioByName(String name) {
         List<BiographiesEntity> biographies = em.createQuery("select b from BiographiesEntity  b where b.name = :name", BiographiesEntity.class)

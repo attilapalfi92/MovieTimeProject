@@ -89,8 +89,9 @@ public class JsonProvider {
         ActorWrapper actorWrapper = new ActorWrapper();
         // setting the actor
         actorWrapper.setActor(dataServices.findActorById(actorId));
+        actorWrapper.getActor().add(linkTo(methodOn(RestController.class).getActorById(actorId)).withRel("actor"));
         BiographiesEntity biography = dataServices.findBioByName(actorWrapper.getActor().getName());
-        //actorWrapper.setBiography(biography);
+        actorWrapper.setBiography(biography);
         // setting the roles of the actor
         for(Movies2ActorsEntity i : result) {
             actorWrapper.addRole(new LightMovieWrapper(i.getMovie().getTitle(),
@@ -99,6 +100,7 @@ public class JsonProvider {
 
         return actorWrapper;
     }
+
 
     @Transactional
     public MovieList findMoviesByTitle(String movieTitle, int pageNum, int pageSize) {
@@ -116,4 +118,23 @@ public class JsonProvider {
 
         return movieList;
     }
+
+
+    @Transactional
+    public MovieList findMoviesByPartTitle(String movieTitle, int pageNum, int pageSize) {
+        List<MoviesEntity> movies = dataServices.findMoviesByPartTitle(movieTitle, pageNum, pageSize);
+
+        for(MoviesEntity movie : movies) {
+            movie.add(linkTo(methodOn(RestController.class).getMovieById(movie.getMovieid())).withRel("movie"));
+        }
+
+        MovieList movieList = new MovieList(movies, pageNum, pageSize);
+        if (movies.size() >= pageSize)
+            movieList.add(linkTo(methodOn(RestController.class).getMoviesByTitle(movieTitle, pageNum + 1, pageSize)).withRel("nextPage"));
+        if(pageNum > 1)
+            movieList.add(linkTo(methodOn(RestController.class).getMoviesByTitle(movieTitle, pageNum - 1, pageSize)).withRel("previousPage"));
+
+        return movieList;
+    }
+
 }

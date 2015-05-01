@@ -61,7 +61,22 @@ public class RestController {
     }
 
 
+    /**
+     * returns with a page of movies with the given part of the title
+     * @param movieTitle title of the desired movie
+     * @param pageNum number of page needed
+     * @param pageSize size of pages
+     * @return a page of movies
+     */
+    @RequestMapping(value = RestUriConstants.GET_MOVIES_BY_PART_TITLE, method = RequestMethod.GET)
+    public @ResponseBody HttpEntity<MovieList> getMoviesByPartTitle(@PathVariable("title") String movieTitle,
+                                                                @PathVariable("pageNum") int pageNum,
+                                                                @PathVariable("pageSize") int pageSize) {
+        movieTitle = movieTitle.replaceAll("_", " ");
+        MovieList movieList = jsonProvider.findMoviesByPartTitle(movieTitle, pageNum, pageSize);
 
+        return new ResponseEntity<MovieList>(movieList, HttpStatus.OK);
+    }
 
 
     @RequestMapping(value = RestUriConstants.ROOT, method = RequestMethod.GET)

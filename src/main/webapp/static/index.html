@@ -6,37 +6,122 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script type="text/javascript" src="/static/script/appLogic.js"></script>
 
+    <style>
+        .loading {
+            display:    none;
+            position:   fixed;
+            z-index:    1000;
+            top:        0;
+            left:       0;
+            height:     100%;
+            width:      100%;
+            background: rgba( 255, 255, 255, .8 )
+            url('http://i.stack.imgur.com/FhHRx.gif')
+            50% 50%
+            no-repeat;
+        }
+    </style>
+
     <title>MovieTime</title>
 </head>
 <body>
-    <h1>Search for movies</h1>
+    <div id="heading">
+        <h1>MovieTime!</h1>
+        <input type="text" placeholder="username">
+        <input type="text" placeholder="password">
+        <input type="button" value="Login">
+    </div>
 
-    <label for="mTitle_input">Title: </label>
-    <input id="mTitle_input" type="text" placeholder="movie title" oninput="titleChanged(value)" /> <br/>
+    <div id="toolbar">
+        <hr/>
+        <input type="button" value="Movies" id="tb_mov_btn" onclick="tbMovBtnClicked()">
+        <input type="button" value="Actors" id="tb_act_btn" onclick="tbActBtnClicked()">
+        <input type="button" value="Must see" id="tb_must_btn" onclick="tbMustBtnClicked()">
+        <input type="button" value="Have seen" id="tb_have_btn" onclick="tbHaveBtnClicked()">
+        <hr/>
+    </div>
 
-    <label for="pageSize_i">Page size: </label>
-    <input id="pageSize_i" type="range" min="10" max="100" step="1"
-           value="30" oninput="sliderChanged(value)">
-    <label id="pSize_label"></label> <br/>
-    <label>page: </label><label id="pageNum_label">1</label>
-    <input id="prev_btn" type="button" name="previous" value="previous" onclick="prevClicked()">
-    <input id="next_btn" type="button" name="next" value="next" onclick="nextClicked()">
+    <div id="movies_div">
+        <h2>Search for movies</h2>
 
-    <hr/>
+        <label for="mTitle_input">Title: </label>
+        <input id="mTitle_input" type="text" placeholder="movie title" oninput="titleChanged(value)" />
+        <input id="mTitle_submit" type="button" value="Go!" onclick="titleEnterPressed()" /> <br/>
 
-    <table id="movieDetails_table">
 
-    </table>
+        <label for="pageSize_i">Page size: </label>
+        <input id="pageSize_i" type="range" min="10" max="100" step="1"
+               value="30" oninput="sliderChanged(value)">
+        <label id="pSize_label"></label> <br/>
+        <label>page: </label><label id="pageNum_label">1</label>
+        <input id="prev_btn" type="button" name="previous" value="previous" onclick="prevClicked()">
+        <input id="next_btn" type="button" name="next" value="next" onclick="nextClicked()">
 
-    <table id="moviesTable">
-        <tr>
-            <th>Title</th>
-            <th>Tagline</th>
-            <th>movieId</th>
-            <th>link</th>
-        </tr>
-    </table>
+        <hr/>
 
+        <div id="actors_movies">
+            <h2 id="actor_name_h2"></h2>
+            <table id="actors_movies_table">
+                <tr>
+                    <th>Title</th>
+                    <th>Role</th>
+                    <th>Tagline</th>
+                    <th>link</th>
+                </tr>
+            </table>
+        </div>
+
+
+        <div id="movie_details">
+            <h2 id="movie_title_h2"></h2>
+            <div>
+                <h3>Details</h3>
+                <h4 id="directors_h">Directors: </h4>      <p id="directors_p"></p>
+                <h4 id="writers_h">Writers: </h4>          <p id="writers_p"></p>
+                <h4 id="producers_h">Producers: </h4>      <p id="producers_p"></p>
+                <h4 id="editors_h">Editors: </h4>          <p id="editors_p"></p>
+                <h4 id="genres_h">Genres: </h4>            <p id="genres_p"></p>
+                <h4 id="languages_h">Languages: </h4>      <p id="languages_p"></p>
+                <h4 id="locations_h">Locations: </h4>      <p id="locations_p"></p>
+            </div>
+
+            <div id="actors_list">
+                <h3>Actors</h3>
+                <table id="actors_table"></table>
+            </div>
+        </div>
+
+
+        <div id="movie_list">
+            <h2>Movies found</h2>
+            <table id="moviesTable">
+                <tr>
+                    <th>Title</th>
+                    <th>Tagline</th>
+                    <th>movieId</th>
+                    <th>link</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div id="actors_div">
+
+    </div>
+
+    <div id="mustsee_div">
+
+    </div>
+
+    <div id="haveseen_div">
+
+    </div>
+
+
+
+    <div id="loadingDiv" class="loading">
+
+    </div>
 
 
 </body>
