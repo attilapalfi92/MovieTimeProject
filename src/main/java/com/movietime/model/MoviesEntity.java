@@ -52,6 +52,8 @@ public class MoviesEntity extends ResourceSupport {
     private List<ReleasedatesEntity> releaseDates;
     @JsonIgnore
     private List<RunningtimesEntity> runningTimes;
+    @JsonIgnore
+    private PlotsEntity plot;
 
     /*
     //@ManyToMany(fetch = FetchType.LAZY)
@@ -272,5 +274,14 @@ public class MoviesEntity extends ResourceSupport {
 
     public void setTagline(TaglinesEntity tagline) {
         this.tagline = tagline;
+    }
+
+    @OneToOne(mappedBy = "movie")
+    public PlotsEntity getPlot() {
+        return plot;
+    }
+
+    public void setPlot(PlotsEntity plot) {
+        this.plot = plot;
     }
 }

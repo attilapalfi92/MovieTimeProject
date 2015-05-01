@@ -28,9 +28,9 @@ $(document).ready(function(){
     $('#prev_btn').prop('disabled', true);
 
     // hide movie details table
-    $('#movie_details').hide();
+    $('#movie_details_div').hide();
     $('#loadingDiv').hide();
-    $('#movie_list').hide();
+    $('#movie_list_div').hide();
     $('#actors_movies').hide();
 
     console.log(pSize);
@@ -96,9 +96,13 @@ function nextClicked() {
 
     initMoviesTable();
     if(!enterPressed) {
+        $('#movie_list_div').hide(50);
         searchMoviesFast($('#mTitle_input').val());
+        $('#movie_list_div').show(50);
     } else {
+        $('#movie_list_div').hide(300);
         searchMoviesMore($('#mTitle_input').val());
+        $('#movie_list_div').show(300);
     }
 }
 
@@ -113,9 +117,13 @@ function prevClicked() {
 
     initMoviesTable();
     if(!enterPressed) {
+        $('#movie_list_div').hide(50);
         searchMoviesFast($('#mTitle_input').val());
+        $('#movie_list_div').show(50);
     } else {
+        $('#movie_list_div').hide(300);
         searchMoviesMore($('#mTitle_input').val());
+        $('#movie_list_div').show(300);
     }
 }
 
@@ -246,11 +254,11 @@ function loadMovieDetails(event) {
     console.log(url);
 
     var $loading = $('#loadingDiv');
-    $loading.show();
+    $loading.show('fast');
     $.ajax({
         url: url
     }).then(function(data) {
-        $loading.hide();
+        $loading.hide('fast');
         console.log(data);
 
         // this function fills the table containing the actors
@@ -261,9 +269,15 @@ function loadMovieDetails(event) {
         // every other data about the movie
         loadMovieDetailsDiv(data);
 
-        $('#movie_details').show();
+        $('#movie_details_div').show('fast');
     });
 }
+
+
+function toggleMovieDetails() {
+    $('#movie_details_div').toggle(400);
+}
+
 
 // this function is called when the user presses enter
 // in the search text of moves section
@@ -281,7 +295,7 @@ $('#mTitle_input').keypress(function (e){
 // this function initializes the movies table
 // in the movies section
 function initMoviesTable() {
-    $('#movie_details').hide();
+    $('#movie_details_div').hide('fast');
 
     $('#moviesTable').empty().append(
         "<tr> " +
@@ -300,14 +314,15 @@ function titleEnterPressed() {
     $('#pageNum_label').text('1');
     var value = $('#mTitle_input').val();
 
+    $('#movie_list_div').hide(50);
     // if the input is not empty
     if(value) {
         initMoviesTable();
         searchMoviesMore(value);
-        $('#movie_list').show();
+        $('#movie_list_div').show('fast');
 
     } else {
-        $('#movie_list').hide();
+        $('#movie_list_div').hide('fast');
     }
 }
 
@@ -316,14 +331,15 @@ function titleChanged(value) {
     enterPressed = false;
     $('#pageNum_label').text('1');
 
+    $('#movie_list_div').hide(50);
     // if the input is not empty
     if(value) {
         initMoviesTable();
         searchMoviesFast(value);
-        $('#movie_list').show();
+        $('#movie_list_div').show('fast');
 
     } else {
-        $('#movie_list').hide();
+        $('#movie_list_div').hide('fast');
     }
 }
 
@@ -362,11 +378,11 @@ function searchMoviesMore(mTitle) {
 
     console.log(url);
     var $loading = $('#loadingDiv');
-    $loading.show();
+    $loading.show('fast');
     $.ajax({
         url: url
     }).then(function(data){
-        $loading.hide();
+        $loading.hide('fast');
         updateMovieListTable(data)
     });
 }
