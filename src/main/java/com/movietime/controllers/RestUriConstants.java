@@ -1,4 +1,4 @@
-package com.movietime.controller;
+package com.movietime.controllers;
 
 /**
  * Created by Attila on 2015-04-14.
@@ -9,6 +9,7 @@ public interface RestUriConstants {
     String GET_MOVIES_BY_PART_TITLE = "/rest/movie/byPartTitle/{title}/{pageNum}/{pageSize}";
     String GET_MOVIE_BY_ID = "/rest/movie/byId/{id}";
     String GET_MOVIES_BY_ACTOR_ID = "/rest/movie/byActorId/{id}";
+    String POST_MOVIE = "/rest/movie";
 
     String GET_ACTOR_BY_ID = "/rest/actor/byId/{id}";
 

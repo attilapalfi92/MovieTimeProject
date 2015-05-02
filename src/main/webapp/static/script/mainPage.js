@@ -45,6 +45,7 @@ function tbMovBtnClicked() {
     $('#actors_div').hide('fast');
     $('#mustsee_div').hide('fast');
     $('#haveseen_div').hide('fast');
+    $('#submitData_div').hide('fast');
 }
 
 
@@ -55,6 +56,7 @@ function tbActBtnClicked() {
     $('#movies_div').hide('fast');
     $('#mustsee_div').hide('fast');
     $('#haveseen_div').hide('fast');
+    $('#submitData_div').hide('fast');
 }
 
 
@@ -65,6 +67,7 @@ function tbMustBtnClicked() {
     $('#movies_div').hide('fast');
     $('#actors_div').hide('fast');
     $('#haveseen_div').hide('fast');
+    $('#submitData_div').hide('fast');
 }
 
 
@@ -72,6 +75,18 @@ function tbMustBtnClicked() {
 // and the others hide
 function tbHaveBtnClicked() {
     $('#haveseen_div').show('fast');
+    $('#movies_div').hide('fast');
+    $('#mustsee_div').hide('fast');
+    $('#actors_div').hide('fast');
+    $('#submitData_div').hide('fast');
+}
+
+
+// when the user clicks on Upload Movies, that div shows up
+// and the others hide
+function tbUploadMovBtnClicked(){
+    $('#submitData_div').show('fast');
+    $('#haveseen_div').hide('fast');
     $('#movies_div').hide('fast');
     $('#mustsee_div').hide('fast');
     $('#actors_div').hide('fast');

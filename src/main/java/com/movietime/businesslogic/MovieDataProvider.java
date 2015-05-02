@@ -1,15 +1,16 @@
 package com.movietime.businesslogic;
 
-import com.movietime.controller.RestController;
+import com.movietime.controllers.ActorRestController;
+import com.movietime.controllers.MovieRestController;
 import com.movietime.dataservices.DataServices;
-
-import com.movietime.entitywrappers.ActorWrapper;
 import com.movietime.entitywrappers.FullMovieWrapper;
-import com.movietime.entitywrappers.LightMovieWrapper;
 import com.movietime.entitywrappers.MovieList;
-import com.movietime.model.*;
+import com.movietime.exceptions.PersistingFailedException;
+import com.movietime.model.ActorsEntity;
+import com.movietime.model.Movies2ActorsEntity;
+import com.movietime.model.MoviesEntity;
+import com.movietime.model.PlotsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,11 +21,10 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
- * Created by Attila on 2015-04-15.
+ * Created by Attila on 2015-05-02.
  */
 @Service
-public class JsonProvider {
-
+public class MovieDataProvider {
     @Autowired
     private DataServices dataServices;
 
@@ -41,7 +41,7 @@ public class JsonProvider {
         for (Movies2ActorsEntity i : result) {
             ActorsEntity actor = i.getActor();
             actor.setRole(i.getAsCharacter());
-            actor.add(linkTo(methodOn(RestController.class).getActorById(actor.getActorid())).withRel("actor"));
+            actor.add(linkTo(methodOn(ActorRestController.class).getActorById(actor.getActorid())).withRel("actor"));
             actors.add(i.getActor());
         }
 
@@ -82,33 +82,11 @@ public class JsonProvider {
         fullMovieWrapper.setGenres(movie.getGenres());
 
         // put a link that points to itself
-        fullMovieWrapper.add(linkTo(methodOn(RestController.class).getMovieById(movieId)).withSelfRel());
+        fullMovieWrapper.add(linkTo(methodOn(MovieRestController.class).getMovieById(movieId)).withSelfRel());
 
         return fullMovieWrapper;
     }
 
-    /**
-     * Finds and actor by it's ID.
-     * @param actorId ID of the desired actor.
-     * @return The desired Actor.
-     */
-    @Transactional
-    public ActorWrapper getActorById(int actorId) {
-        List<Movies2ActorsEntity> result = dataServices.findMovies2ActorsByActorId(actorId);
-        ActorWrapper actorWrapper = new ActorWrapper();
-        // setting the actor
-        actorWrapper.setActor(dataServices.findActorById(actorId));
-        actorWrapper.getActor().add(linkTo(methodOn(RestController.class).getActorById(actorId)).withRel("actor"));
-        BiographiesEntity biography = dataServices.findBioByName(actorWrapper.getActor().getName());
-        actorWrapper.setBiography(biography);
-        // setting the roles of the actor
-        for(Movies2ActorsEntity i : result) {
-            actorWrapper.addRole(new LightMovieWrapper(i.getMovie().getTitle(),
-                    i.getMovie().getMovieid()), i.getAsCharacter());
-        }
-
-        return actorWrapper;
-    }
 
     /**
      * Finds a list of movie by the beginning of it's title. Paginated.
@@ -122,14 +100,14 @@ public class JsonProvider {
         List<MoviesEntity> movies = dataServices.findMoviesByTitle(movieTitle, pageNum, pageSize);
 
         for(MoviesEntity movie : movies) {
-            movie.add(linkTo(methodOn(RestController.class).getMovieById(movie.getMovieid())).withRel("movie"));
+            movie.add(linkTo(methodOn(MovieRestController.class).getMovieById(movie.getMovieid())).withRel("movie"));
         }
 
         MovieList movieList = new MovieList(movies, pageNum, pageSize);
         if (movies.size() >= pageSize)
-            movieList.add(linkTo(methodOn(RestController.class).getMoviesByTitle(movieTitle, pageNum + 1, pageSize)).withRel("nextPage"));
+            movieList.add(linkTo(methodOn(MovieRestController.class).getMoviesByTitle(movieTitle, pageNum + 1, pageSize)).withRel("nextPage"));
         if(pageNum > 1)
-            movieList.add(linkTo(methodOn(RestController.class).getMoviesByTitle(movieTitle, pageNum - 1, pageSize)).withRel("previousPage"));
+            movieList.add(linkTo(methodOn(MovieRestController.class).getMoviesByTitle(movieTitle, pageNum - 1, pageSize)).withRel("previousPage"));
 
         return movieList;
     }
@@ -147,14 +125,14 @@ public class JsonProvider {
         List<MoviesEntity> movies = dataServices.findMoviesByPartTitle(movieTitle, pageNum, pageSize);
 
         for(MoviesEntity movie : movies) {
-            movie.add(linkTo(methodOn(RestController.class).getMovieById(movie.getMovieid())).withRel("movie"));
+            movie.add(linkTo(methodOn(MovieRestController.class).getMovieById(movie.getMovieid())).withRel("movie"));
         }
 
         MovieList movieList = new MovieList(movies, pageNum, pageSize);
         if (movies.size() >= pageSize)
-            movieList.add(linkTo(methodOn(RestController.class).getMoviesByTitle(movieTitle, pageNum + 1, pageSize)).withRel("nextPage"));
+            movieList.add(linkTo(methodOn(MovieRestController.class).getMoviesByTitle(movieTitle, pageNum + 1, pageSize)).withRel("nextPage"));
         if(pageNum > 1)
-            movieList.add(linkTo(methodOn(RestController.class).getMoviesByTitle(movieTitle, pageNum - 1, pageSize)).withRel("previousPage"));
+            movieList.add(linkTo(methodOn(MovieRestController.class).getMoviesByTitle(movieTitle, pageNum - 1, pageSize)).withRel("previousPage"));
 
         return movieList;
     }
@@ -169,5 +147,17 @@ public class JsonProvider {
         PlotsEntity plot = dataServices.findPlotByMovieId(movieId);
 
         return plot;
+    }
+
+
+    /**
+     * Saves new movie to the database
+     * @param movie the new movie to be saved
+     * @throws PersistingFailedException When persisting is failed, this exception is thrown.
+     */
+    @Transactional
+    public void saveNewMovie(MoviesEntity movie) throws PersistingFailedException {
+        dataServices.saveNewMovie(movie);
+        movie.getMovieid();
     }
 }

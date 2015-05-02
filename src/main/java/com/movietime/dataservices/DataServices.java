@@ -1,10 +1,12 @@
 package com.movietime.dataservices;
 
+import com.movietime.exceptions.PersistingFailedException;
 import com.movietime.model.*;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import java.util.List;
 
 
@@ -139,6 +141,21 @@ public class DataServices {
                 .setParameter("movieId", movieId)
                 .getSingleResult();
         return result;
+    }
+
+    /**
+     * Persists the given movie.
+     * @param movie The movie to be persisted.
+     * @throws PersistingFailedException When persisting is failed, this exception is thrown.
+     */
+    public void saveNewMovie(MoviesEntity movie) throws PersistingFailedException {
+        try {
+            em.persist(movie);
+            em.flush();
+            em.refresh(movie);
+        } catch (PersistenceException e) {
+            throw new PersistingFailedException("Title must not be null.");
+        }
     }
 
 }

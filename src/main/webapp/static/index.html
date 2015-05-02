@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/script/appLogic.js"></script>
+    <script type="text/javascript" src="/static/script/mainPage.js"></script>
+    <script type="text/javascript" src="/static/script/submitPage.js"></script>
 
     <style>
         .loading {
@@ -15,8 +16,8 @@
             left:       0;
             height:     100%;
             width:      100%;
-            background: rgba( 255, 255, 255, .8 )
-            url('http://i.stack.imgur.com/FhHRx.gif')
+            background: rgba( 255, 255, 255, .9 )
+            url('../resources/ajax_loader_blue_350.gif')
             50% 50%
             no-repeat;
         }
@@ -38,6 +39,7 @@
         <input type="button" value="Actors" id="tb_act_btn" onclick="tbActBtnClicked()">
         <input type="button" value="Must see" id="tb_must_btn" onclick="tbMustBtnClicked()">
         <input type="button" value="Have seen" id="tb_have_btn" onclick="tbHaveBtnClicked()">
+        <input type="button" value="Submit data" id="tb_upload_mov_btn" onclick="tbUploadMovBtnClicked()">
         <hr/>
     </div>
 
@@ -47,7 +49,6 @@
         <label for="mTitle_input">Title: </label>
         <input id="mTitle_input" type="text" placeholder="movie title" oninput="titleChanged(value)" />
         <input id="mTitle_submit" type="button" value="Go!" onclick="titleEnterPressed()" /> <br/>
-
 
         <label for="pageSize_i">Page size: </label>
         <input id="pageSize_i" type="range" min="10" max="100" step="1"
@@ -67,7 +68,6 @@
             <div id="movie_details_hideable">
                 <div id="movie_plot_btn_div"></div>
                 <pre id="movie_plot_p"></pre>
-
                 <div>
                     <h3>Details</h3>
                     <h4 id="directors_h">Directors: </h4>      <p id="directors_p"></p>
@@ -78,8 +78,6 @@
                     <h4 id="languages_h">Languages: </h4>      <p id="languages_p"></p>
                     <h4 id="locations_h">Locations: </h4>      <p id="locations_p"></p>
                 </div>
-
-
                 <div id="actors_list">
                     <h3>Actors</h3>
                     <table id="actors_table"></table>
@@ -88,7 +86,6 @@
 
             <hr/>
         </div>
-
         <div id="movie_list_div">
             <h2>Movies found</h2>
             <table id="moviesTable">
@@ -113,17 +110,40 @@
     </div>
 
     <div id="mustsee_div">
-
     </div>
 
     <div id="haveseen_div">
+    </div>
+
+    <div id="submitData_div">
+        <h2>Submit data</h2>
+
+        <input id="submitMovBtn" type="button" value="Movie" onclick="submitMovBtnClicked()">
+        <input id="submitActBtn" type="button" value="Actor" onclick="submitActBtnClicked()">
+        <input id="submitOtherBtn" type="button" value="Other" onclick="submitOtherBtnClicked()">
+
+        <div id="submitMovie_div">
+            <h3>Movie</h3>
+        </div>
+
+        <div id="submitActor_div">
+            <h3>Actor</h3>
+        </div>
+
+        <div id="submitOther_div">
+            <h3>Other</h3>
+            <select>
+                <option value="director">Director</option>
+                <option value="producer">Producer</option>
+                <option value="writer">Writer</option>
+                <option value="editor">Editor</option>
+            </select>
+        </div>
 
     </div>
 
 
-
     <div id="loadingDiv" class="loading">
-
     </div>
 
 

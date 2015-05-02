@@ -70,6 +70,7 @@ public class MoviesEntity extends ResourceSupport {
 
     @Id
     @Column(name = "movieid", nullable = false, insertable = true, updatable = true)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getMovieid() {
         return movieid;
     }
