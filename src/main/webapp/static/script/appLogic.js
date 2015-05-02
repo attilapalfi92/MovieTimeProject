@@ -31,7 +31,7 @@ $(document).ready(function(){
     $('#movie_details_div').hide();
     $('#loadingDiv').hide();
     $('#movie_list_div').hide();
-    $('#actors_movies').hide();
+    $('#actors_div').hide();
 
     console.log(pSize);
 });
@@ -41,40 +41,40 @@ $(document).ready(function(){
 // when the user clicks on movies, that div shows up
 // and the others hide
 function tbMovBtnClicked() {
-    $('#movies_div').show('slow');
-    $('#actors_div').hide('slow');
-    $('#mustsee_div').hide('slow');
-    $('#haveseen_div').hide('slow');
+    $('#movies_div').show('fast');
+    $('#actors_div').hide('fast');
+    $('#mustsee_div').hide('fast');
+    $('#haveseen_div').hide('fast');
 }
 
 
 // when the user clicks on movies, that div shows up
 // and the others hide
 function tbActBtnClicked() {
-    $('#movies_div').hide('slow');
-    $('#actors_div').show('slow');
-    $('#mustsee_div').hide('slow');
-    $('#haveseen_div').hide('slow');
+    $('#actors_div').show('fast');
+    $('#movies_div').hide('fast');
+    $('#mustsee_div').hide('fast');
+    $('#haveseen_div').hide('fast');
 }
 
 
 // when the user clicks on movies, that div shows up
 // and the others hide
 function tbMustBtnClicked() {
-    $('#movies_div').hide('slow');
-    $('#actors_div').show('slow');
-    $('#mustsee_div').hide('slow');
-    $('#haveseen_div').hide('slow');
+    $('#mustsee_div').show('fast');
+    $('#movies_div').hide('fast');
+    $('#actors_div').hide('fast');
+    $('#haveseen_div').hide('fast');
 }
 
 
 // when the user clicks on movies, that div shows up
 // and the others hide
 function tbHaveBtnClicked() {
-    $('#movies_div').hide('slow');
-    $('#actors_div').show('slow');
-    $('#mustsee_div').hide('slow');
-    $('#haveseen_div').hide('slow');
+    $('#haveseen_div').show('fast');
+    $('#movies_div').hide('fast');
+    $('#mustsee_div').hide('fast');
+    $('#actors_div').hide('fast');
 }
 
 
@@ -138,9 +138,75 @@ function loadActorDetails(event) {
     url = url.substring(startIndex);
     console.log(url);
 
+    $('#movies_div').hide('fast');
+    $('#loadingDiv').show('fast');
     $.ajax({
         url: url
     }).then(function(data) {
+        //<div id="actors_div">
+            //<div id="actors_movies">
+            //<h2 id="actor_name_h2"></h2>
+            //<p id="actor_bio"></p>
+                //<table id="actors_movies_table">
+                    //<tr>
+                        //<th>Title</th>
+                        //<th>Role</th>
+                        //<th>link</th>
+                    //</tr>
+                //</table>
+            //</div>
+        //</div>
+
+        $('#actor_name_h2').text(data.actor.name);
+        if (data.biography) {
+            $('#actor_bio').text(data.biography.biotext);
+        }
+
+        var table = document.getElementById('actors_movies_table');
+
+        $(table).empty().append(
+            "<tr> " +
+            "<th>Title</th> " +
+            "<th>Role</th> " +
+            "<th>Link</th> " +
+            "</tr>");
+
+
+        var movies = Object.keys(data.roles);
+        for (var i = 0; i < movies.length; i++) {
+            // extracting the title and movieId
+            var movie = movies[i];
+            var idx = movie.indexOf('Title=');
+            var titleAndId = movie.substring(idx + 7);
+            var movIdIdx = titleAndId.indexOf('movieId=');
+            var title = titleAndId;
+            title = title.substring(0, movIdIdx);
+            var movId = titleAndId.substring(movIdIdx + 9);
+
+            // here I have the title and the movieId
+            var row = table.insertRow(-1);
+            var cell_movtitle = row.insertCell(-1);
+            var cell_role = row.insertCell(-1);
+            var cell_btn = row.insertCell(-1);
+
+            $(cell_movtitle).text(title);
+            $(cell_role).text(data.roles[movie]);
+
+            var detailsBtnName = '/rest/movie/byId/' + movId;
+            var detailsBtn = document.createElement('input');
+            detailsBtn.setAttribute('type', 'button');
+            detailsBtn.setAttribute('class', 'movie_details_button');
+            detailsBtn.setAttribute('value', 'Show details');
+            detailsBtn.setAttribute('name', detailsBtnName);
+            $(detailsBtn).click(loadMovieDetails);
+            cell_btn.appendChild(detailsBtn);
+        }
+
+
+        $('#loadingDiv').hide('fast');
+        $('#mustsee_div').hide('fast');
+        $('#haveseen_div').hide('fast');
+        $('#actors_div').show('fast');
         console.log(data);
     });
 }
@@ -199,39 +265,46 @@ function loadMovieDetailsDiv(movie) {
     //<h4 id="locations_h">Locations: </h4>      <p id="locations_p"></p>
     //</div>
 
-    $('#movie_title_h2').text(movie.movie.title);
+    $('#movie_title_h2').empty().text(movie.movie.title);
 
     var dirsP = $('#directors_p');
+    dirsP.empty();
     for (var i = 0; i < movie.directors.length; i++) {
         dirsP.append(movie.directors[i]['name'] + ';   ');
     }
 
     var writsP = $('#writers_p');
+    writsP.empty();
     for (var i = 0; i < movie.writers.length; i++) {
         writsP.append(movie.writers[i]['name'] + ';   ');
     }
 
     var prodsP = $('#producers_p');
+    prodsP.empty();
     for (var i = 0; i < movie.producers.length; i++) {
         prodsP.append(movie.producers[i]['name'] + ';   ');
     }
 
     var editsP = $('#editors_p');
+    editsP.empty();
     for (var i = 0; i < movie.editors.length; i++) {
         editsP.append(movie.editors[i]['name'] + ';   ');
     }
 
     var genresP = $('#genres_p');
+    genresP.empty();
     for (var i = 0; i < movie.genres.length; i++) {
         genresP.append(movie.genres[i]['genre'] + ';   ');
     }
 
     var langP = $('#languages_p');
+    langP.empty();
     for (var i = 0; i < movie.languages.length; i++) {
         langP.append(movie.languages[i]['language'] + ';   ');
     }
 
     var locP = $('#locations_p');
+    locP.empty();
     for (var i = 0; i < movie.locations.length; i++) {
         if(!movie.locations[i].addition) {
             locP.append('<b>' + movie.locations[i].location + '</b>' + ';   ');
@@ -246,6 +319,10 @@ function loadMovieDetailsDiv(movie) {
 // the movie
 function loadMovieDetails(event) {
     console.log('button pressed');
+
+    $('#mustsee_div').hide('fast');
+    $('#haveseen_div').hide('fast');
+    $('#actors_div').hide('fast');
 
     var url = event.target.name;
     // http://localhost:8090/rest/movie/byId/2122594
@@ -269,13 +346,56 @@ function loadMovieDetails(event) {
         // every other data about the movie
         loadMovieDetailsDiv(data);
 
+        // creating the "Show Plot" button
+        startIndex = url.indexOf('/byId/');
+        var movId = url.substring(startIndex + 6);
+        var plotBtn = document.createElement('input');
+        plotBtn.setAttribute('type', 'button');
+        plotBtn.setAttribute('class', 'movie_toggle_plot_btn');
+        plotBtn.setAttribute('value', 'Plot');
+        plotBtn.setAttribute('name', movId);
+        $(plotBtn).click(movieShowPlotBtnClicked);
+        $('#movie_plot_btn_div').empty();
+        $('#movie_plot_btn_div').append(plotBtn);
+        firstPlotClick = true;
+
+        $('#movies_div').show('fast');
+        $('#movie_details_hideable').show();
+        $('#movie_plot_p').hide();
         $('#movie_details_div').show('fast');
+
     });
 }
 
+// this function called when the user wants to read the plot of the movie.
+// so the user clicks on the "Plot" button.
+var firstPlotClick = true;
+function movieShowPlotBtnClicked(event) {
+    var plotPar = $('#movie_plot_p');
+    if (firstPlotClick) {
+        plotPar.empty();
+        var movieId = event.target.name;
+        var url = '/rest/plot/byMovieId/' + movieId;
+        plotPar.hide();
+        $.ajax({
+            url: url
+        }).then(function(data){
+            if(data) {
+                plotPar.text(data.plottext);
+                firstPlotClick = false;
+                plotPar.show(500);
+            }
+        });
 
+    } else {
+        plotPar.toggle(500);
+    }
+}
+
+
+// this is the event handler of the "Details" button
 function toggleMovieDetails() {
-    $('#movie_details_div').toggle(400);
+    $('#movie_details_hideable').toggle(400);
 }
 
 
@@ -319,10 +439,10 @@ function titleEnterPressed() {
     if(value) {
         initMoviesTable();
         searchMoviesMore(value);
-        $('#movie_list_div').show('fast');
+        $('#movie_list_div').show(50);
 
     } else {
-        $('#movie_list_div').hide('fast');
+        $('#movie_list_div').hide(50);
     }
 }
 
@@ -336,10 +456,10 @@ function titleChanged(value) {
     if(value) {
         initMoviesTable();
         searchMoviesFast(value);
-        $('#movie_list_div').show('fast');
+        $('#movie_list_div').show(50);
 
     } else {
-        $('#movie_list_div').hide('fast');
+        $('#movie_list_div').hide(50);
     }
 }
 
@@ -360,6 +480,7 @@ function searchMoviesFast(mTitle) {
     $.ajax({
         url: url
     }).then(function(data){
+        console.log(data);
         updateMovieListTable(data)
     });
 }
@@ -388,7 +509,7 @@ function searchMoviesMore(mTitle) {
 }
 
 
-// if the input text changes, update the table
+// if the input text changes, update the table of movies
 function updateMovieListTable(data) {
     var nextBtn = $('#next_btn');
     var prevBtn = $('#prev_btn');

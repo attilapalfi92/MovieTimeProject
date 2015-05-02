@@ -4,7 +4,7 @@ import com.movietime.businesslogic.JsonProvider;
 import com.movietime.entitywrappers.ActorWrapper;
 import com.movietime.entitywrappers.FullMovieWrapper;
 import com.movietime.entitywrappers.MovieList;
-import com.movietime.model.MoviesEntity;
+import com.movietime.model.PlotsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -14,11 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
-
-import java.util.List;
 
 /**
  * Created by Attila on 2015-04-14.
@@ -55,7 +50,7 @@ public class RestController {
                                                              @PathVariable("pageNum") int pageNum,
                                                              @PathVariable("pageSize") int pageSize) {
         movieTitle = movieTitle.replaceAll("_", " ");
-        MovieList movieList = jsonProvider.findMoviesByTitle(movieTitle, pageNum, pageSize);
+        MovieList movieList = jsonProvider.getMoviesByTitle(movieTitle, pageNum, pageSize);
 
         return new ResponseEntity<MovieList>(movieList, HttpStatus.OK);
     }
@@ -73,25 +68,32 @@ public class RestController {
                                                                 @PathVariable("pageNum") int pageNum,
                                                                 @PathVariable("pageSize") int pageSize) {
         movieTitle = movieTitle.replaceAll("_", " ");
-        MovieList movieList = jsonProvider.findMoviesByPartTitle(movieTitle, pageNum, pageSize);
+        MovieList movieList = jsonProvider.getMoviesByPartTitle(movieTitle, pageNum, pageSize);
 
         return new ResponseEntity<MovieList>(movieList, HttpStatus.OK);
     }
 
 
-    @RequestMapping(value = RestUriConstants.ROOT, method = RequestMethod.GET)
-    public ModelAndView welcomePage() {
-
-        return new ModelAndView("hello");
-    }
-
+    /**
+     * Returns with an actor determined by it's ID.
+     * @param actorId ID of the desired actor.
+     * @return Http response containing the actor in json format.
+     */
     @RequestMapping(value = RestUriConstants.GET_ACTOR_BY_ID, method = RequestMethod.GET)
     public @ResponseBody ActorWrapper getActorById(@PathVariable("id") int actorId) {
         return jsonProvider.getActorById(actorId);
     }
 
 
-
+    /**
+     * Returns with the plot of the desired movie.
+     * @param movieId ID of the movie who's plot is needed.
+     * @return Http response containing the plot in json format.
+     */
+    @RequestMapping(value = RestUriConstants.GET_PLOT, method = RequestMethod.GET)
+    public @ResponseBody PlotsEntity getPlotForMovie(@PathVariable("id") int movieId) {
+        return jsonProvider.getPlotForMovie(movieId);
+    }
 
 
 }

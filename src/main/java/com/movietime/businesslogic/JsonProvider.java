@@ -28,6 +28,11 @@ public class JsonProvider {
     @Autowired
     private DataServices dataServices;
 
+    /**
+     * Finds a movie by it's ID.
+     * @param movieId ID of the desired movie.
+     * @return The desired movie.
+     */
     @Transactional
     public FullMovieWrapper getMovieById(int movieId) {
         List<Movies2ActorsEntity> result = dataServices.findMovies2ActorsByMovieId(movieId);
@@ -82,7 +87,11 @@ public class JsonProvider {
         return fullMovieWrapper;
     }
 
-
+    /**
+     * Finds and actor by it's ID.
+     * @param actorId ID of the desired actor.
+     * @return The desired Actor.
+     */
     @Transactional
     public ActorWrapper getActorById(int actorId) {
         List<Movies2ActorsEntity> result = dataServices.findMovies2ActorsByActorId(actorId);
@@ -101,9 +110,15 @@ public class JsonProvider {
         return actorWrapper;
     }
 
-
+    /**
+     * Finds a list of movie by the beginning of it's title. Paginated.
+     * @param movieTitle Beginning of the title of the desired movie.
+     * @param pageNum Which page is needed.
+     * @param pageSize Size of each pages.
+     * @return A page (list) of movies with the given title beginning.
+     */
     @Transactional
-    public MovieList findMoviesByTitle(String movieTitle, int pageNum, int pageSize) {
+    public MovieList getMoviesByTitle(String movieTitle, int pageNum, int pageSize) {
         List<MoviesEntity> movies = dataServices.findMoviesByTitle(movieTitle, pageNum, pageSize);
 
         for(MoviesEntity movie : movies) {
@@ -120,8 +135,15 @@ public class JsonProvider {
     }
 
 
+    /**
+     * Finds a list of movie by a part of it's title. Paginated.
+     * @param movieTitle Part of the title of the desired movie.
+     * @param pageNum Which page is needed.
+     * @param pageSize Size of each pages.
+     * @return A page (list) of movies with the given title part.
+     */
     @Transactional
-    public MovieList findMoviesByPartTitle(String movieTitle, int pageNum, int pageSize) {
+    public MovieList getMoviesByPartTitle(String movieTitle, int pageNum, int pageSize) {
         List<MoviesEntity> movies = dataServices.findMoviesByPartTitle(movieTitle, pageNum, pageSize);
 
         for(MoviesEntity movie : movies) {
@@ -137,4 +159,15 @@ public class JsonProvider {
         return movieList;
     }
 
+    /**
+     * Returns with the plot of the movie given by it's ID.
+     * @param movieId ID of the movie who's plots is wanted.
+     * @return Plot of the movie.
+     */
+    @Transactional
+    public PlotsEntity getPlotForMovie(int movieId) {
+        PlotsEntity plot = dataServices.findPlotByMovieId(movieId);
+
+        return plot;
+    }
 }

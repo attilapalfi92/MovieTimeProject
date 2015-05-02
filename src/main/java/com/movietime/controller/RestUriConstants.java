@@ -8,7 +8,9 @@ public interface RestUriConstants {
     String GET_MOVIES_BY_TITLE = "/rest/movie/byTitle/{title}/{pageNum}/{pageSize}";
     String GET_MOVIES_BY_PART_TITLE = "/rest/movie/byPartTitle/{title}/{pageNum}/{pageSize}";
     String GET_MOVIE_BY_ID = "/rest/movie/byId/{id}";
-    String GET_MOVIE_BY_ACTOR_ID = "/rest/movie/byActorId/{id}";
+    String GET_MOVIES_BY_ACTOR_ID = "/rest/movie/byActorId/{id}";
 
     String GET_ACTOR_BY_ID = "/rest/actor/byId/{id}";
+
+    String GET_PLOT = "/rest/plot/byMovieId/{id}";
 }
