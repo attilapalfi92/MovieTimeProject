@@ -70,16 +70,16 @@ public class DataServices {
 
     /**
      * @param title part of the title of the movie to be searched for
-     * @param pageNumber number of the page the user needs. 1st page is 1, 2nd page is 1 and so on
+     * @param page number of the page the user needs. 1st page is 1, 2nd page is 1 and so on
      * @param pageSize size of each pages
      * @return
      */
-    public List<MoviesEntity> findMoviesByPartTitle(String title, int pageNumber, int pageSize) {
+    public List<MoviesEntity> findMoviesByPartTitle(String title, int page, int pageSize) {
         title = "%" + title + "%";
         List<MoviesEntity> result = em.createQuery("SELECT m FROM MoviesEntity m WHERE m.title LIKE :title" +
                 " ORDER BY m.title", MoviesEntity.class)
                 .setParameter("title", title)
-                .setFirstResult((pageNumber - 1) * pageSize)
+                .setFirstResult((page - 1) * pageSize)
                 .setMaxResults(pageSize)
                 .getResultList();
 
@@ -125,6 +125,24 @@ public class DataServices {
         ActorsEntity result = em.createQuery("SELECT a FROM ActorsEntity a WHERE a.actorid = :actorId", ActorsEntity.class)
                 .setParameter("actorId", actorId)
                 .getSingleResult();
+
+        return result;
+    }
+
+    /**
+     *
+     * @param firstName
+     * @param lastName
+     * @return
+     */
+    public List<ActorsEntity> findActorsByName(String firstName, String lastName, int page, int pageSize) {
+        String name = lastName + "%" + firstName + "%";
+
+        List<ActorsEntity> result = em.createQuery("SELECT a FROM ActorsEntity a WHERE a.name LIKE :name", ActorsEntity.class)
+                .setParameter("name", name)
+                .setFirstResult((page - 1) * pageSize)
+                .setMaxResults(pageSize)
+                .getResultList();
 
         return result;
     }

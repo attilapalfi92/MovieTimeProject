@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by Attila on 2015-04-16.
  */
-public class ActorWrapper extends ResourceSupport {
+public class ActorWrapper {
     ActorsEntity actor;
     Map<LightMovieWrapper, String> roles;
     BiographiesEntity biography;

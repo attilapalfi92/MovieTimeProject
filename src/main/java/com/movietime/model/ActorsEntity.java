@@ -18,8 +18,6 @@ public class ActorsEntity extends ResourceSupport {
     private int actorid;
     private String name;
     private String sex;
-    //@JsonIgnore
-    //private List<MoviesEntity> movies;
     @JsonIgnore
     private List<Movies2ActorsEntity> roles;
     private String role;
@@ -90,17 +88,6 @@ public class ActorsEntity extends ResourceSupport {
         return result;
     }
 
-    /*
-    //@ManyToMany(mappedBy = "actors", fetch = FetchType.LAZY)
-    @Transient
-    public List<MoviesEntity> getMovies() {
-        return movies;
-    }
-
-    public void setMovies(List<MoviesEntity> movies) {
-        this.movies = movies;
-    }
-    */
 
     @OneToMany(mappedBy = "actor", fetch = FetchType.LAZY)
     public List<Movies2ActorsEntity> getRoles() {

@@ -2,7 +2,7 @@ package com.movietime.controllers;
 
 import com.movietime.businesslogic.MovieDataProvider;
 import com.movietime.entitywrappers.FullMovieWrapper;
-import com.movietime.entitywrappers.MovieList;
+import com.movietime.entitywrappers.MoviePage;
 import com.movietime.exceptions.PersistingFailedException;
 import com.movietime.model.MoviesEntity;
 import com.movietime.model.PlotsEntity;
@@ -39,36 +39,36 @@ public class MovieRestController {
     /**
      * returns with a page of movies with the given title
      * @param movieTitle title of the desired movie
-     * @param pageNum number of page needed
+     * @param page number of page needed
      * @param pageSize size of pages
      * @return a page of movies
      */
     @RequestMapping(value = RestUriConstants.GET_MOVIES_BY_TITLE, method = RequestMethod.GET)
-    public @ResponseBody HttpEntity<MovieList> getMoviesByTitle(@PathVariable("title") String movieTitle,
-                                                             @PathVariable("pageNum") int pageNum,
+    public @ResponseBody HttpEntity<MoviePage> getMoviesByTitle(@PathVariable("title") String movieTitle,
+                                                             @PathVariable("page") int page,
                                                              @PathVariable("pageSize") int pageSize) {
         movieTitle = movieTitle.replaceAll("_", " ");
-        MovieList movieList = movieDataProvider.getMoviesByTitle(movieTitle, pageNum, pageSize);
+        MoviePage moviePage = movieDataProvider.getMoviesByTitle(movieTitle, page, pageSize);
 
-        return new ResponseEntity<MovieList>(movieList, HttpStatus.OK);
+        return new ResponseEntity<MoviePage>(moviePage, HttpStatus.OK);
     }
 
 
     /**
      * returns with a page of movies with the given part of the title
      * @param movieTitle title of the desired movie
-     * @param pageNum number of page needed
+     * @param page number of page needed
      * @param pageSize size of pages
      * @return a page of movies
      */
     @RequestMapping(value = RestUriConstants.GET_MOVIES_BY_PART_TITLE, method = RequestMethod.GET)
-    public @ResponseBody HttpEntity<MovieList> getMoviesByPartTitle(@PathVariable("title") String movieTitle,
-                                                                @PathVariable("pageNum") int pageNum,
+    public @ResponseBody HttpEntity<MoviePage> getMoviesByPartTitle(@PathVariable("title") String movieTitle,
+                                                                @PathVariable("page") int page,
                                                                 @PathVariable("pageSize") int pageSize) {
         movieTitle = movieTitle.replaceAll("_", " ");
-        MovieList movieList = movieDataProvider.getMoviesByPartTitle(movieTitle, pageNum, pageSize);
+        MoviePage moviePage = movieDataProvider.getMoviesByPartTitle(movieTitle, page, pageSize);
 
-        return new ResponseEntity<MovieList>(movieList, HttpStatus.OK);
+        return new ResponseEntity<MoviePage>(moviePage, HttpStatus.OK);
     }
 
 

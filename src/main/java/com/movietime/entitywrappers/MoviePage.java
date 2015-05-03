@@ -9,18 +9,18 @@ import java.util.List;
 /**
  * Created by Attila on 2015-04-22.
  */
-public class MovieList extends ResourceSupport {
+public class MoviePage extends ResourceSupport {
     private List<MoviesEntity> movies;
     private int pageNum;
     private int pageSize;
 
-    public MovieList(List<MoviesEntity> movies, int pageNum, int pageSize) {
+    public MoviePage(List<MoviesEntity> movies, int pageNum, int pageSize) {
         this.movies = movies;
         this.pageNum = pageNum;
         this.pageSize = pageSize;
     }
 
-    public MovieList() {
+    public MoviePage() {
         movies = new ArrayList<>();
         pageNum = 0;
         pageSize = 0;

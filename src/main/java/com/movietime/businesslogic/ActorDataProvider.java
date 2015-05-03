@@ -3,8 +3,10 @@ package com.movietime.businesslogic;
 import com.movietime.controllers.ActorRestController;
 import com.movietime.controllers.MovieRestController;
 import com.movietime.dataservices.DataServices;
+import com.movietime.entitywrappers.ActorPage;
 import com.movietime.entitywrappers.ActorWrapper;
 import com.movietime.entitywrappers.LightMovieWrapper;
+import com.movietime.model.ActorsEntity;
 import com.movietime.model.BiographiesEntity;
 import com.movietime.model.Movies2ActorsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +49,29 @@ public class ActorDataProvider {
         return actorWrapper;
     }
 
+
+    /**
+     *
+     * @param firstName
+     * @param lastName
+     * @return
+     */
+    @Transactional
+    public ActorPage getActorsByName(String firstName, String lastName, int page, int pageSize) {
+        List<ActorsEntity> actors = dataServices.findActorsByName(firstName, lastName, page, pageSize);
+        ActorPage actorPage = new ActorPage(actors, 1, 30);
+
+        // adding links to the actors
+        for (ActorsEntity actor : actors) {
+            actor.add(linkTo(methodOn(ActorRestController.class).getActorById(actor.getActorid())).withRel("actor"));
+        }
+
+        if (actors.size() >= pageSize)
+            actorPage.add(linkTo(methodOn(ActorRestController.class).getActorsByName(firstName, lastName, page + 1, pageSize)).withRel("nextPage"));
+        if(page > 1)
+            actorPage.add(linkTo(methodOn(ActorRestController.class).getActorsByName(firstName, lastName, page - 1, pageSize)).withRel("previousPage"));
+
+        return actorPage;
+    }
 
 }

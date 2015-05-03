@@ -4,7 +4,7 @@ import com.movietime.controllers.ActorRestController;
 import com.movietime.controllers.MovieRestController;
 import com.movietime.dataservices.DataServices;
 import com.movietime.entitywrappers.FullMovieWrapper;
-import com.movietime.entitywrappers.MovieList;
+import com.movietime.entitywrappers.MoviePage;
 import com.movietime.exceptions.PersistingFailedException;
 import com.movietime.model.ActorsEntity;
 import com.movietime.model.Movies2ActorsEntity;
@@ -91,50 +91,50 @@ public class MovieDataProvider {
     /**
      * Finds a list of movie by the beginning of it's title. Paginated.
      * @param movieTitle Beginning of the title of the desired movie.
-     * @param pageNum Which page is needed.
+     * @param page Which page is needed.
      * @param pageSize Size of each pages.
      * @return A page (list) of movies with the given title beginning.
      */
     @Transactional
-    public MovieList getMoviesByTitle(String movieTitle, int pageNum, int pageSize) {
-        List<MoviesEntity> movies = dataServices.findMoviesByTitle(movieTitle, pageNum, pageSize);
+    public MoviePage getMoviesByTitle(String movieTitle, int page, int pageSize) {
+        List<MoviesEntity> movies = dataServices.findMoviesByTitle(movieTitle, page, pageSize);
 
         for(MoviesEntity movie : movies) {
             movie.add(linkTo(methodOn(MovieRestController.class).getMovieById(movie.getMovieid())).withRel("movie"));
         }
 
-        MovieList movieList = new MovieList(movies, pageNum, pageSize);
+        MoviePage moviePage = new MoviePage(movies, page, pageSize);
         if (movies.size() >= pageSize)
-            movieList.add(linkTo(methodOn(MovieRestController.class).getMoviesByTitle(movieTitle, pageNum + 1, pageSize)).withRel("nextPage"));
-        if(pageNum > 1)
-            movieList.add(linkTo(methodOn(MovieRestController.class).getMoviesByTitle(movieTitle, pageNum - 1, pageSize)).withRel("previousPage"));
+            moviePage.add(linkTo(methodOn(MovieRestController.class).getMoviesByTitle(movieTitle, page + 1, pageSize)).withRel("nextPage"));
+        if(page > 1)
+            moviePage.add(linkTo(methodOn(MovieRestController.class).getMoviesByTitle(movieTitle, page - 1, pageSize)).withRel("previousPage"));
 
-        return movieList;
+        return moviePage;
     }
 
 
     /**
      * Finds a list of movie by a part of it's title. Paginated.
      * @param movieTitle Part of the title of the desired movie.
-     * @param pageNum Which page is needed.
+     * @param page Which page is needed.
      * @param pageSize Size of each pages.
      * @return A page (list) of movies with the given title part.
      */
     @Transactional
-    public MovieList getMoviesByPartTitle(String movieTitle, int pageNum, int pageSize) {
-        List<MoviesEntity> movies = dataServices.findMoviesByPartTitle(movieTitle, pageNum, pageSize);
+    public MoviePage getMoviesByPartTitle(String movieTitle, int page, int pageSize) {
+        List<MoviesEntity> movies = dataServices.findMoviesByPartTitle(movieTitle, page, pageSize);
 
         for(MoviesEntity movie : movies) {
             movie.add(linkTo(methodOn(MovieRestController.class).getMovieById(movie.getMovieid())).withRel("movie"));
         }
 
-        MovieList movieList = new MovieList(movies, pageNum, pageSize);
+        MoviePage moviePage = new MoviePage(movies, page, pageSize);
         if (movies.size() >= pageSize)
-            movieList.add(linkTo(methodOn(MovieRestController.class).getMoviesByTitle(movieTitle, pageNum + 1, pageSize)).withRel("nextPage"));
-        if(pageNum > 1)
-            movieList.add(linkTo(methodOn(MovieRestController.class).getMoviesByTitle(movieTitle, pageNum - 1, pageSize)).withRel("previousPage"));
+            moviePage.add(linkTo(methodOn(MovieRestController.class).getMoviesByPartTitle(movieTitle, page + 1, pageSize)).withRel("nextPage"));
+        if(page > 1)
+            moviePage.add(linkTo(methodOn(MovieRestController.class).getMoviesByPartTitle(movieTitle, page - 1, pageSize)).withRel("previousPage"));
 
-        return movieList;
+        return moviePage;
     }
 
     /**

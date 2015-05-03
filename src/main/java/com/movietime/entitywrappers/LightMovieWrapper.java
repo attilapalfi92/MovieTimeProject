@@ -5,7 +5,7 @@ import org.springframework.hateoas.ResourceSupport;
 /**
  * Created by Attila on 2015-04-18.
  */
-public class LightMovieWrapper extends ResourceSupport {
+public class LightMovieWrapper {
     String movieTitle;
     int movieId;
 
