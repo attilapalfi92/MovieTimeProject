@@ -10,21 +10,21 @@ import javax.persistence.*;
 @Entity
 @Table(name = "runningtimes", schema = "", catalog = "movietime2")
 public class RunningtimesEntity {
-    private int movieid;
+    private int movieId;
     private String time;
     private String addition;
-    private int runningtimeId;
+    private int runningTimeId;
     @JsonIgnore
     private MoviesEntity movie;
 
     @Basic
     @Column(name = "movieid", nullable = false, insertable = false, updatable = false)
-    public int getMovieid() {
-        return movieid;
+    public int getMovieId() {
+        return movieId;
     }
 
-    public void setMovieid(int movieid) {
-        this.movieid = movieid;
+    public void setMovieId(int movieid) {
+        this.movieId = movieid;
     }
 
     @Basic
@@ -49,12 +49,12 @@ public class RunningtimesEntity {
 
     @Id
     @Column(name = "runningtime_id", nullable = false, insertable = true, updatable = true)
-    public int getRunningtimeId() {
-        return runningtimeId;
+    public int getRunningTimeId() {
+        return runningTimeId;
     }
 
-    public void setRunningtimeId(int runningtimeId) {
-        this.runningtimeId = runningtimeId;
+    public void setRunningTimeId(int runningtimeId) {
+        this.runningTimeId = runningtimeId;
     }
 
     @Override
@@ -64,8 +64,8 @@ public class RunningtimesEntity {
 
         RunningtimesEntity that = (RunningtimesEntity) o;
 
-        if (movieid != that.movieid) return false;
-        if (runningtimeId != that.runningtimeId) return false;
+        if (movieId != that.movieId) return false;
+        if (runningTimeId != that.runningTimeId) return false;
         if (addition != null ? !addition.equals(that.addition) : that.addition != null) return false;
         if (time != null ? !time.equals(that.time) : that.time != null) return false;
 
@@ -74,10 +74,10 @@ public class RunningtimesEntity {
 
     @Override
     public int hashCode() {
-        int result = movieid;
+        int result = movieId;
         result = 31 * result + (time != null ? time.hashCode() : 0);
         result = 31 * result + (addition != null ? addition.hashCode() : 0);
-        result = 31 * result + runningtimeId;
+        result = 31 * result + runningTimeId;
         return result;
     }
 
