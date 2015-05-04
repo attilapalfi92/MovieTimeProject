@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "language", schema = "", catalog = "movietime2")
 public class LanguageEntity {
-    private int movieid;
+    private int movieId;
     private String language;
     private String addition;
     private int languageId;
@@ -19,12 +19,12 @@ public class LanguageEntity {
 
     @Basic
     @Column(name = "movieid", nullable = false, insertable = false, updatable = false)
-    public int getMovieid() {
-        return movieid;
+    public int getMovieId() {
+        return movieId;
     }
 
-    public void setMovieid(int movieid) {
-        this.movieid = movieid;
+    public void setMovieId(int movieid) {
+        this.movieId = movieid;
     }
 
     @Basic
@@ -65,7 +65,7 @@ public class LanguageEntity {
         LanguageEntity that = (LanguageEntity) o;
 
         if (languageId != that.languageId) return false;
-        if (movieid != that.movieid) return false;
+        if (movieId != that.movieId) return false;
         if (addition != null ? !addition.equals(that.addition) : that.addition != null) return false;
         if (language != null ? !language.equals(that.language) : that.language != null) return false;
 
@@ -74,7 +74,7 @@ public class LanguageEntity {
 
     @Override
     public int hashCode() {
-        int result = movieid;
+        int result = movieId;
         result = 31 * result + (language != null ? language.hashCode() : 0);
         result = 31 * result + (addition != null ? addition.hashCode() : 0);
         result = 31 * result + languageId;

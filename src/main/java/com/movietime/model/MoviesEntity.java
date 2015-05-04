@@ -1,10 +1,6 @@
 package com.movietime.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import org.hibernate.annotations.BatchSize;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
@@ -17,10 +13,10 @@ import java.util.List;
 @Table(name = "movies", schema = "", catalog = "movietime2")
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "movieid")
 public class MoviesEntity extends ResourceSupport {
-    private int movieid;
+    private int movieId;
     private String title;
     private String year;
-    private String imdbid;
+    private String imdbId;
     private TaglinesEntity tagline;
     //@JsonIgnore
     //private List<ActorsEntity> actors;
@@ -31,7 +27,7 @@ public class MoviesEntity extends ResourceSupport {
     @JsonIgnore
     private List<Movies2ActorsEntity> characters;
     @JsonIgnore
-    private List<MpaaratingsEntity> mpaaRatings;
+    private List<MpaaRatingsEntity> mpaaRatings;
     @JsonIgnore
     private List<GenresEntity> genres;
     @JsonIgnore
@@ -49,9 +45,9 @@ public class MoviesEntity extends ResourceSupport {
     @JsonIgnore
     private RatingsEntity rating;
     @JsonIgnore
-    private List<ReleasedatesEntity> releaseDates;
+    private List<ReleaseDatesEntity> releaseDates;
     @JsonIgnore
-    private List<RunningtimesEntity> runningTimes;
+    private List<RunningTimesEntity> runningTimes;
     @JsonIgnore
     private PlotsEntity plot;
 
@@ -71,12 +67,12 @@ public class MoviesEntity extends ResourceSupport {
     @Id
     @Column(name = "movieid", nullable = false, insertable = true, updatable = true)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int getMovieid() {
-        return movieid;
+    public int getMovieId() {
+        return movieId;
     }
 
-    public void setMovieid(int movieid) {
-        this.movieid = movieid;
+    public void setMovieId(int movieid) {
+        this.movieId = movieid;
     }
 
     @Basic
@@ -101,12 +97,12 @@ public class MoviesEntity extends ResourceSupport {
 
     @Basic
     @Column(name = "imdbid", nullable = true, insertable = true, updatable = true, length = 10)
-    public String getImdbid() {
-        return imdbid;
+    public String getImdbId() {
+        return imdbId;
     }
 
-    public void setImdbid(String imdbid) {
-        this.imdbid = imdbid;
+    public void setImdbId(String imdbid) {
+        this.imdbId = imdbid;
     }
 
     @Override
@@ -116,8 +112,8 @@ public class MoviesEntity extends ResourceSupport {
 
         MoviesEntity that = (MoviesEntity) o;
 
-        if (movieid != that.movieid) return false;
-        if (imdbid != null ? !imdbid.equals(that.imdbid) : that.imdbid != null) return false;
+        if (movieId != that.movieId) return false;
+        if (imdbId != null ? !imdbId.equals(that.imdbId) : that.imdbId != null) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (year != null ? !year.equals(that.year) : that.year != null) return false;
 
@@ -126,10 +122,10 @@ public class MoviesEntity extends ResourceSupport {
 
     @Override
     public int hashCode() {
-        int result = movieid;
+        int result = movieId;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (year != null ? year.hashCode() : 0);
-        result = 31 * result + (imdbid != null ? imdbid.hashCode() : 0);
+        result = 31 * result + (imdbId != null ? imdbId.hashCode() : 0);
         return result;
     }
 
@@ -170,11 +166,11 @@ public class MoviesEntity extends ResourceSupport {
     /*@JoinTable(name = "mpaaratings", catalog = "movietime2", schema = "",
         joinColumns = @JoinColumn(name = "movieid", referencedColumnName = "movieid", nullable = false),
         inverseJoinColumns = @JoinColumn(name = "mpaaratings_id", referencedColumnName = "mpaaratings_id", nullable = false))*/
-    public List<MpaaratingsEntity> getMpaaRatings() {
+    public List<MpaaRatingsEntity> getMpaaRatings() {
         return mpaaRatings;
     }
 
-    public void setMpaaRatings(List<MpaaratingsEntity> mpaaRatings) {
+    public void setMpaaRatings(List<MpaaRatingsEntity> mpaaRatings) {
         this.mpaaRatings = mpaaRatings;
     }
 
@@ -251,20 +247,20 @@ public class MoviesEntity extends ResourceSupport {
     }
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
-    public List<ReleasedatesEntity> getReleaseDates() {
+    public List<ReleaseDatesEntity> getReleaseDates() {
         return releaseDates;
     }
 
-    public void setReleaseDates(List<ReleasedatesEntity> releaseDates) {
+    public void setReleaseDates(List<ReleaseDatesEntity> releaseDates) {
         this.releaseDates = releaseDates;
     }
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
-    public List<RunningtimesEntity> getRunningTimes() {
+    public List<RunningTimesEntity> getRunningTimes() {
         return runningTimes;
     }
 
-    public void setRunningTimes(List<RunningtimesEntity> runningTimes) {
+    public void setRunningTimes(List<RunningTimesEntity> runningTimes) {
         this.runningTimes = runningTimes;
     }
 

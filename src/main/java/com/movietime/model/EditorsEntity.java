@@ -11,19 +11,19 @@ import java.util.List;
 @Entity
 @Table(name = "editors", schema = "", catalog = "movietime2")
 public class EditorsEntity {
-    private int editorid;
+    private int editorId;
     private String name;
     @JsonIgnore
     private List<MoviesEntity> movies;
 
     @Id
     @Column(name = "editorid", nullable = false, insertable = true, updatable = true)
-    public int getEditorid() {
-        return editorid;
+    public int getEditorId() {
+        return editorId;
     }
 
-    public void setEditorid(int editorid) {
-        this.editorid = editorid;
+    public void setEditorId(int editorId) {
+        this.editorId = editorId;
     }
 
     @Basic
@@ -43,7 +43,7 @@ public class EditorsEntity {
 
         EditorsEntity that = (EditorsEntity) o;
 
-        if (editorid != that.editorid) return false;
+        if (editorId != that.editorId) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
@@ -51,7 +51,7 @@ public class EditorsEntity {
 
     @Override
     public int hashCode() {
-        int result = editorid;
+        int result = editorId;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }

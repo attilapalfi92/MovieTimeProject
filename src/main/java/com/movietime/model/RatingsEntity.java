@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ratings", schema = "", catalog = "movietime2")
 public class RatingsEntity {
-    private int movieid;
+    private int movieId;
     private String rank;
     private Integer votes;
     private String distribution;
@@ -20,12 +20,12 @@ public class RatingsEntity {
 
     @Basic
     @Column(name = "movieid", nullable = false, insertable = false, updatable = false)
-    public int getMovieid() {
-        return movieid;
+    public int getMovieId() {
+        return movieId;
     }
 
-    public void setMovieid(int movieid) {
-        this.movieid = movieid;
+    public void setMovieId(int movieid) {
+        this.movieId = movieid;
     }
 
     @Basic
@@ -75,7 +75,7 @@ public class RatingsEntity {
 
         RatingsEntity that = (RatingsEntity) o;
 
-        if (movieid != that.movieid) return false;
+        if (movieId != that.movieId) return false;
         if (ratingId != that.ratingId) return false;
         if (distribution != null ? !distribution.equals(that.distribution) : that.distribution != null) return false;
         if (rank != null ? !rank.equals(that.rank) : that.rank != null) return false;
@@ -86,7 +86,7 @@ public class RatingsEntity {
 
     @Override
     public int hashCode() {
-        int result = movieid;
+        int result = movieId;
         result = 31 * result + (rank != null ? rank.hashCode() : 0);
         result = 31 * result + (votes != null ? votes.hashCode() : 0);
         result = 31 * result + (distribution != null ? distribution.hashCode() : 0);

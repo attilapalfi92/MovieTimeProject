@@ -14,7 +14,7 @@ import java.util.List;
  * Created by Attila on 2015-04-06.
  */
 @Repository
-public class DataServices {
+public class MovieDao {
 
     /**
      * EntityManager of this persistence context.
@@ -29,7 +29,7 @@ public class DataServices {
      * @return List of movies - actors connecting entity: actors and roles whose are part of the movie.
      */
     public List<Movies2ActorsEntity> findMovies2ActorsByMovieId(int movieId) {
-        List<Movies2ActorsEntity> result = em.createQuery("select m2a from Movies2ActorsEntity m2a where m2a.movieid = :movieId", Movies2ActorsEntity.class)
+        List<Movies2ActorsEntity> result = em.createQuery("select m2a from Movies2ActorsEntity m2a where m2a.movieId = :movieId", Movies2ActorsEntity.class)
                 .setParameter("movieId", movieId)
                 .getResultList();
 
@@ -43,7 +43,7 @@ public class DataServices {
      * @return list of movies - actors connecting entity: movies and roles in which the actor played.
      */
     public List<Movies2ActorsEntity> findMovies2ActorsByActorId(int actorId) {
-        List<Movies2ActorsEntity> result = em.createQuery("select m2a from Movies2ActorsEntity m2a where m2a.actorid = :actorId", Movies2ActorsEntity.class)
+        List<Movies2ActorsEntity> result = em.createQuery("select m2a from Movies2ActorsEntity m2a where m2a.actorId = :actorId", Movies2ActorsEntity.class)
                 .setParameter("actorId", actorId)
                 .getResultList();
 
@@ -108,7 +108,7 @@ public class DataServices {
      * @return the desired movie entity
      */
     public MoviesEntity findMovieById(int movieId) {
-        MoviesEntity result = em.createQuery("SELECT m FROM MoviesEntity m WHERE m.movieid = :movieId", MoviesEntity.class)
+        MoviesEntity result = em.createQuery("SELECT m FROM MoviesEntity m WHERE m.movieId = :movieId", MoviesEntity.class)
                 .setParameter("movieId", movieId)
                 .getSingleResult();
 
@@ -122,7 +122,7 @@ public class DataServices {
      */
     public ActorsEntity findActorById(int actorId) {
 
-        ActorsEntity result = em.createQuery("SELECT a FROM ActorsEntity a WHERE a.actorid = :actorId", ActorsEntity.class)
+        ActorsEntity result = em.createQuery("SELECT a FROM ActorsEntity a WHERE a.actorId = :actorId", ActorsEntity.class)
                 .setParameter("actorId", actorId)
                 .getSingleResult();
 
@@ -155,11 +155,12 @@ public class DataServices {
      */
     public PlotsEntity findPlotByMovieId(int movieId) {
 
-        PlotsEntity result = em.createQuery("SELECT p FROM PlotsEntity p WHERE p.movieid = :movieId", PlotsEntity.class)
+        PlotsEntity result = em.createQuery("SELECT p FROM PlotsEntity p WHERE p.movieId = :movieId", PlotsEntity.class)
                 .setParameter("movieId", movieId)
                 .getSingleResult();
         return result;
     }
+
 
     /**
      * Persists the given movie.
@@ -167,13 +168,11 @@ public class DataServices {
      * @throws PersistingFailedException When persisting is failed, this exception is thrown.
      */
     public void saveNewMovie(MoviesEntity movie) throws PersistingFailedException {
-        try {
-            em.persist(movie);
-            em.flush();
-            em.refresh(movie);
-        } catch (PersistenceException e) {
-            throw new PersistingFailedException("Title must not be null.");
+        if (movie.getTitle() == null || movie.getTitle().isEmpty()) {
+            throw new PersistingFailedException("Title cannot be empty nor null.");
         }
+
+        em.persist(movie);
     }
 
 }

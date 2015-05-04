@@ -10,30 +10,30 @@ import javax.persistence.*;
 @Entity
 @Table(name = "taglines", schema = "", catalog = "movietime2")
 public class TaglinesEntity {
-    private int movieid;
-    private String taglinetext;
+    private int movieId;
+    private String taglineText;
     private int taglineId;
     @JsonIgnore
     private MoviesEntity movie;
 
     @Basic
     @Column(name = "movieid", nullable = false, insertable = false, updatable = false)
-    public int getMovieid() {
-        return movieid;
+    public int getMovieId() {
+        return movieId;
     }
 
-    public void setMovieid(int movieid) {
-        this.movieid = movieid;
+    public void setMovieId(int movieid) {
+        this.movieId = movieid;
     }
 
     @Basic
     @Column(name = "taglinetext", nullable = true, insertable = true, updatable = true, columnDefinition = "text", length = 65535)
-    public String getTaglinetext() {
-        return taglinetext;
+    public String getTaglineText() {
+        return taglineText;
     }
 
-    public void setTaglinetext(String taglinetext) {
-        this.taglinetext = taglinetext;
+    public void setTaglineText(String taglinetext) {
+        this.taglineText = taglinetext;
     }
 
     @Id
@@ -53,17 +53,17 @@ public class TaglinesEntity {
 
         TaglinesEntity that = (TaglinesEntity) o;
 
-        if (movieid != that.movieid) return false;
+        if (movieId != that.movieId) return false;
         if (taglineId != that.taglineId) return false;
-        if (taglinetext != null ? !taglinetext.equals(that.taglinetext) : that.taglinetext != null) return false;
+        if (taglineText != null ? !taglineText.equals(that.taglineText) : that.taglineText != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = movieid;
-        result = 31 * result + (taglinetext != null ? taglinetext.hashCode() : 0);
+        int result = movieId;
+        result = 31 * result + (taglineText != null ? taglineText.hashCode() : 0);
         result = 31 * result + taglineId;
         return result;
     }

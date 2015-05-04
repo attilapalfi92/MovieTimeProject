@@ -3,8 +3,8 @@ package com.movietime.controllers;
 import com.movietime.businesslogic.MovieDataProvider;
 import com.movietime.entitywrappers.FullMovieWrapper;
 import com.movietime.entitywrappers.MoviePage;
+import com.movietime.entitywrappers.SubmittedMovie;
 import com.movietime.exceptions.PersistingFailedException;
-import com.movietime.model.MoviesEntity;
 import com.movietime.model.PlotsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -90,7 +90,7 @@ public class MovieRestController {
      * @return The saved / unsaved movie.
      */
     @RequestMapping(value = RestUriConstants.POST_MOVIE, method = RequestMethod.POST)
-    public ResponseEntity<MoviesEntity> postMovie(@RequestBody MoviesEntity movie) {
+    public ResponseEntity<SubmittedMovie> postMovie(@RequestBody SubmittedMovie movie) {
         try{
             movieDataProvider.saveNewMovie(movie);
         } catch (PersistingFailedException e) {

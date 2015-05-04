@@ -21,7 +21,7 @@ function loadActorDetails(event) {
         $('#actor_name_h2').text(data.actor.name);
         $('#actor_bio').hide();
         if (data.biography) {
-            $('#actor_bio').text(data.biography.biotext);
+            $('#actor_bio').text(data.biography.bioText);
         }
 
         var table = document.getElementById('actors_movies_table');

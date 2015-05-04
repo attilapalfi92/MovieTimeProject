@@ -1,9 +1,6 @@
 package com.movietime.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,19 +11,19 @@ import java.util.List;
 @Entity
 @Table(name = "writers", schema = "", catalog = "movietime2")
 public class WritersEntity {
-    private int writerid;
+    private int writerId;
     private String name;
     @JsonIgnore
     private List<MoviesEntity> movies;
 
     @Id
     @Column(name = "writerid", nullable = false, insertable = true, updatable = true)
-    public int getWriterid() {
-        return writerid;
+    public int getWriterId() {
+        return writerId;
     }
 
-    public void setWriterid(int writerid) {
-        this.writerid = writerid;
+    public void setWriterId(int writerid) {
+        this.writerId = writerid;
     }
 
     @Basic
@@ -46,7 +43,7 @@ public class WritersEntity {
 
         WritersEntity that = (WritersEntity) o;
 
-        if (writerid != that.writerid) return false;
+        if (writerId != that.writerId) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
@@ -54,7 +51,7 @@ public class WritersEntity {
 
     @Override
     public int hashCode() {
-        int result = writerid;
+        int result = writerId;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }

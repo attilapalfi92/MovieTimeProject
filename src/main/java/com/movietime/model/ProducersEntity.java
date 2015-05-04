@@ -1,9 +1,6 @@
 package com.movietime.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,7 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "producers", schema = "", catalog = "movietime2")
 public class ProducersEntity {
-    private int producerid;
+    private int producerId;
     private String name;
     @JsonIgnore
     private List<MoviesEntity> movies;
@@ -22,12 +19,12 @@ public class ProducersEntity {
 
     @Id
     @Column(name = "producerid", nullable = false, insertable = true, updatable = true)
-    public int getProducerid() {
-        return producerid;
+    public int getProducerId() {
+        return producerId;
     }
 
-    public void setProducerid(int producerid) {
-        this.producerid = producerid;
+    public void setProducerId(int producerid) {
+        this.producerId = producerid;
     }
 
     @Basic
@@ -47,7 +44,7 @@ public class ProducersEntity {
 
         ProducersEntity that = (ProducersEntity) o;
 
-        if (producerid != that.producerid) return false;
+        if (producerId != that.producerId) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
@@ -55,7 +52,7 @@ public class ProducersEntity {
 
     @Override
     public int hashCode() {
-        int result = producerid;
+        int result = producerId;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }

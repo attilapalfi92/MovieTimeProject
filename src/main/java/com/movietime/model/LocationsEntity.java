@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "locations", schema = "", catalog = "movietime2")
 public class LocationsEntity {
-    private int movieid;
+    private int movieId;
     private String location;
     private String addition;
     private int locationId;
@@ -19,12 +19,12 @@ public class LocationsEntity {
 
     @Basic
     @Column(name = "movieid", nullable = false, insertable = false, updatable = false)
-    public int getMovieid() {
-        return movieid;
+    public int getMovieId() {
+        return movieId;
     }
 
-    public void setMovieid(int movieid) {
-        this.movieid = movieid;
+    public void setMovieId(int movieid) {
+        this.movieId = movieid;
     }
 
     @Basic
@@ -65,7 +65,7 @@ public class LocationsEntity {
         LocationsEntity that = (LocationsEntity) o;
 
         if (locationId != that.locationId) return false;
-        if (movieid != that.movieid) return false;
+        if (movieId != that.movieId) return false;
         if (addition != null ? !addition.equals(that.addition) : that.addition != null) return false;
         if (location != null ? !location.equals(that.location) : that.location != null) return false;
 
@@ -74,7 +74,7 @@ public class LocationsEntity {
 
     @Override
     public int hashCode() {
-        int result = movieid;
+        int result = movieId;
         result = 31 * result + (location != null ? location.hashCode() : 0);
         result = 31 * result + (addition != null ? addition.hashCode() : 0);
         result = 31 * result + locationId;

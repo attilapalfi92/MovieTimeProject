@@ -59,13 +59,13 @@ function loadSubmitMovActorTable(data) {
             var cell_btn = row.insertCell(-1);
 
             $(cell_actorname).text(actor['name']);
-            $(cell_actorId).text(actor.actorid);
+            $(cell_actorId).text(actor.actorId);
 
             var addBtn = document.createElement('input');
             addBtn.setAttribute('type', 'button');
             addBtn.setAttribute('class', 'add_actor_to_movie_btn');
             addBtn.setAttribute('value', 'Add');
-            var btnName = 'actorId= ' + actor.actorid + '; name= ' + actor.name;
+            var btnName = 'actorId= ' + actor.actorId + '; name= ' + actor.name;
             addBtn.setAttribute('name', btnName);
             $(addBtn).click(addActorToMovie);
             cell_btn.appendChild(addBtn);
@@ -174,4 +174,86 @@ function addActorToMovie(event) {
 function cancelActorFromMovieSubmit(event) {
     var row = document.getElementById(event.target.name);
     row.parentNode.removeChild(row);
+}
+
+
+function submitMovieClicked() {
+    var table = document.getElementById('submit_mov_added_actors_t');
+    var rows = table.rows;
+
+    var movie = new Object();
+    movie.title = $('#submit_mov_title').val();
+
+    // if contains only whitespaces
+    if (!movie.title.replace(/\s/g, '').length) {
+        alert("Title cannot be empty.");
+        return;
+    }
+
+    var roles = new Array();
+    for(var i = 1; i < rows.length; i++) {
+        var row = table.getElementsByTagName('tr')[i];
+        var idCell = row.cells[1];
+        var actorId = $(idCell).text();
+
+        var roleCell = row.cells[2];
+        var role = $(roleCell.childNodes[0]).val();
+        if (role == '') {
+            alert('Role cannot be empty.');
+            return;
+        }
+        var role = {
+            actorId: actorId,
+            asCharacter: role
+        };
+        roles.push(role);
+    }
+
+    movie.roles = roles;
+
+    var release = new Object();
+    release.releaseDate = $('#submit_mov_releaseDate').val();
+    if (release.releaseDate == '') {
+        alert('Release date cannot be empty.');
+        return;
+    }
+    release.country = $('#submit_mov_country').val();
+    // if contains only whitespaces
+    if (!release.country.replace(/\s/g, '').length) {
+        alert("Country cannot be empty.");
+        return;
+    }
+    movie.release = release;
+
+    var genres = $('#submit_mov_genres').val();
+    // if contains only whitespaces
+    if (!genres.replace(/\s/g, '').length) {
+        alert("Genres cannot be empty.");
+        return;
+    }
+    movie.genres = genres.split(';');
+
+    var taglines = $('#submit_mov_taglines').val();
+    // if contains only whitespaces
+    if (!taglines.replace(/\s/g, '').length) {
+        alert("Taglines cannot be empty.");
+        return;
+    }
+    movie.taglines = taglines.split(';');
+    console.log(movie);
+    var url = '/rest/movie';
+
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: JSON.stringify(movie),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function(msg) {
+            console.log(msg);
+        },
+        error: function(msg) {
+            console.log(msg);
+        }
+    });
 }

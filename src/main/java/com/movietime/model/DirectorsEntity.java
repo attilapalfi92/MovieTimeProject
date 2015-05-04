@@ -11,19 +11,19 @@ import java.util.List;
 @Entity
 @Table(name = "directors", schema = "", catalog = "movietime2")
 public class DirectorsEntity {
-    private int directorid;
+    private int directorId;
     private String name;
     @JsonIgnore
     private List<MoviesEntity> movies;
 
     @Id
     @Column(name = "directorid", nullable = false, insertable = true, updatable = true)
-    public int getDirectorid() {
-        return directorid;
+    public int getDirectorId() {
+        return directorId;
     }
 
-    public void setDirectorid(int directorid) {
-        this.directorid = directorid;
+    public void setDirectorId(int directorId) {
+        this.directorId = directorId;
     }
 
     @Basic
@@ -43,7 +43,7 @@ public class DirectorsEntity {
 
         DirectorsEntity that = (DirectorsEntity) o;
 
-        if (directorid != that.directorid) return false;
+        if (directorId != that.directorId) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
@@ -51,7 +51,7 @@ public class DirectorsEntity {
 
     @Override
     public int hashCode() {
-        int result = directorid;
+        int result = directorId;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }

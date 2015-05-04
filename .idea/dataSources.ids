@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - movietime2@localhost" uuid="1be15d47-7a32-42d4-8b47-5bdc856b841e">
+    <database-info product="MySQL" version="5.6.22-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.34 ( Revision: jess.balint@oracle.com-20141014163213-wqbwpf1ok2kvo1om )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="movietime2"/>
+    <table name="actors" schema="" catalog="movietime2" type="TABLE">
+      <column name="actorid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="250" scale="0" nullable="false" jdbcType="12"/>
+      <column name="sex" sqlType="ENUM" precision="2" scale="0" nullable="true" jdbcType="1"/>
+      <primary-key name="PRIMARY" columns="actorid"/>
+      <index name="actors_name_fulltext" unique="false" columns="name"/>
+      <index name="name" unique="false" columns="name"/>
+    </table>
+    <table name="akanames" schema="" catalog="movietime2" type="TABLE">
+      <column name="name" sqlType="VARCHAR" precision="250" scale="0" nullable="false" jdbcType="12"/>
+      <column name="akaname" sqlType="VARCHAR" precision="250" scale="0" nullable="false" jdbcType="12"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <index name="akaname" unique="false" columns="akaname"/>
+      <index name="akanames_akaname_fulltext" unique="false" columns="akaname"/>
+      <index name="name" unique="false" columns="name"/>
+    </table>
+    <table name="akatitles" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="language" sqlType="CHAR" precision="3" scale="0" nullable="false" jdbcType="1"/>
+      <column name="title" sqlType="VARCHAR" precision="400" scale="0" nullable="false" jdbcType="12"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <column name="akaTitleId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="akaTitleId"/>
+      <index name="akatitles_title_fulltext" unique="false" columns="title"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+      <index name="title" unique="false" columns="title"/>
+    </table>
+    <table name="altversions" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="versiontext" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="biographies" schema="" catalog="movietime2" type="TABLE">
+      <column name="bioid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="250" scale="0" nullable="false" jdbcType="12"/>
+      <column name="biotext" sqlType="MEDIUMTEXT" precision="16777215" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="bioid"/>
+      <index name="name" unique="false" columns="name"/>
+    </table>
+    <table name="business" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="businesstext" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="movieid"/>
+    </table>
+    <table name="certificates" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="country" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
+      <column name="certification" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <index name="certification" unique="false" columns="certification"/>
+      <index name="country" unique="false" columns="country"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="cinematgrs" schema="" catalog="movietime2" type="TABLE">
+      <column name="cinematid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="250" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="cinematid"/>
+      <index name="name" unique="false" columns="name"/>
+    </table>
+    <table name="colorinfo" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="color" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <index name="color" unique="false" columns="color"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="composers" schema="" catalog="movietime2" type="TABLE">
+      <column name="composerid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="250" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="composerid"/>
+      <index name="name" unique="false" columns="name"/>
+    </table>
+    <table name="costdesigners" schema="" catalog="movietime2" type="TABLE">
+      <column name="costdesid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="250" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="costdesid"/>
+      <index name="name" unique="false" columns="name"/>
+    </table>
+    <table name="countries" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="country" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="countryId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="countryId"/>
+      <index name="country" unique="false" columns="country"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="crazycredits" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="credittext" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="directors" schema="" catalog="movietime2" type="TABLE">
+      <column name="directorid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="250" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="directorid"/>
+      <index name="directors_name_fulltext" unique="false" columns="name"/>
+      <index name="name" unique="false" columns="name"/>
+    </table>
+    <table name="distributors" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" precision="250" scale="0" nullable="false" jdbcType="12"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <column name="distributorId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="distributorId"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="editors" schema="" catalog="movietime2" type="TABLE">
+      <column name="editorid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="250" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="editorid"/>
+      <index name="name" unique="false" columns="name"/>
+    </table>
+    <table name="genres" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="genre" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="genre_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="genre_id"/>
+      <index name="genre" unique="false" columns="genre"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="keywords" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="keyword" sqlType="VARCHAR" precision="125" scale="0" nullable="false" jdbcType="12"/>
+      <column name="keyword_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="keyword_id"/>
+      <index name="keyword" unique="false" columns="keyword"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="language" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="language" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <column name="language_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="language_id"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="literature" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="literaturetext" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="literatureId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="literatureId"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="locations" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="location" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <column name="location_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="location_id"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="misc" schema="" catalog="movietime2" type="TABLE">
+      <column name="miscid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="250" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="miscid"/>
+      <index name="name" unique="false" columns="name"/>
+    </table>
+    <table name="movielinks" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="movielinkstext" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="movies" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="400" scale="0" nullable="false" jdbcType="12"/>
+      <column name="year" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="imdbid" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="movieid"/>
+      <index name="movies_title_fulltext" unique="false" columns="title"/>
+      <index name="title" unique="false" columns="title"/>
+    </table>
+    <table name="movies2actors" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="actorid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="as_character" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <column name="m2aid" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="m2aid"/>
+      <index name="actorid" unique="false" columns="actorid"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="movies2cinematgrs" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="cinematid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <index name="cinematid" unique="false" columns="cinematid"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="movies2composers" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="composerid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <index name="composerid" unique="false" columns="composerid"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="movies2costdes" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="costdesid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <index name="costdesid" unique="false" columns="costdesid"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="movies2directors" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="directorid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <index name="directorid" unique="false" columns="directorid"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="movies2editors" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="editorid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <index name="editorid" unique="false" columns="editorid"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="movies2misc" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="miscid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <index name="miscid" unique="false" columns="miscid"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="movies2proddes" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="proddesid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+      <index name="proddesid" unique="false" columns="proddesid"/>
+    </table>
+    <table name="movies2producers" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="producerid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+      <index name="producerid" unique="false" columns="producerid"/>
+    </table>
+    <table name="movies2writers" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="writerid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+      <index name="writerid" unique="false" columns="writerid"/>
+    </table>
+    <table name="mpaaratings" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="reasontext" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="mpaaratings_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="mpaaratings_id"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="plots" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="plottext" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="plot_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="plot_id"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="prodcompanies" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" precision="250" scale="0" nullable="false" jdbcType="12"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <column name="prodcompanyId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="prodcompanyId"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+      <index name="name" unique="false" columns="name"/>
+    </table>
+    <table name="proddesigners" schema="" catalog="movietime2" type="TABLE">
+      <column name="proddesid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="250" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="proddesid"/>
+      <index name="name" unique="false" columns="name"/>
+    </table>
+    <table name="producers" schema="" catalog="movietime2" type="TABLE">
+      <column name="producerid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="250" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="producerid"/>
+      <index name="name" unique="false" columns="name"/>
+      <index name="producers_name_fulltext" unique="false" columns="name"/>
+    </table>
+    <table name="quotes" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="quotetext" sqlType="MEDIUMTEXT" precision="16777215" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="quote_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="quote_id"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="ratings" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="rank" sqlType="CHAR" precision="4" scale="0" nullable="false" jdbcType="1"/>
+      <column name="votes" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="true" jdbcType="4"/>
+      <column name="distribution" sqlType="CHAR" precision="10" scale="0" nullable="false" jdbcType="1"/>
+      <column name="rating_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="rating_id"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="releasedates" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="country" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
+      <column name="imdbdate" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="releasedate" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <column name="releasedate_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="releasedate_id"/>
+      <index name="country" unique="false" columns="country"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+      <index name="releasedate" unique="false" columns="releasedate"/>
+    </table>
+    <table name="runningtimes" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="time" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="runningtime_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="runningtime_id"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="soundmix" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sound" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+      <index name="sound" unique="false" columns="sound"/>
+    </table>
+    <table name="soundtracks" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="soundtracktext" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="soundtrackId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="soundtrackId"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="taglines" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="taglinetext" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="tagline_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="tagline_id"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="technical" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" precision="250" scale="0" nullable="false" jdbcType="12"/>
+      <column name="addition" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <column name="technicalId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="technicalId"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+      <index name="name" unique="false" columns="name"/>
+    </table>
+    <table name="trivia" schema="" catalog="movietime2" type="TABLE">
+      <column name="movieid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4"/>
+      <column name="triviatext" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="triviaId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="triviaId"/>
+      <index name="movieid" unique="false" columns="movieid"/>
+    </table>
+    <table name="writers" schema="" catalog="movietime2" type="TABLE">
+      <column name="writerid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="250" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="writerid"/>
+      <index name="name" unique="false" columns="name"/>
+    </table>
+  </data-source>
+</component>

@@ -10,30 +10,30 @@ import javax.persistence.*;
 @Entity
 @Table(name = "quotes", schema = "", catalog = "movietime2")
 public class QuotesEntity {
-    private int movieid;
-    private String quotetext;
+    private int movieId;
+    private String quoteText;
     private int quoteId;
     @JsonIgnore
     private MoviesEntity movie;
 
     @Basic
     @Column(name = "movieid", nullable = false, insertable = false, updatable = false)
-    public int getMovieid() {
-        return movieid;
+    public int getMovieId() {
+        return movieId;
     }
 
-    public void setMovieid(int movieid) {
-        this.movieid = movieid;
+    public void setMovieId(int movieid) {
+        this.movieId = movieid;
     }
 
     @Basic
     @Column(name = "quotetext", nullable = true, insertable = true, updatable = true, columnDefinition = "mediumtext", length = 16777215)
-    public String getQuotetext() {
-        return quotetext;
+    public String getQuoteText() {
+        return quoteText;
     }
 
-    public void setQuotetext(String quotetext) {
-        this.quotetext = quotetext;
+    public void setQuoteText(String quotetext) {
+        this.quoteText = quotetext;
     }
 
     @Id
@@ -53,17 +53,17 @@ public class QuotesEntity {
 
         QuotesEntity that = (QuotesEntity) o;
 
-        if (movieid != that.movieid) return false;
+        if (movieId != that.movieId) return false;
         if (quoteId != that.quoteId) return false;
-        if (quotetext != null ? !quotetext.equals(that.quotetext) : that.quotetext != null) return false;
+        if (quoteText != null ? !quoteText.equals(that.quoteText) : that.quoteText != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = movieid;
-        result = 31 * result + (quotetext != null ? quotetext.hashCode() : 0);
+        int result = movieId;
+        result = 31 * result + (quoteText != null ? quoteText.hashCode() : 0);
         result = 31 * result + quoteId;
         return result;
     }

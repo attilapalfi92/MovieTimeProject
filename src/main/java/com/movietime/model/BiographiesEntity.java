@@ -1,7 +1,5 @@
 package com.movietime.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 /**
@@ -12,20 +10,20 @@ import javax.persistence.*;
 @Entity
 @Table(name = "biographies", schema = "", catalog = "movietime2")
 public class BiographiesEntity {
-    private int bioid;
+    private int bioId;
     private String name;
-    private String biotext;
+    private String bioText;
     //@JsonIgnore
     //private ActorsEntity actor;
 
     @Id
     @Column(name = "bioid", nullable = false, insertable = true, updatable = true)
-    public int getBioid() {
-        return bioid;
+    public int getBioId() {
+        return bioId;
     }
 
-    public void setBioid(int bioid) {
-        this.bioid = bioid;
+    public void setBioId(int bioid) {
+        this.bioId = bioid;
     }
 
     @Basic
@@ -40,12 +38,12 @@ public class BiographiesEntity {
 
     @Basic
     @Column(name = "biotext", nullable = true, insertable = true, updatable = true, columnDefinition = "mediumtext", length = 16777215)
-    public String getBiotext() {
-        return biotext;
+    public String getBioText() {
+        return bioText;
     }
 
-    public void setBiotext(String biotext) {
-        this.biotext = biotext;
+    public void setBioText(String biotext) {
+        this.bioText = biotext;
     }
 
     @Override
@@ -55,8 +53,8 @@ public class BiographiesEntity {
 
         BiographiesEntity that = (BiographiesEntity) o;
 
-        if (bioid != that.bioid) return false;
-        if (biotext != null ? !biotext.equals(that.biotext) : that.biotext != null) return false;
+        if (bioId != that.bioId) return false;
+        if (bioText != null ? !bioText.equals(that.bioText) : that.bioText != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
@@ -64,9 +62,9 @@ public class BiographiesEntity {
 
     @Override
     public int hashCode() {
-        int result = bioid;
+        int result = bioId;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (biotext != null ? biotext.hashCode() : 0);
+        result = 31 * result + (bioText != null ? bioText.hashCode() : 0);
         return result;
     }
 

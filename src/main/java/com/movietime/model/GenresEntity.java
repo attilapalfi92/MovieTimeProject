@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "genres", schema = "", catalog = "movietime2")
 public class GenresEntity {
-    private int movieid;
+    private int movieId;
     private String genre;
     private int genre_id;
     @JsonIgnore
@@ -18,12 +18,12 @@ public class GenresEntity {
 
     @Basic
     @Column(name = "movieid", nullable = false, insertable = false, updatable = false)
-    public int getMovieid() {
-        return movieid;
+    public int getMovieId() {
+        return movieId;
     }
 
-    public void setMovieid(int movieid) {
-        this.movieid = movieid;
+    public void setMovieId(int movieid) {
+        this.movieId = movieid;
     }
 
     @Basic
@@ -54,7 +54,7 @@ public class GenresEntity {
         GenresEntity that = (GenresEntity) o;
 
         if (genre_id != that.genre_id) return false;
-        if (movieid != that.movieid) return false;
+        if (movieId != that.movieId) return false;
         if (genre != null ? !genre.equals(that.genre) : that.genre != null) return false;
 
         return true;
@@ -62,7 +62,7 @@ public class GenresEntity {
 
     @Override
     public int hashCode() {
-        int result = movieid;
+        int result = movieId;
         result = 31 * result + (genre != null ? genre.hashCode() : 0);
         result = 31 * result + genre_id;
         return result;

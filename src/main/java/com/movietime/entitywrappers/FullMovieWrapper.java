@@ -3,7 +3,6 @@ package com.movietime.entitywrappers;
 import com.movietime.model.*;
 import org.springframework.hateoas.ResourceSupport;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +13,7 @@ public class FullMovieWrapper extends ResourceSupport {
     private List<ActorsEntity> actors;
     private List<ProducersEntity> producers;
     private List<WritersEntity> writers;
-    private MpaaratingsEntity mpaaRating;
+    private MpaaRatingsEntity mpaaRating;
     private List<GenresEntity> genres;
     private List<DirectorsEntity> directors;
     private List<EditorsEntity> editors;
@@ -22,8 +21,7 @@ public class FullMovieWrapper extends ResourceSupport {
     private List<LocationsEntity> locations;
     //private QuotesEntity quote;
     private RatingsEntity rating;
-    //private List<ReleasedatesEntity> releaseDates;
-    private RunningtimesEntity runningTime;
+    private RunningTimesEntity runningTime;
 
     public FullMovieWrapper() {}
 
@@ -82,29 +80,19 @@ public class FullMovieWrapper extends ResourceSupport {
         this.rating = rating;
     }
 
-    /*
-    public List<ReleasedatesEntity> getReleaseDates() {
-        return releaseDates;
-    }
-
-    public void setReleaseDates(List<ReleasedatesEntity> releaseDates) {
-        this.releaseDates = releaseDates;
-    }
-    */
-
-    public RunningtimesEntity getRunningTime() {
+    public RunningTimesEntity getRunningTime() {
         return runningTime;
     }
 
-    public void setRunningTime(RunningtimesEntity runningTime) {
+    public void setRunningTime(RunningTimesEntity runningTime) {
         this.runningTime = runningTime;
     }
 
-    public MpaaratingsEntity getMpaaRating() {
+    public MpaaRatingsEntity getMpaaRating() {
         return mpaaRating;
     }
 
-    public void setMpaaRating(MpaaratingsEntity mpaaRating) {
+    public void setMpaaRating(MpaaRatingsEntity mpaaRating) {
         this.mpaaRating = mpaaRating;
     }
 

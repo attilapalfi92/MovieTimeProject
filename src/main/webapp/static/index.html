@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
     <script type="text/javascript" src="/static/script/mainPage.js"></script>
     <script type="text/javascript" src="/static/script/moviesPage.js"></script>
     <script type="text/javascript" src="/static/script/actorsPage.js"></script>
@@ -143,6 +144,7 @@
 
         <div id="submitMovie_div">
             <h3>Movie</h3>
+            <input id="submit_movie_btn" type="button" value="Submit" onclick="submitMovieClicked()"> <br/>
             <label for="submit_mov_title">Title: </label>
             <input id="submit_mov_title" type="text" placeholder="title"> <br/>
 

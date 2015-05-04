@@ -1,9 +1,6 @@
 package com.movietime.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
@@ -15,7 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "actors", schema = "", catalog = "movietime2")
 public class ActorsEntity extends ResourceSupport {
-    private int actorid;
+    private int actorId;
     private String name;
     private String sex;
     @JsonIgnore
@@ -28,12 +25,12 @@ public class ActorsEntity extends ResourceSupport {
 
     @Id
     @Column(name = "actorid", nullable = false, insertable = true, updatable = true)
-    public int getActorid() {
-        return actorid;
+    public int getActorId() {
+        return actorId;
     }
 
-    public void setActorid(int actorid) {
-        this.actorid = actorid;
+    public void setActorId(int actorId) {
+        this.actorId = actorId;
     }
 
     @Transient
@@ -73,7 +70,7 @@ public class ActorsEntity extends ResourceSupport {
 
         ActorsEntity that = (ActorsEntity) o;
 
-        if (actorid != that.actorid) return false;
+        if (actorId != that.actorId) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (sex != null ? !sex.equals(that.sex) : that.sex != null) return false;
 
@@ -82,7 +79,7 @@ public class ActorsEntity extends ResourceSupport {
 
     @Override
     public int hashCode() {
-        int result = actorid;
+        int result = actorId;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (sex != null ? sex.hashCode() : 0);
         return result;

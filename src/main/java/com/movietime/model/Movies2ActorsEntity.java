@@ -11,8 +11,8 @@ import javax.persistence.*;
 @Table(name = "movies2actors", schema = "", catalog = "movietime2")
 public class Movies2ActorsEntity {
     private int m2aid;
-    private int movieid;
-    private int actorid;
+    private int movieId;
+    private int actorId;
     private String asCharacter;
     @JsonIgnore
     private ActorsEntity actor;
@@ -27,22 +27,22 @@ public class Movies2ActorsEntity {
 
     @Basic
     @Column(name = "movieid", nullable = false, insertable = false, updatable = false)
-    public int getMovieid() {
-        return movieid;
+    public int getMovieId() {
+        return movieId;
     }
 
-    public void setMovieid(int movieid) {
-        this.movieid = movieid;
+    public void setMovieId(int movieid) {
+        this.movieId = movieid;
     }
 
     @Basic
     @Column(name = "actorid", nullable = false, insertable = false, updatable = false)
-    public int getActorid() {
-        return actorid;
+    public int getActorId() {
+        return actorId;
     }
 
-    public void setActorid(int actorid) {
-        this.actorid = actorid;
+    public void setActorId(int actorid) {
+        this.actorId = actorid;
     }
 
     @Basic
@@ -62,8 +62,8 @@ public class Movies2ActorsEntity {
 
         Movies2ActorsEntity that = (Movies2ActorsEntity) o;
 
-        if (actorid != that.actorid) return false;
-        if (movieid != that.movieid) return false;
+        if (actorId != that.actorId) return false;
+        if (movieId != that.movieId) return false;
         if (asCharacter != null ? !asCharacter.equals(that.asCharacter) : that.asCharacter != null) return false;
 
         return true;
@@ -71,8 +71,8 @@ public class Movies2ActorsEntity {
 
     @Override
     public int hashCode() {
-        int result = movieid;
-        result = 31 * result + actorid;
+        int result = movieId;
+        result = 31 * result + actorId;
         result = 31 * result + (asCharacter != null ? asCharacter.hashCode() : 0);
         return result;
     }

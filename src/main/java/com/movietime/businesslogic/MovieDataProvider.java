@@ -2,18 +2,18 @@ package com.movietime.businesslogic;
 
 import com.movietime.controllers.ActorRestController;
 import com.movietime.controllers.MovieRestController;
-import com.movietime.dataservices.DataServices;
+import com.movietime.dataservices.*;
 import com.movietime.entitywrappers.FullMovieWrapper;
 import com.movietime.entitywrappers.MoviePage;
+import com.movietime.entitywrappers.SubmittedMovie;
 import com.movietime.exceptions.PersistingFailedException;
-import com.movietime.model.ActorsEntity;
-import com.movietime.model.Movies2ActorsEntity;
-import com.movietime.model.MoviesEntity;
-import com.movietime.model.PlotsEntity;
+import com.movietime.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +25,17 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  */
 @Service
 public class MovieDataProvider {
+
     @Autowired
-    private DataServices dataServices;
+    private MovieDao movieDao;
+    @Autowired
+    private ReleaseDateDao releaseDateDao;
+    @Autowired
+    private M2aDao m2aDao;
+    @Autowired
+    private GenreDao genreDao;
+    @Autowired
+    private TaglineDao taglineDao;
 
     /**
      * Finds a movie by it's ID.
@@ -35,20 +44,20 @@ public class MovieDataProvider {
      */
     @Transactional
     public FullMovieWrapper getMovieById(int movieId) {
-        List<Movies2ActorsEntity> result = dataServices.findMovies2ActorsByMovieId(movieId);
+        List<Movies2ActorsEntity> result = movieDao.findMovies2ActorsByMovieId(movieId);
         // getting the actors and setting the roles for them
         List<ActorsEntity> actors = new ArrayList<>(result.size());
         for (Movies2ActorsEntity i : result) {
             ActorsEntity actor = i.getActor();
             actor.setRole(i.getAsCharacter());
-            actor.add(linkTo(methodOn(ActorRestController.class).getActorById(actor.getActorid())).withRel("actor"));
+            actor.add(linkTo(methodOn(ActorRestController.class).getActorById(actor.getActorId())).withRel("actor"));
             actors.add(i.getActor());
         }
 
         // setting all the other fields
         FullMovieWrapper fullMovieWrapper = new FullMovieWrapper();
         //MoviesEntity movie = result.get(0).getMovie();
-        MoviesEntity movie = dataServices.findMovieById(movieId);
+        MoviesEntity movie = movieDao.findMovieById(movieId);
         fullMovieWrapper.setMovie(movie);
         fullMovieWrapper.setActors(actors);
         // kicking the hibernate to fetch the required collections
@@ -62,7 +71,7 @@ public class MovieDataProvider {
         movie.getReleaseDates().isEmpty();
         movie.getGenres().isEmpty();
 
-        //String reasonText = movie.getMpaaRating().getReasontext();
+        //String reasonText = movie.getMpaaRating().getReasonText();
 
         // setting all the other fields
         fullMovieWrapper.setProducers(movie.getProducers());
@@ -97,10 +106,10 @@ public class MovieDataProvider {
      */
     @Transactional
     public MoviePage getMoviesByTitle(String movieTitle, int page, int pageSize) {
-        List<MoviesEntity> movies = dataServices.findMoviesByTitle(movieTitle, page, pageSize);
+        List<MoviesEntity> movies = movieDao.findMoviesByTitle(movieTitle, page, pageSize);
 
         for(MoviesEntity movie : movies) {
-            movie.add(linkTo(methodOn(MovieRestController.class).getMovieById(movie.getMovieid())).withRel("movie"));
+            movie.add(linkTo(methodOn(MovieRestController.class).getMovieById(movie.getMovieId())).withRel("movie"));
         }
 
         MoviePage moviePage = new MoviePage(movies, page, pageSize);
@@ -122,10 +131,10 @@ public class MovieDataProvider {
      */
     @Transactional
     public MoviePage getMoviesByPartTitle(String movieTitle, int page, int pageSize) {
-        List<MoviesEntity> movies = dataServices.findMoviesByPartTitle(movieTitle, page, pageSize);
+        List<MoviesEntity> movies = movieDao.findMoviesByPartTitle(movieTitle, page, pageSize);
 
         for(MoviesEntity movie : movies) {
-            movie.add(linkTo(methodOn(MovieRestController.class).getMovieById(movie.getMovieid())).withRel("movie"));
+            movie.add(linkTo(methodOn(MovieRestController.class).getMovieById(movie.getMovieId())).withRel("movie"));
         }
 
         MoviePage moviePage = new MoviePage(movies, page, pageSize);
@@ -144,7 +153,7 @@ public class MovieDataProvider {
      */
     @Transactional
     public PlotsEntity getPlotForMovie(int movieId) {
-        PlotsEntity plot = dataServices.findPlotByMovieId(movieId);
+        PlotsEntity plot = movieDao.findPlotByMovieId(movieId);
 
         return plot;
     }
@@ -156,8 +165,48 @@ public class MovieDataProvider {
      * @throws PersistingFailedException When persisting is failed, this exception is thrown.
      */
     @Transactional
-    public void saveNewMovie(MoviesEntity movie) throws PersistingFailedException {
-        dataServices.saveNewMovie(movie);
-        movie.getMovieid();
+    public void saveNewMovie(SubmittedMovie movie) throws PersistingFailedException {
+        MoviesEntity moviesEntity = new MoviesEntity();
+
+        // setting the movie title
+        moviesEntity.setTitle(movie.getTitle());
+        // setting the movie year
+        DateFormat df = new SimpleDateFormat("yyyy");
+        moviesEntity.setYear(df.format(movie.getRelease().getReleaseDate()));
+        // saving the MoviesEntity to the database
+        movieDao.saveNewMovie(moviesEntity);
+
+        // saving the ReleaseDate
+        ReleaseDatesEntity rde = new ReleaseDatesEntity();
+        rde.setMovie(moviesEntity);
+        rde.setReleaseDate(movie.getRelease().getReleaseDate());
+        rde.setCountry(movie.getRelease().getCountry());
+        rde.setAddition(movie.getRelease().getAddition());
+        releaseDateDao.saveNewReleaseDate(rde);
+
+        // saving roles
+        for (Movies2ActorsEntity m2a : movie.getRoles()) {
+            m2a.setMovie(moviesEntity);
+            m2aDao.saveNewM2aEntity(m2a);
+        }
+
+        // saving genres
+        for (String genre : movie.getGenres()) {
+            GenresEntity genresEntity = new GenresEntity();
+            genresEntity.setMovie(moviesEntity);
+            genresEntity.setGenre(genre);
+            genreDao.saveNewGenre(genresEntity);
+        }
+
+        // saving taglines
+        for (String tagline : movie.getTaglines()) {
+            TaglinesEntity taglinesEntity = new TaglinesEntity();
+            taglinesEntity.setMovie(moviesEntity);
+            taglinesEntity.setTaglineText(tagline);
+            taglineDao.saveNewTagline(taglinesEntity);
+        }
+
+        int i = 0;
+        i = i + 1;
     }
 }

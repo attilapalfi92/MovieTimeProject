@@ -184,7 +184,7 @@ function loadActorsTable(actors) {
         $(cell_actorname).text(actor['name']);
         $(cell_role).text(actor.role);
         $(cell_sex).text(actor.sex);
-        $(cell_actorid).text(actor.actorid);
+        $(cell_actorid).text(actor.actorId);
 
         var detailsBtn = document.createElement('input');
         detailsBtn.setAttribute('type', 'button');
@@ -213,7 +213,7 @@ function movieShowPlotBtnClicked(event) {
             url: url
         }).then(function(data){
             if(data) {
-                plotPar.text(data.plottext);
+                plotPar.text(data.plotText);
                 firstPlotClick = false;
                 plotPar.show(500);
             }
@@ -321,7 +321,8 @@ function searchMoviesFast(mTitle) {
     }).then(function(data){
         console.log(data);
         if(data.movies.length != 0) {
-            updateMovieListTable(data)
+            updateMovieListTable(data);
+            $('#moviesTable').show();
         } else {
             $('#moviesTable').hide(50);
             $('#next_btn').prop('disabled', true);
@@ -349,7 +350,8 @@ function searchMoviesMore(mTitle) {
         url: url
     }).then(function(data){
         if(data.movies.length != 0) {
-            updateMovieListTable(data)
+            updateMovieListTable(data);
+            $('#moviesTable').show();
         } else {
             $('#moviesTable').hide(50);
             $('#next_btn').prop('disabled', true);
@@ -406,12 +408,12 @@ function updateMovieListTable(data) {
 
         $(cell_title).text(movie.title);
         if (movies[i].tagline) {
-            $(cell_tagline).text(movie.tagline.taglinetext);
+            $(cell_tagline).text(movie.tagline.taglineText);
 
         } else {
             $(cell_tagline).text('');
         }
-        $(cell_movieid).text(movie.movieid);
+        $(cell_movieid).text(movie.movieId);
 
         var detailsBtn = document.createElement('input');
         detailsBtn.setAttribute('type', 'button');

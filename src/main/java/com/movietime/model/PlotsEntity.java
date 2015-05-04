@@ -10,30 +10,30 @@ import javax.persistence.*;
 @Entity
 @Table(name = "plots", schema = "", catalog = "movietime2")
 public class PlotsEntity {
-    private int movieid;
-    private String plottext;
+    private int movieId;
+    private String plotText;
     private int plot_id;
     @JsonIgnore
     private MoviesEntity movie;
 
     @Basic
     @Column(name = "movieid", nullable = false, insertable = false, updatable = false)
-    public int getMovieid() {
-        return movieid;
+    public int getMovieId() {
+        return movieId;
     }
 
-    public void setMovieid(int movieid) {
-        this.movieid = movieid;
+    public void setMovieId(int movieid) {
+        this.movieId = movieid;
     }
 
     @Basic
     @Column(name = "plottext", nullable = true, insertable = true, updatable = true, columnDefinition = "text", length = 65535)
-    public String getPlottext() {
-        return plottext;
+    public String getPlotText() {
+        return plotText;
     }
 
-    public void setPlottext(String plottext) {
-        this.plottext = plottext;
+    public void setPlotText(String plottext) {
+        this.plotText = plottext;
     }
 
     @Id
@@ -53,17 +53,17 @@ public class PlotsEntity {
 
         PlotsEntity that = (PlotsEntity) o;
 
-        if (movieid != that.movieid) return false;
+        if (movieId != that.movieId) return false;
         if (plot_id != that.plot_id) return false;
-        if (plottext != null ? !plottext.equals(that.plottext) : that.plottext != null) return false;
+        if (plotText != null ? !plotText.equals(that.plotText) : that.plotText != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = movieid;
-        result = 31 * result + (plottext != null ? plottext.hashCode() : 0);
+        int result = movieId;
+        result = 31 * result + (plotText != null ? plotText.hashCode() : 0);
         result = 31 * result + plot_id;
         return result;
     }
