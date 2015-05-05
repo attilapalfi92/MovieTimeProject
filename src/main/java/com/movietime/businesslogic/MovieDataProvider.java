@@ -29,7 +29,7 @@ public class MovieDataProvider {
     @Autowired
     private MovieDao movieDao;
     @Autowired
-    private ReleaseDateDao releaseDateDao;
+    private ReleasedateDao releasedateDao;
     @Autowired
     private M2aDao m2aDao;
     @Autowired
@@ -42,7 +42,7 @@ public class MovieDataProvider {
      * @param movieId ID of the desired movie.
      * @return The desired movie.
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public FullMovieWrapper getMovieById(int movieId) {
         List<Movies2ActorsEntity> result = movieDao.findMovies2ActorsByMovieId(movieId);
         // getting the actors and setting the roles for them
@@ -182,7 +182,7 @@ public class MovieDataProvider {
         rde.setReleaseDate(movie.getRelease().getReleaseDate());
         rde.setCountry(movie.getRelease().getCountry());
         rde.setAddition(movie.getRelease().getAddition());
-        releaseDateDao.saveNewReleaseDate(rde);
+        releasedateDao.saveNewReleaseDate(rde);
 
         // saving roles
         for (Movies2ActorsEntity m2a : movie.getRoles()) {
