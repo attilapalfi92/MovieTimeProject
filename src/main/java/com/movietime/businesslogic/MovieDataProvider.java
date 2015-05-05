@@ -177,7 +177,7 @@ public class MovieDataProvider {
         movieDao.saveNewMovie(moviesEntity);
 
         // saving the ReleaseDate
-        ReleaseDatesEntity rde = new ReleaseDatesEntity();
+        ReleasedatesEntity rde = new ReleasedatesEntity();
         rde.setMovie(moviesEntity);
         rde.setReleaseDate(movie.getRelease().getReleaseDate());
         rde.setCountry(movie.getRelease().getCountry());

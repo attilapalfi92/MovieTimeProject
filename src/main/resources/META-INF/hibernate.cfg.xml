@@ -14,7 +14,7 @@
       <mapping class="com.movietime.model.ProducersEntity"/>
       <mapping class="com.movietime.model.WritersEntity"/>
       <mapping class="com.movietime.model.Movies2ActorsEntity"/>
-      <mapping class="com.movietime.model.MpaaRatingsEntity"/>
+      <mapping class="com.movietime.model.MpaaratingsEntity"/>
       <mapping class="com.movietime.model.GenresEntity"/>
       <mapping class="com.movietime.model.BiographiesEntity"/>
       <mapping class="com.movietime.model.DirectorsEntity"/>
@@ -24,8 +24,8 @@
       <mapping class="com.movietime.model.LocationsEntity"/>
       <mapping class="com.movietime.model.QuotesEntity"/>
       <mapping class="com.movietime.model.RatingsEntity"/>
-      <mapping class="com.movietime.model.ReleaseDatesEntity"/>
-      <mapping class="com.movietime.model.RunningTimesEntity"/>
+      <mapping class="com.movietime.model.ReleasedatesEntity"/>
+      <mapping class="com.movietime.model.RunningtimesEntity"/>
       <mapping class="com.movietime.model.TaglinesEntity"/>
       <mapping class="com.movietime.model.PlotsEntity"/>
   </session-factory>

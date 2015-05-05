@@ -1,7 +1,7 @@
 package com.movietime.entitywrappers;
 
 import com.movietime.model.Movies2ActorsEntity;
-import com.movietime.model.ReleaseDatesEntity;
+import com.movietime.model.ReleasedatesEntity;
 
 import java.util.List;
 
@@ -12,10 +12,10 @@ public class SubmittedMovie {
     private String title;
     private List<String> genres;
     private List<Movies2ActorsEntity> roles;
-    private ReleaseDatesEntity release;
+    private ReleasedatesEntity release;
     private List<String> taglines;
 
-    public SubmittedMovie(String title, List<String> genres, List<Movies2ActorsEntity> roles, ReleaseDatesEntity release, List<String> taglines) {
+    public SubmittedMovie(String title, List<String> genres, List<Movies2ActorsEntity> roles, ReleasedatesEntity release, List<String> taglines) {
         this.title = title;
         this.genres = genres;
         this.roles = roles;
@@ -50,11 +50,11 @@ public class SubmittedMovie {
         this.roles = roles;
     }
 
-    public ReleaseDatesEntity getRelease() {
+    public ReleasedatesEntity getRelease() {
         return release;
     }
 
-    public void setRelease(ReleaseDatesEntity release) {
+    public void setRelease(ReleasedatesEntity release) {
         this.release = release;
     }
 

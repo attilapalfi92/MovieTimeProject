@@ -13,7 +13,7 @@ public class FullMovieWrapper extends ResourceSupport {
     private List<ActorsEntity> actors;
     private List<ProducersEntity> producers;
     private List<WritersEntity> writers;
-    private MpaaRatingsEntity mpaaRating;
+    private MpaaratingsEntity mpaaRating;
     private List<GenresEntity> genres;
     private List<DirectorsEntity> directors;
     private List<EditorsEntity> editors;
@@ -21,7 +21,7 @@ public class FullMovieWrapper extends ResourceSupport {
     private List<LocationsEntity> locations;
     //private QuotesEntity quote;
     private RatingsEntity rating;
-    private RunningTimesEntity runningTime;
+    private RunningtimesEntity runningTime;
 
     public FullMovieWrapper() {}
 
@@ -80,19 +80,19 @@ public class FullMovieWrapper extends ResourceSupport {
         this.rating = rating;
     }
 
-    public RunningTimesEntity getRunningTime() {
+    public RunningtimesEntity getRunningTime() {
         return runningTime;
     }
 
-    public void setRunningTime(RunningTimesEntity runningTime) {
+    public void setRunningTime(RunningtimesEntity runningTime) {
         this.runningTime = runningTime;
     }
 
-    public MpaaRatingsEntity getMpaaRating() {
+    public MpaaratingsEntity getMpaaRating() {
         return mpaaRating;
     }
 
-    public void setMpaaRating(MpaaRatingsEntity mpaaRating) {
+    public void setMpaaRating(MpaaratingsEntity mpaaRating) {
         this.mpaaRating = mpaaRating;
     }
 

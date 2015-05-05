@@ -27,7 +27,7 @@ public class MoviesEntity extends ResourceSupport {
     @JsonIgnore
     private List<Movies2ActorsEntity> characters;
     @JsonIgnore
-    private List<MpaaRatingsEntity> mpaaRatings;
+    private List<MpaaratingsEntity> mpaaRatings;
     @JsonIgnore
     private List<GenresEntity> genres;
     @JsonIgnore
@@ -45,9 +45,9 @@ public class MoviesEntity extends ResourceSupport {
     @JsonIgnore
     private RatingsEntity rating;
     @JsonIgnore
-    private List<ReleaseDatesEntity> releaseDates;
+    private List<ReleasedatesEntity> releaseDates;
     @JsonIgnore
-    private List<RunningTimesEntity> runningTimes;
+    private List<RunningtimesEntity> runningTimes;
     @JsonIgnore
     private PlotsEntity plot;
 
@@ -166,11 +166,11 @@ public class MoviesEntity extends ResourceSupport {
     /*@JoinTable(name = "mpaaratings", catalog = "movietime2", schema = "",
         joinColumns = @JoinColumn(name = "movieid", referencedColumnName = "movieid", nullable = false),
         inverseJoinColumns = @JoinColumn(name = "mpaaratings_id", referencedColumnName = "mpaaratings_id", nullable = false))*/
-    public List<MpaaRatingsEntity> getMpaaRatings() {
+    public List<MpaaratingsEntity> getMpaaRatings() {
         return mpaaRatings;
     }
 
-    public void setMpaaRatings(List<MpaaRatingsEntity> mpaaRatings) {
+    public void setMpaaRatings(List<MpaaratingsEntity> mpaaRatings) {
         this.mpaaRatings = mpaaRatings;
     }
 
@@ -247,20 +247,20 @@ public class MoviesEntity extends ResourceSupport {
     }
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
-    public List<ReleaseDatesEntity> getReleaseDates() {
+    public List<ReleasedatesEntity> getReleaseDates() {
         return releaseDates;
     }
 
-    public void setReleaseDates(List<ReleaseDatesEntity> releaseDates) {
+    public void setReleaseDates(List<ReleasedatesEntity> releaseDates) {
         this.releaseDates = releaseDates;
     }
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
-    public List<RunningTimesEntity> getRunningTimes() {
+    public List<RunningtimesEntity> getRunningTimes() {
         return runningTimes;
     }
 
-    public void setRunningTimes(List<RunningTimesEntity> runningTimes) {
+    public void setRunningTimes(List<RunningtimesEntity> runningTimes) {
         this.runningTimes = runningTimes;
     }
 
