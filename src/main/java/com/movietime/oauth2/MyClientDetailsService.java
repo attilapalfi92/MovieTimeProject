@@ -8,8 +8,9 @@ import java.util.List;
 
 /**
  * Created by Attila on 2015-05-06.
+ * A service that provides the details about an OAuth2 client.
  */
-public class MyGuestService implements ClientDetailsService {
+public class MyClientDetailsService implements ClientDetailsService {
     private String id;
     private String secretKey;
 
@@ -28,14 +29,14 @@ public class MyGuestService implements ClientDetailsService {
             authorities.add(new GrantedAuthority() {
                 @Override
                 public String getAuthority() {
-                    return "ROLE_CLIENT";
+                    return "ROLE_USER";
                 }
             });
 
             authorities.add(new GrantedAuthority() {
                 @Override
                 public String getAuthority() {
-                    return "ROLE_TRUSTED_CLIENT";
+                    return "ROLE_ADMIN";
                 }
             });
 
@@ -56,8 +57,10 @@ public class MyGuestService implements ClientDetailsService {
             clientDetails.setAuthorizedGrantTypes(authorizedGrantTypes);
             clientDetails.setAuthorities(authorities);
             clientDetails.setScope(scopes);
-            clientDetails.setAccessTokenValiditySeconds(30);
-            clientDetails.setRefreshTokenValiditySeconds(600);
+            // AccesToken lasts for 1 day: 1*24*60*60 = 86400 seconds
+            clientDetails.setAccessTokenValiditySeconds(86400);
+            // RefresToken lasts for 1 month: 30*24*60*60 = 2592000 seconds
+            clientDetails.setRefreshTokenValiditySeconds(2592000);
 
             return clientDetails;
 

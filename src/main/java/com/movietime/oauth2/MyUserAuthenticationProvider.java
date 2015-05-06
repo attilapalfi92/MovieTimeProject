@@ -8,11 +8,11 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by Attila on 2015-05-06.
+ * Indicates a class can process a specific Authentication implementation.
  */
 @Component
 public class MyUserAuthenticationProvider implements AuthenticationProvider {
@@ -22,11 +22,13 @@ public class MyUserAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+
         boolean result = myAuthenticationProxy.isValidUser(
                 authentication.getPrincipal().toString(), authentication.getCredentials().toString());
 
         if (result) {
-            List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+            MyUserDetails userDetails = myAuthenticationProxy.detailsOfUser(authentication.getPrincipal().toString());
+            Collection<? extends GrantedAuthority> grantedAuthorities = userDetails.getAuthorities();
             MyUserAuthenticationToken auth = new MyUserAuthenticationToken(authentication.getPrincipal(),
                     authentication.getCredentials(), grantedAuthorities);
 

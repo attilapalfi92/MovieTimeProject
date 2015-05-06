@@ -77,7 +77,7 @@
 
 
     <sec:authentication-manager alias="authenticationManager">
-        <sec:authentication-provider user-service-ref="clientDetailsUserService" />
+        <sec:authentication-provider user-service-ref="userDetailsUserService" />
     </sec:authentication-manager>
 
     <sec:authentication-manager id="userAuthenticationManager">
@@ -88,8 +88,8 @@
           class="com.movietime.oauth2.MyUserAuthenticationProvider">
     </bean>
 
-    <bean id="clientDetailsUserService"
-          class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">
+    <bean id="userDetailsUserService"
+          class="com.movietime.oauth2.MyUserDetailsService">
         <constructor-arg ref="clientDetails"/>
     </bean>
 
@@ -127,11 +127,12 @@
                            token-services-ref="tokenServices"/>
 
     <!-- Client Definition -->
-    <bean id="clientDetails" class="com.movietime.oauth2.MyGuestService">
+    <bean id="clientDetails" class="com.movietime.oauth2.MyClientDetailsService">
         <property name="id" value="MovieTime" />
         <property name="secretKey" value="MovieTimeSecretKey" />
     </bean>
     <bean id="myAuthenticationProxy" class="com.movietime.oauth2.MyAuthenticationProxy"></bean>
+
 
 
 

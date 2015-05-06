@@ -7,6 +7,7 @@ import java.util.Collection;
 
 /**
  * Created by Attila on 2015-05-06.
+ * An Authentication implementation that is designed for simple presentation of a username and password.
  */
 public class MyUserAuthenticationToken extends AbstractAuthenticationToken {
 
