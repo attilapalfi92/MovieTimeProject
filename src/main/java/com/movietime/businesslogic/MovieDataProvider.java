@@ -29,7 +29,7 @@ public class MovieDataProvider {
     @Autowired
     private MovieDao movieDao;
     @Autowired
-    private ReleasedateDao releasedateDao;
+    private ReleaseDao releaseDao;
     @Autowired
     private M2aDao m2aDao;
     @Autowired
@@ -182,7 +182,7 @@ public class MovieDataProvider {
         rde.setReleaseDate(movie.getRelease().getReleaseDate());
         rde.setCountry(movie.getRelease().getCountry());
         rde.setAddition(movie.getRelease().getAddition());
-        releasedateDao.saveNewReleaseDate(rde);
+        releaseDao.saveNewReleaseDate(rde);
 
         // saving roles
         for (Movies2ActorsEntity m2a : movie.getRoles()) {

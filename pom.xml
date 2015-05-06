@@ -95,6 +95,13 @@
             <version>3.2.3.RELEASE</version>
         </dependency>
 
+        <!-- OAUTH2 libarires -->
+        <dependency>
+            <groupId>org.springframework.security.oauth</groupId>
+            <artifactId>spring-security-oauth2</artifactId>
+            <version>1.0.5.RELEASE</version>
+        </dependency>
+
         <!-- Everything Else -->
         <dependency>
             <groupId>mysql</groupId>
