@@ -36,11 +36,20 @@ $(document).ready(function(){
     $('#submitActor_div').hide();
     $('#submitOther_div').hide();
 
+    Cookies.get()
+
     console.log(pSize);
+    getRefreshToken('Oppenheimer', '111111', refreshTokenHandler());
+
 });
 
+function refreshTokenHandler(refreshToken) {
+    console.log(refreshToken);
+}
 
-
+function accessTokenHandler(accessToken) {
+    console.log(accessToken);
+}
 
 
 

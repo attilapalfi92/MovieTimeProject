@@ -359,6 +359,14 @@
       <primary-key name="PRIMARY" columns="triviaId"/>
       <index name="movieid" unique="false" columns="movieid"/>
     </table>
+    <table name="users" schema="" catalog="movietime2" type="TABLE">
+      <column name="user_id" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_name" sqlType="VARCHAR" precision="64" scale="0" nullable="true" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="64" scale="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="128" scale="0" nullable="true" jdbcType="12"/>
+      <column name="role" sqlType="ENUM" precision="2" scale="0" nullable="true" jdbcType="1"/>
+      <primary-key name="PRIMARY" columns="user_id"/>
+    </table>
     <table name="writers" schema="" catalog="movietime2" type="TABLE">
       <column name="writerid" sqlType="MEDIUMINT UNSIGNED" precision="8" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="name" sqlType="VARCHAR" precision="250" scale="0" nullable="false" jdbcType="12"/>

@@ -28,5 +28,6 @@
       <mapping class="com.movietime.model.RunningtimesEntity"/>
       <mapping class="com.movietime.model.TaglinesEntity"/>
       <mapping class="com.movietime.model.PlotsEntity"/>
+      <mapping class="com.movietime.model.UsersEntity"/>
   </session-factory>
 </hibernate-configuration>

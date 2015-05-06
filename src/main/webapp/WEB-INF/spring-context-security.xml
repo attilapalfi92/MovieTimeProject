@@ -3,9 +3,13 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:oauth="http://www.springframework.org/schema/security/oauth2"
        xmlns:sec="http://www.springframework.org/schema/security"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
 
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
        http://www.springframework.org/schema/security
        http://www.springframework.org/schema/security/spring-security-3.2.xsd
        http://www.springframework.org/schema/security/oauth2
@@ -14,7 +18,7 @@
        http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
     <!-- Definition of the Authentication Service -->
-    <http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="clientAuthenticationManager"
+    <http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="authenticationManager"
           xmlns="http://www.springframework.org/schema/security">
         <intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_FULLY"/>
         <anonymous enabled="false"/>
@@ -33,6 +37,8 @@
         <anonymous enabled="false"/>
         <intercept-url pattern="/rest/actor/**"
                        access="ROLE_USER"/>
+        <intercept-url pattern="/rest/submit/**"
+                       access="ROLE_ADMIN" />
         <custom-filter ref="resourceServerFilter"
                        before="PRE_AUTH_FILTER"/>
         <access-denied-handler
@@ -55,7 +61,7 @@
 
     <bean id="clientCredentialsTokenEndpointFilter"
           class="org.springframework.security.oauth2.provider.client.ClientCredentialsTokenEndpointFilter">
-        <property name="authenticationManager" ref="clientAuthenticationManager"/>
+        <property name="authenticationManager" ref="authenticationManager"/>
     </bean>
 
     <bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased"
@@ -69,23 +75,28 @@
         </constructor-arg>
     </bean>
 
-    <!-- Authentication in config file -->
-    <authentication-manager id="clientAuthenticationManager" xmlns="http://www.springframework.org/schema/security">
-        <authentication-provider user-service-ref="clientDetailsUserService"/>
-    </authentication-manager>
 
-    <authentication-manager alias="authenticationManager" xmlns="http://www.springframework.org/schema/security">
-        <authentication-provider>
-            <user-service id="userDetailsService">
-                <user name="admin" password="password" authorities="ROLE_USER"/>
-            </user-service>
-        </authentication-provider>
-    </authentication-manager>
+    <sec:authentication-manager alias="authenticationManager">
+        <sec:authentication-provider user-service-ref="clientDetailsUserService" />
+    </sec:authentication-manager>
+
+    <sec:authentication-manager id="userAuthenticationManager">
+        <sec:authentication-provider ref="customUserAuthenticationProvider" />
+    </sec:authentication-manager>
+
+    <bean id="customUserAuthenticationProvider"
+          class="com.movietime.oauth2.MyUserAuthenticationProvider">
+    </bean>
 
     <bean id="clientDetailsUserService"
           class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">
         <constructor-arg ref="clientDetails"/>
     </bean>
+
+
+
+
+
 
     <!-- Token Store  -->
     <bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.InMemoryTokenStore"/>
@@ -94,8 +105,7 @@
         <property name="tokenStore" ref="tokenStore"/>
         <property name="supportRefreshToken" value="true"/>
         <property name="clientDetailsService" ref="clientDetails"/>
-        <!-- VIV -->
-        <property name="accessTokenValiditySeconds" value="10"/>
+        <property name="accessTokenValiditySeconds" value="120"/>
     </bean>
 
     <bean id="userApprovalHandler"
@@ -104,13 +114,12 @@
     </bean>
 
     <!-- Token management -->
-    <oauth:authorization-server client-details-service-ref="clientDetails" token-services-ref="tokenServices"
-                                user-approval-handler-ref="userApprovalHandler">
+    <oauth:authorization-server client-details-service-ref="clientDetails" token-services-ref="tokenServices">
         <oauth:authorization-code/>
         <oauth:implicit/>
         <oauth:refresh-token/>
         <oauth:client-credentials/>
-        <oauth:password/>
+        <oauth:password authentication-manager-ref="userAuthenticationManager"/>
     </oauth:authorization-server>
 
     <oauth:resource-server id="resourceServerFilter"
@@ -118,20 +127,14 @@
                            token-services-ref="tokenServices"/>
 
     <!-- Client Definition -->
-    <oauth:client-details-service id="clientDetails">
-        <!-- I refer to this in the
-        /oauth/token?grant_type=password@client_id=my-trusted-client&username=admin&password=password
-        url -->
-        <!-- access_token lasts for 600 seconds, refresh token lasts for 30 seconds -->
-        <oauth:client client-id="my-trusted-client"
-                      authorized-grant-types="password,authorization_code,refresh_token,implicit,redirect"
-                      authorities="ROLE_CLIENT, ROLE_TRUSTED_CLIENT"
-                      redirect-uri="/web"
-                      scope="read,write,trust"
-                      access-token-validity="30"
-                      refresh-token-validity="600"/>
+    <bean id="clientDetails" class="com.movietime.oauth2.MyGuestService">
+        <property name="id" value="MovieTime" />
+        <property name="secretKey" value="MovieTimeSecretKey" />
+    </bean>
+    <bean id="myAuthenticationProxy" class="com.movietime.oauth2.MyAuthenticationProxy"></bean>
 
-    </oauth:client-details-service>
+
+
 
 
     <sec:global-method-security pre-post-annotations="enabled" proxy-target-class="true">
@@ -140,4 +143,10 @@
     <oauth:expression-handler id="oauthExpressionHandler"/>
     <oauth:web-expression-handler id="oauthWebExpressionHandler"/>
 
+
+    <mvc:annotation-driven />
+
+    <mvc:default-servlet-handler />
+
+    <context:annotation-config/>
 </beans>

@@ -8,11 +8,18 @@
     </welcome-file-list>
 
     <!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+    <!--<context-param>-->
+        <!--<param-name>contextConfigLocation</param-name>-->
+        <!--<param-value>-->
+            <!--/WEB-INF/root-context.xml-->
+            <!--/WEB-INF/spring-context-security.xml-->
+        <!--</param-value>-->
+    <!--</context-param>-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
             /WEB-INF/root-context.xml
-            /WEB-INF/spring-context-security.xml
+            /WEB-INF/spring-context.xml
         </param-value>
     </context-param>
 
