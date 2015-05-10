@@ -16,12 +16,11 @@ import org.springframework.security.oauth2.provider.client.ClientDetailsUserDeta
  * It is used throughout the framework as a user DAO and is the strategy used by the DaoAuthenticationProvider.
  * Contains only one read-only method, which simplifies support for new data-access strategies.
  */
-@Component
 public class MyUserDetailsService implements UserDetailsService {
 
-    MyClientDetailsService myClientDetailsService;
+    private final MyClientDetailsService myClientDetailsService;
 
-    public MyUserDetailsService() {}
+    //public MyUserDetailsService() {}
 
     public MyUserDetailsService(MyClientDetailsService myClientDetailsService) {
         this.myClientDetailsService = myClientDetailsService;

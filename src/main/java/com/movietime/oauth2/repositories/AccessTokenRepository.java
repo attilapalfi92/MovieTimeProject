@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Attila on 2015-05-06.
  */
-@Repository
+//@Repository
 public class AccessTokenRepository {
 
     public AccessToken findByTokenId(String tokenId) {

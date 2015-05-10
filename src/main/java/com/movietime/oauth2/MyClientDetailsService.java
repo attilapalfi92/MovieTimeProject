@@ -20,6 +20,7 @@ public class MyClientDetailsService implements ClientDetailsService {
         if (clientId.equals(id)) {
             List<String> authorizedGrantTypes = new ArrayList<>();
             authorizedGrantTypes.add("password");
+            authorizedGrantTypes.add("authorization_code");
             authorizedGrantTypes.add("refresh_token");
             authorizedGrantTypes.add("client_credentials");
             authorizedGrantTypes.add("implicit");
@@ -36,7 +37,7 @@ public class MyClientDetailsService implements ClientDetailsService {
             authorities.add(new GrantedAuthority() {
                 @Override
                 public String getAuthority() {
-                    return "ROLE_ADMIN";
+                    return "ROLE_TRUSTED_CLIENT";
                 }
             });
 
