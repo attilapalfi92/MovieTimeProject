@@ -4,23 +4,24 @@
        xmlns:oauth="http://www.springframework.org/schema/security/oauth2"
        xmlns:sec="http://www.springframework.org/schema/security"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
-
        xsi:schemaLocation="
        http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
        http://www.springframework.org/schema/security
        http://www.springframework.org/schema/security/spring-security-3.2.xsd
        http://www.springframework.org/schema/security/oauth2
-       http://www.springframework.org/schema/security/spring-security-oauth2-1.0.xsd
+       http://www.springframework.org/schema/security/spring-security-oauth2-2.0.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+       http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
     <!-- Definition of the Authentication Service -->
-    <http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="clientAuthenticationManager"
+    <http pattern="/oauth/token/**"
+          create-session="stateless"
+          authentication-manager-ref="clientAuthenticationManager"
           xmlns="http://www.springframework.org/schema/security">
-        <intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_FULLY"/>
+        <intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_FULLY" method="POST"/>
         <anonymous enabled="false"/>
         <http-basic entry-point-ref="clientAuthenticationEntryPoint"/>
         <!-- include this only if you need to authenticate clients via request parameters -->
@@ -34,15 +35,18 @@
           entry-point-ref="oauthAuthenticationEntryPoint"
           access-decision-manager-ref="accessDecisionManager"
           xmlns="http://www.springframework.org/schema/security">
+        <intercept-url pattern="/rest/movieTime/actor/**" access="ROLE_USER" method="GET" />
+        <intercept-url pattern="/rest/movieTime/actor/**" access="ROLE_USER" method="POST" />
+        <intercept-url pattern="/rest/movieTime/actor/**" access="ROLE_USER" method="PUT" />
+        <intercept-url pattern="/rest/movieTime/actor/**" access="ROLE_USER" method="DELETE" />
         <anonymous enabled="false"/>
-        <intercept-url pattern="/rest/movieTime/actor/**"
-                       access="ROLE_USER"/>
-        <intercept-url pattern="/rest/movieTime/submit/**"
-                       access="ROLE_ADMIN" />
-        <custom-filter ref="resourceServerFilter"
-                       before="PRE_AUTH_FILTER"/>
-        <access-denied-handler
-                ref="oauthAccessDeniedHandler"/>
+        <!--<intercept-url pattern="/rest/movieTime/actor/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>-->
+        <!--<intercept-url pattern="/rest/movieTime/actor/**" access="permitAll"/>-->
+        <!--<intercept-url pattern="/rest/movieTime/submit/**" access="permitAll" />-->
+        <!--<intercept-url pattern="/rest/movieTime/actor/**" access="ROLE_USER"/>-->
+        <!--<intercept-url pattern="/rest/movieTime/submit/**" access="ROLE_ADMIN" />-->
+        <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
+        <access-denied-handler ref="oauthAccessDeniedHandler"/>
     </http>
 
     <bean id="oauthAuthenticationEntryPoint"
@@ -84,23 +88,29 @@
         <sec:authentication-provider user-service-ref="clientDetailsUserService" />
     </sec:authentication-manager>
 
-    <sec:authentication-manager alias="userAuthenticationManager">
-        <sec:authentication-provider ref="customUserAuthenticationProvider" />
-    </sec:authentication-manager>
+    <!--<sec:authentication-manager alias="userAuthenticationManager">-->
+        <!--<sec:authentication-provider ref="customUserAuthenticationProvider" />-->
+    <!--</sec:authentication-manager>-->
+    <authentication-manager alias="userAuthenticationManager" xmlns="http://www.springframework.org/schema/security">
+        <authentication-provider>
+            <user-service id="userDetailsService">
+                <user name="Oppenheimer" password="111111" authorities="ROLE_USER"/>
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
 
-    <!-- vs: org.springframework.security.oauth2.provider.client.InMemoryClientDetailsService -->
-    <bean id="clientDetailsUserService"
-          class="com.movietime.oauth2.MyUserDetailsService">
-        <constructor-arg ref="clientDetails"/>
-    </bean>
     <!--<bean id="clientDetailsUserService"-->
-          <!--class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">-->
+          <!--class="com.movietime.oauth2.MyUserDetailsService">-->
         <!--<constructor-arg ref="clientDetails"/>-->
     <!--</bean>-->
-
-    <bean id="customUserAuthenticationProvider"
-          class="com.movietime.oauth2.MyUserAuthenticationProvider">
+    <bean id="clientDetailsUserService"
+          class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">
+        <constructor-arg ref="clientDetails"/>
     </bean>
+
+    <!--<bean id="customUserAuthenticationProvider"-->
+          <!--class="com.movietime.oauth2.MyUserAuthenticationProvider">-->
+    <!--</bean>-->
 
 
 
@@ -111,7 +121,7 @@
 
 
     <!-- Token Store  -->
-    <bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.InMemoryTokenStore"/>
+    <bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore"/>
 
     <!-- tokenStore is always empty. there is another tokenServices somewhere. -->
     <bean id="tokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
@@ -125,8 +135,15 @@
     </bean>
 
     <bean id="userApprovalHandler"
-          class="org.springframework.security.oauth2.provider.approval.TokenServicesUserApprovalHandler">
-        <property name="tokenServices" ref="tokenServices"/>
+          class="org.springframework.security.oauth2.provider.approval.TokenStoreUserApprovalHandler">
+        <property name="tokenStore" ref="tokenStore"/>
+        <property name="clientDetailsService" ref="clientDetails"/>
+        <property name="requestFactory" ref="oAuth2RequestFactory"/>
+    </bean>
+
+    <bean id="oAuth2RequestFactory"
+          class="org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory">
+        <constructor-arg ref="clientDetails"/>
     </bean>
 
     <!-- Token management -->
@@ -144,16 +161,27 @@
                            token-services-ref="tokenServices"/>
 
     <!-- Client Definition -->
-    <bean id="clientDetails" class="com.movietime.oauth2.MyClientDetailsService">
-        <property name="id" value="MovieTime" />
-        <property name="secretKey" value="MovieTimeSecretKey" />
-    </bean>
+    <!--<bean id="clientDetails" class="com.movietime.oauth2.MyClientDetailsService">-->
+        <!--<property name="id" value="MovieTime" />-->
+        <!--<property name="secretKey" value="MovieTimeSecretKey" />-->
+    <!--</bean>-->
+    <oauth:client-details-service id="clientDetails">
+        <oauth:client client-id="MovieTime"
+                      secret="MovieTimeSecretKey"
+                      authorized-grant-types="password,authorization_code,refresh_token,implicit,redirect"
+                      authorities="ROLE_USER, ROLE_ADMIN"
+                      redirect-uri="/web"
+                      scope="read,write,trust"
+                      access-token-validity="86400"
+                      refresh-token-validity="2592000"/>
+
+    </oauth:client-details-service>
+
+
+
+
+
     <!--<bean id="myAuthenticationProxy" class="com.movietime.oauth2.MyAuthenticationProxy"></bean>-->
-
-
-
-
-
 
     <sec:global-method-security pre-post-annotations="enabled" proxy-target-class="true">
         <sec:expression-handler ref="oauthExpressionHandler"/>

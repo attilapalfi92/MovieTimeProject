@@ -2,6 +2,7 @@ package com.movietime.oauth2;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.provider.*;
+import org.springframework.security.oauth2.provider.client.BaseClientDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class MyClientDetailsService implements ClientDetailsService {
             authorities.add(new GrantedAuthority() {
                 @Override
                 public String getAuthority() {
-                    return "ROLE_TRUSTED_CLIENT";
+                    return "ROLE_ADMIN";
                 }
             });
 

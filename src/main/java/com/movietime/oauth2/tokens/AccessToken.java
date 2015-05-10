@@ -8,7 +8,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
  * Created by Attila on 2015-05-10.
  */
 public class AccessToken {
-    private String tokenId;
+    /*private String tokenId;
     private OAuth2AccessToken oAuth2AccessToken;
     private String authenticationId;
     private String userName;
@@ -84,5 +84,5 @@ public class AccessToken {
 
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
-    }
+    }*/
 }
