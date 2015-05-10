@@ -41,142 +41,145 @@
     <title>MovieTime</title>
 </head>
 <body>
-    <div id="heading">
-        <h1>MovieTime!</h1>
-        <input type="text" placeholder="username">
-        <input type="text" placeholder="password">
-        <input type="button" value="Login">
+    <h1>MovieTime!</h1>
+    <div id="loginDiv">
+        <h3>Please, log in.</h3>
+        <input type="text" placeholder="username" id="username_i">
+        <input type="text" placeholder="password" id="password_i">
+        <input type="button" value="Login" onclick="loginClicked()">
     </div>
 
-    <div id="toolbar">
-        <hr/>
-        <input type="button" value="Movies" id="tb_mov_btn" onclick="tbMovBtnClicked()">
-        <input type="button" value="Actors" id="tb_act_btn" onclick="tbActBtnClicked()">
-        <input type="button" value="Must see" id="tb_must_btn" onclick="tbMustBtnClicked()">
-        <input type="button" value="Have seen" id="tb_have_btn" onclick="tbHaveBtnClicked()">
-        <input type="button" value="Submit data" id="tb_upload_mov_btn" onclick="tbUploadDataBtnClicked()">
-        <hr/>
-    </div>
-
-    <div id="movies_div">
-        <h2>Search for movies</h2>
-
-        <label for="mTitle_input">Title: </label>
-        <input id="mTitle_input" type="text" placeholder="movie title" oninput="titleChanged(value)" />
-        <input id="mTitle_submit" type="button" value="Go!" onclick="titleEnterPressed()" /> <br/>
-
-        <label for="pageSize_i">Page size: </label>
-        <input id="pageSize_i" type="range" min="10" max="100" step="1" class="bar"
-               value="30" oninput="sliderChanged(value)">
-        <label id="pSize_label"></label> <br/>
-        <label>page: </label><label id="pageNum_label">1</label>
-        <input class="btn btn-default" id="prev_btn" type="button" name="previous" value="previous" onclick="prevClicked()">
-        <input class="btn btn-default" id="next_btn" type="button" name="next" value="next" onclick="nextClicked()">
-
-        <hr/>
-
-        <div id="movie_details_div">
-            <h2 id="movie_title_h2"></h2>
-
-            <h4><input id="movie_details_hider" type="button" value="Details" onclick="toggleMovieDetails()"/></h4>
-            <div id="movie_details_hideable">
-                <div id="movie_plot_btn_div"></div>
-                <pre id="movie_plot_p"></pre>
-                <div>
-                    <h4 id="directors_h">Directors: </h4>      <p id="directors_p"></p>
-                    <h4 id="writers_h">Writers: </h4>          <p id="writers_p"></p>
-                    <h4 id="producers_h">Producers: </h4>      <p id="producers_p"></p>
-                    <h4 id="editors_h">Editors: </h4>          <p id="editors_p"></p>
-                    <h4 id="genres_h">Genres: </h4>            <p id="genres_p"></p>
-                    <h4 id="languages_h">Languages: </h4>      <p id="languages_p"></p>
-                    <h4 id="locations_h">Locations: </h4>      <p id="locations_p"></p>
-                </div>
-                <div id="actors_list">
-                    <h3>Actors</h3>
-                    <table id="movie_actorTable" class="table-striped"></table>
-                </div>
-            </div>
-
+    <div id="protectedDiv">
+        <h3 id="welcomeHeader"></h3>
+        <div id="toolbar">
+            <hr/>
+            <input type="button" value="Movies" id="tb_mov_btn" onclick="tbMovBtnClicked()">
+            <input type="button" value="Actors" id="tb_act_btn" onclick="tbActBtnClicked()">
+            <input type="button" value="Must see" id="tb_must_btn" onclick="tbMustBtnClicked()">
+            <input type="button" value="Have seen" id="tb_have_btn" onclick="tbHaveBtnClicked()">
+            <input type="button" value="Submit data" id="tb_upload_mov_btn" onclick="tbUploadDataBtnClicked()">
             <hr/>
         </div>
-        <div id="movie_list_div">
-            <h2>Movies found</h2>
-            <table id="moviesTable" class="table-striped">
-                <tr>
-                    <th>Title</th>
-                    <th>Tagline</th>
-                    <th>movieId</th>
-                    <th>link</th>
-                </tr>
-            </table>
-        </div>
-    </div>
 
+        <div id="movies_div">
+            <h2>Search for movies</h2>
 
+            <label for="mTitle_input">Title: </label>
+            <input id="mTitle_input" type="text" placeholder="movie title" oninput="titleChanged(value)" />
+            <input id="mTitle_submit" type="button" value="Go!" onclick="titleEnterPressed()" /> <br/>
 
-    <div id="actors_div">
-        <h2>Search for actors</h2>
-        <label for="actor_name_i">Name: </label>
-        <input type="text" id="actor_name_i" placeholder="actor name">
-        <input type="button" value="Go!" id="actor_search_btn" onclick="searchActors()">
+            <label for="pageSize_i">Page size: </label>
+            <input id="pageSize_i" type="range" min="10" max="100" step="1" class="bar"
+                   value="30" oninput="sliderChanged(value)">
+            <label id="pSize_label"></label> <br/>
+            <label>page: </label><label id="pageNum_label">1</label>
+            <input class="btn btn-default" id="prev_btn" type="button" name="previous" value="previous" onclick="prevClicked()">
+            <input class="btn btn-default" id="next_btn" type="button" name="next" value="next" onclick="nextClicked()">
 
-        <div id="actors_div_hideable">
-            <h2 id="actor_name_h2"></h2>
-            <h4><input type="button" value="Bio" id="actor_bio_btn" onclick="actorBioBtnClicked()"></h4>
-            <pre id="actor_bio"></pre>
-            <h3>Roles</h3>
-            <table id="actors_movies_table" class="table-striped">
-            </table>
-        </div>
+            <hr/>
 
-    </div>
+            <div id="movie_details_div">
+                <h2 id="movie_title_h2"></h2>
 
-    <div id="mustsee_div">
-    </div>
-
-    <div id="haveseen_div">
-    </div>
-
-    <div id="submitData_div">
-        <h2>Submit data</h2>
-
-        <input id="submitMovBtn" type="button" value="Movie" onclick="submitMovBtnClicked()">
-        <input id="submitActBtn" type="button" value="Actor" onclick="submitActBtnClicked()">
-        <input id="submitOtherBtn" type="button" value="Other" onclick="submitOtherBtnClicked()">
-
-        <div id="submitMovie_div">
-            <h3>Movie</h3>
-            <input id="submit_movie_btn" type="button" value="Submit" onclick="submitMovieClicked()"> <br/>
-            <label for="submit_mov_title">Title: </label>
-            <input id="submit_mov_title" type="text" placeholder="title"> <br/>
-
-            <label>Release: </label>
-            <input id="submit_mov_releaseDate" type="date">
-            <input id="submit_mov_country" type="text" placeholder="country"> <br/>
-
-            <label for="submit_mov_genres">Genres: </label>
-            <input id="submit_mov_genres" type="text" placeholder="genres">
-            <label for="submit_mov_genres">(; separated)</label> <br/>
-
-            <label for="submit_mov_taglines">Taglines: </label>
-            <input id="submit_mov_taglines" type="text" placeholder="taglines">
-            <label for="submit_mov_taglines">(; separated)</label> <hr/>
-
-            <div id="submit_mov_actor_adder">
-                <h4>Added actors</h4>
-                <div class="table-responsive">
-                    <table id="submit_mov_added_actors_t" class="table">
-                        <!-- This is where the selected actors go, and the user can type the role for him/her -->
-                        <tr>
-                            <th>Name</th>
-                            <th>actorId</th>
-                            <th>Role</th>
-                            <th>Cancel</th>
-                        </tr>
-                    </table>
+                <h4><input id="movie_details_hider" type="button" value="Details" onclick="toggleMovieDetails()"/></h4>
+                <div id="movie_details_hideable">
+                    <div id="movie_plot_btn_div"></div>
+                    <pre id="movie_plot_p"></pre>
+                    <div>
+                        <h4 id="directors_h">Directors: </h4>      <p id="directors_p"></p>
+                        <h4 id="writers_h">Writers: </h4>          <p id="writers_p"></p>
+                        <h4 id="producers_h">Producers: </h4>      <p id="producers_p"></p>
+                        <h4 id="editors_h">Editors: </h4>          <p id="editors_p"></p>
+                        <h4 id="genres_h">Genres: </h4>            <p id="genres_p"></p>
+                        <h4 id="languages_h">Languages: </h4>      <p id="languages_p"></p>
+                        <h4 id="locations_h">Locations: </h4>      <p id="locations_p"></p>
+                    </div>
+                    <div id="actors_list">
+                        <h3>Actors</h3>
+                        <table id="movie_actorTable" class="table-striped"></table>
+                    </div>
                 </div>
 
                 <hr/>
+            </div>
+            <div id="movie_list_div">
+                <h2>Movies found</h2>
+                <table id="moviesTable" class="table-striped">
+                    <tr>
+                        <th>Title</th>
+                        <th>Tagline</th>
+                        <th>movieId</th>
+                        <th>link</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+
+        <div id="actors_div">
+            <h2>Search for actors</h2>
+            <label for="actor_name_i">Name: </label>
+            <input type="text" id="actor_name_i" placeholder="actor name">
+            <input type="button" value="Go!" id="actor_search_btn" onclick="searchActors()">
+
+            <div id="actors_div_hideable">
+                <h2 id="actor_name_h2"></h2>
+                <h4><input type="button" value="Bio" id="actor_bio_btn" onclick="actorBioBtnClicked()"></h4>
+                <pre id="actor_bio"></pre>
+                <h3>Roles</h3>
+                <table id="actors_movies_table" class="table-striped">
+                </table>
+            </div>
+
+        </div>
+
+        <div id="mustsee_div">
+        </div>
+
+        <div id="haveseen_div">
+        </div>
+
+        <div id="submitData_div">
+            <h2>Submit data</h2>
+
+            <input id="submitMovBtn" type="button" value="Movie" onclick="submitMovBtnClicked()">
+            <input id="submitActBtn" type="button" value="Actor" onclick="submitActBtnClicked()">
+            <input id="submitOtherBtn" type="button" value="Other" onclick="submitOtherBtnClicked()">
+
+            <div id="submitMovie_div">
+                <h3>Movie</h3>
+                <input id="submit_movie_btn" type="button" value="Submit" onclick="submitMovieClicked()"> <br/>
+                <label for="submit_mov_title">Title: </label>
+                <input id="submit_mov_title" type="text" placeholder="title"> <br/>
+
+                <label>Release: </label>
+                <input id="submit_mov_releaseDate" type="date">
+                <input id="submit_mov_country" type="text" placeholder="country"> <br/>
+
+                <label for="submit_mov_genres">Genres: </label>
+                <input id="submit_mov_genres" type="text" placeholder="genres">
+                <label for="submit_mov_genres">(; separated)</label> <br/>
+
+                <label for="submit_mov_taglines">Taglines: </label>
+                <input id="submit_mov_taglines" type="text" placeholder="taglines">
+                <label for="submit_mov_taglines">(; separated)</label> <hr/>
+
+                <div id="submit_mov_actor_adder">
+                    <h4>Added actors</h4>
+                    <div class="table-responsive">
+                        <table id="submit_mov_added_actors_t" class="table">
+                            <!-- This is where the selected actors go, and the user can type the role for him/her -->
+                            <tr>
+                                <th>Name</th>
+                                <th>actorId</th>
+                                <th>Role</th>
+                                <th>Cancel</th>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <hr/>
                 </div>
                 <h4>Add actors and their roles to the movie</h4> <br/>
                 <input id="submit_mov_actor_firstName" type="text" placeholder="first name">
@@ -208,6 +211,7 @@
         </div>
 
     </div>
+
 
 
     <div id="loadingDiv" class="loading">

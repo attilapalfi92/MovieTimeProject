@@ -29,15 +29,15 @@
     </http>
 
     <!-- Protected resources -->
-    <http pattern="/rest/actor/**"
+    <http pattern="/rest/movieTime/actor/**"
           create-session="never"
           entry-point-ref="oauthAuthenticationEntryPoint"
           access-decision-manager-ref="accessDecisionManager"
           xmlns="http://www.springframework.org/schema/security">
         <anonymous enabled="false"/>
-        <intercept-url pattern="/rest/actor/**"
+        <intercept-url pattern="/rest/movieTime/actor/**"
                        access="ROLE_USER"/>
-        <intercept-url pattern="/rest/submit/**"
+        <intercept-url pattern="/rest/movieTime/submit/**"
                        access="ROLE_ADMIN" />
         <custom-filter ref="resourceServerFilter"
                        before="PRE_AUTH_FILTER"/>
@@ -105,7 +105,10 @@
         <property name="tokenStore" ref="tokenStore"/>
         <property name="supportRefreshToken" value="true"/>
         <property name="clientDetailsService" ref="clientDetails"/>
-        <property name="accessTokenValiditySeconds" value="120"/>
+        <!--AccessToken lasts for 1 day: 1*24*60*60 = 86400 seconds-->
+        <property name="accessTokenValiditySeconds" value="86400"/>
+        <!--RefreshToken lasts for 1 month: 30*24*60*60 = 2592000 seconds-->
+        <property name="refreshTokenValiditySeconds" value="2592000"/>
     </bean>
 
     <bean id="userApprovalHandler"

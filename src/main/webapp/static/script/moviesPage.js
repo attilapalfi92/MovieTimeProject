@@ -61,45 +61,50 @@ function loadMovieDetails(event) {
     $('#actors_div').hide('fast');
 
     var url = event.target.name;
-    // http://localhost:8090/rest/movie/byId/2122594
+    // http://localhost:8090/rest/movieTime/movie/byId/2122594
     var startIndex = url.indexOf('/rest');
     url = url.substring(startIndex);
+    url = url + '?access_token=' + Cookies.get('accessToken');
     console.log(url);
 
     var $loading = $('#loadingDiv');
-    $loading.show('fast');
+    $loading.show();
     $.ajax({
-        url: url
-    }).then(function(data) {
-        $loading.hide('fast');
-        console.log(data);
+        url: url,
+        success: function(data) {
+            $loading.hide();
+            console.log(data);
 
-        // this function fills the table containing the actors
-        // #actors_table
-        loadActorsTable(data.actors);
+            // this function fills the table containing the actors
+            // #actors_table
+            loadActorsTable(data.actors);
 
-        // this function fills the div containing
-        // every other data about the movie
-        loadMovieDetailsDiv(data);
+            // this function fills the div containing
+            // every other data about the movie
+            loadMovieDetailsDiv(data);
 
-        // creating the "Show Plot" button
-        startIndex = url.indexOf('/byId/');
-        var movId = url.substring(startIndex + 6);
-        var plotBtn = document.createElement('input');
-        plotBtn.setAttribute('type', 'button');
-        plotBtn.setAttribute('class', 'movie_toggle_plot_btn');
-        plotBtn.setAttribute('value', 'Plot');
-        plotBtn.setAttribute('name', movId);
-        $(plotBtn).click(movieShowPlotBtnClicked);
-        $('#movie_plot_btn_div').empty();
-        $('#movie_plot_btn_div').append(plotBtn);
-        firstPlotClick = true;
+            // creating the "Show Plot" button
+            startIndex = url.indexOf('/byId/');
+            var movId = url.substring(startIndex + 6);
+            var plotBtn = document.createElement('input');
+            plotBtn.setAttribute('type', 'button');
+            plotBtn.setAttribute('class', 'movie_toggle_plot_btn');
+            plotBtn.setAttribute('value', 'Plot');
+            plotBtn.setAttribute('name', movId);
+            $(plotBtn).click(movieShowPlotBtnClicked);
+            $('#movie_plot_btn_div').empty();
+            $('#movie_plot_btn_div').append(plotBtn);
+            firstPlotClick = true;
 
-        $('#movies_div').show('fast');
-        $('#movie_details_hideable').show();
-        $('#movie_plot_p').hide();
-        $('#movie_details_div').show('fast');
-
+            $('#movies_div').show('fast');
+            $('#movie_details_hideable').show();
+            $('#movie_plot_p').hide();
+            $('#movie_details_div').show('fast');
+        },
+        error: function(data) {
+            $('#loadingDiv').hide();
+            alert('movie error');
+        }
     });
 }
 
@@ -207,15 +212,20 @@ function movieShowPlotBtnClicked(event) {
     if (firstPlotClick) {
         plotPar.empty();
         var movieId = event.target.name;
-        var url = '/rest/plot/byMovieId/' + movieId;
+        var url = '/rest/movieTime/plot/byMovieId/' + movieId;
+        url = url + '?access_token=' + Cookies.get('accessToken');
         plotPar.hide();
         $.ajax({
-            url: url
-        }).then(function(data){
-            if(data) {
-                plotPar.text(data.plotText);
-                firstPlotClick = false;
-                plotPar.show(500);
+            url: url,
+            success: function(data) {
+                if(data) {
+                    plotPar.text(data.plotText);
+                    firstPlotClick = false;
+                    plotPar.show(500);
+                }
+            },
+            error: function(data) {
+                alert('movie error');
             }
         });
 
@@ -306,27 +316,32 @@ function titleChanged(value) {
 // in movies. its called after each keypress
 function searchMoviesFast(mTitle) {
     // creating the url: title
-    var url = "/rest/movie/byTitle/" + mTitle + '/';
+    var url = "/rest/movieTime/movie/byTitle/" + mTitle + '/';
     // creating the url: page number
     var pNum = $('#pageNum_label').text();
     url = url + pNum + '/';
     // creating the url: page size
     var pSize = $('#pageSize_i').val();
     url = url + pSize;
+    url = url + '?access_token=' + Cookies.get('accessToken');
 
     console.log(url);
 
     $.ajax({
-        url: url
-    }).then(function(data){
-        console.log(data);
-        if(data.movies.length != 0) {
-            updateMovieListTable(data);
-            $('#moviesTable').show();
-        } else {
-            $('#moviesTable').hide(50);
-            $('#next_btn').prop('disabled', true);
-            $('#prev_btn').prop('disabled', true);
+        url: url,
+        success: function(data) {
+            console.log(data);
+            if(data.movies.length != 0) {
+                updateMovieListTable(data);
+                $('#moviesTable').show();
+            } else {
+                $('#moviesTable').hide(50);
+                $('#next_btn').prop('disabled', true);
+                $('#prev_btn').prop('disabled', true);
+            }
+        },
+        error: function(data) {
+            alert('movie error');
         }
     });
 }
@@ -335,29 +350,35 @@ function searchMoviesFast(mTitle) {
 // much more results.
 function searchMoviesMore(mTitle) {
     // creating the url: title
-    var url = "/rest/movie/byPartTitle/" + mTitle + '/';
+    var url = "/rest/movieTime/movie/byPartTitle/" + mTitle + '/';
     // creating the url: page number
     var pNum = $('#pageNum_label').text();
     url = url + pNum + '/';
     // creating the url: page size
     var pSize = $('#pageSize_i').val();
     url = url + pSize;
+    url = url + '?access_token=' + Cookies.get('accessToken');
 
     console.log(url);
     var $loading = $('#loadingDiv');
-    $loading.show('fast');
+    $loading.show();
     $.ajax({
-        url: url
-    }).then(function(data){
-        if(data.movies.length != 0) {
-            updateMovieListTable(data);
-            $('#moviesTable').show();
-        } else {
-            $('#moviesTable').hide(50);
-            $('#next_btn').prop('disabled', true);
-            $('#prev_btn').prop('disabled', true);
+        url: url,
+        success: function(data) {
+            if(data.movies.length != 0) {
+                updateMovieListTable(data);
+                $('#moviesTable').show();
+            } else {
+                $('#moviesTable').hide(50);
+                $('#next_btn').prop('disabled', true);
+                $('#prev_btn').prop('disabled', true);
+            }
+            $loading.hide();
+        },
+        error: function(data) {
+            $loading.hide();
+            alert("movie error");
         }
-        $loading.hide('fast');
     });
 }
 

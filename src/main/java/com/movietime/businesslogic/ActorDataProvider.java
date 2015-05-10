@@ -1,6 +1,6 @@
 package com.movietime.businesslogic;
 
-import com.movietime.controllers.ActorRestController;
+import com.movietime.controllers.movieTimeApp.ActorRestController;
 import com.movietime.dataservices.MovieDao;
 import com.movietime.entitywrappers.ActorPage;
 import com.movietime.entitywrappers.ActorWrapper;

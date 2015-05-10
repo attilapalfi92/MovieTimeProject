@@ -1,7 +1,7 @@
 package com.movietime.businesslogic;
 
-import com.movietime.controllers.ActorRestController;
-import com.movietime.controllers.MovieRestController;
+import com.movietime.controllers.movieTimeApp.ActorRestController;
+import com.movietime.controllers.movieTimeApp.MovieRestController;
 import com.movietime.dataservices.*;
 import com.movietime.entitywrappers.FullMovieWrapper;
 import com.movietime.entitywrappers.MoviePage;

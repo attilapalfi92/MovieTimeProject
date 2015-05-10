@@ -36,21 +36,90 @@ $(document).ready(function(){
     $('#submitActor_div').hide();
     $('#submitOther_div').hide();
 
-    Cookies.get()
+    // hide the protected div by default
+    $('#protectedDiv').hide();
+    // hide loginDiv by default too, and show when it's needed
+    $('#loginDiv').hide();
 
-    console.log(pSize);
-    getRefreshToken('Oppenheimer', '111111', refreshTokenHandler());
+    userName = Cookies.get('userName');
+    // if userName is undefined, user has to log in
+    if (typeof userName === 'undefined') {
+        $('#loginDiv').show('fast');
 
+    } else { // else check his/her tokens
+        password = Cookies.get('password');
+        var accessToken = Cookies.get('accessToken');
+        var refreshToken = Cookies.get('refreshToken');
+
+        // if accessToken is undefined, we have to get one and save it to cookies
+        if (typeof accessToken === 'undefined') {
+
+            // if refreshToken is undefined too, the user is logged out
+            // and she/he has to log in again
+            if (typeof refreshToken === 'undefined') {
+                $('#loginDiv').show('fast');
+                return;
+            }
+
+            // else we can get access token and the user is logged in
+            getAccessToken(refreshToken.refresh_token, saveAccessToken, logOut);
+            logIn();
+        }
+
+        // else the user is logged in
+        logIn();
+    }
 });
 
-function refreshTokenHandler(refreshToken) {
-    console.log(refreshToken);
+
+function logOut(reason) {
+    $('#protectedDiv').hide('fast');
+    $('#loginDiv').show('fast');
+    Cookies.remove('userName');
+    Cookies.remove('password');
+    Cookies.remove('accessToken');
+    Cookies.remove('refreshToken');
 }
 
-function accessTokenHandler(accessToken) {
+function logIn() {
+    $('#welcomeHeader').text('Welcome ' + userName + '!');
+    $('#protectedDiv').show('fast');
+    $('#loginDiv').hide('fast');
+}
+
+
+function loginClicked() {
+    userName = $('#username_i').val();
+    password = $('#password_i').val();
+    getRefreshToken(userName, password, userLoggedIn, logOut);
+    Cookies.set('userName', userName, { expires: 31 });
+    Cookies.set('password', password, { expires: 31 });
+}
+
+
+var userName;
+var password;
+
+
+function userLoggedIn(refreshToken) {
+    Cookies.set('refreshToken', refreshToken.refresh_token, { expires: 30 });
+
+    var tokenLife = refreshToken.expires_in / 60 / 60 / 24;
+    Cookies.set('accessToken', refreshToken.access_token, { expires: tokenLife });
+
+    console.log('Token: ');
+    console.log(refreshToken);
+
+    logIn();
+}
+
+
+function saveAccessToken(accessToken) {
+    var tokenLife = accessToken.expires_in / 60 / 60 / 24;
+    Cookies.set('accessToken', accessToken.access_token, { expires: tokenLife });
+    console.log('accessToken: ');
     console.log(accessToken);
 }
-
 
 
 

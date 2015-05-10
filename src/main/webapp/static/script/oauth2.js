@@ -2,7 +2,7 @@
  * Created by Attila on 2015-05-06.
  */
 
-function getRefreshToken(userName, pwd, refreshTokenHandler) {
+function getRefreshToken(userName, pwd, refreshTokenHandler, errorHandler) {
     var pwdGrantUrl = '/oauth/token?client_id=MovieTime&client_secret=MovieTimeSecretKey&grant_type=password&username=' +
         userName +
         '&password=' +
@@ -11,20 +11,30 @@ function getRefreshToken(userName, pwd, refreshTokenHandler) {
     $.ajax({
         url: pwdGrantUrl,
         success: function(response) {
-            refreshTokenHandler(response.refresh_token);
+            refreshTokenHandler(response);
+        },
+        error: function(response) {
+            console.log('Error happened during getRefreshToken');
+            console.log(response);
+            errorHandler('refresh');
         }
     })
 
 }
 
-function getAccessToken(refreshToken, accessTokenHandler) {
+function getAccessToken(refreshToken, accessTokenHandler, errorHandler) {
     var refreshGrantUrl = '/oauth/token?client_id=MovieTime&client_secret=MovieTimeSecretKey&grant_type=refresh_token&refresh_token=' +
         refreshToken;
 
     $.ajax({
         url: refreshGrantUrl,
         success: function(response) {
-            accessTokenHandler(response.access_token);
+            accessTokenHandler(response);
+        },
+        error: function(response) {
+            console.log('Error happened during getAccessToken');
+            console.log(response);
+            errorHandler('access');
         }
     });
 }

@@ -1,4 +1,4 @@
-package com.movietime.controllers;
+package com.movietime.controllers.movieTimeApp;
 
 import com.movietime.businesslogic.MovieDataProvider;
 import com.movietime.entitywrappers.FullMovieWrapper;
@@ -27,7 +27,7 @@ public class MovieRestController {
      * @param movieId the id of the desired movie
      * @return http response containing the movie in json format
      */
-    @RequestMapping(value = RestUriConstants.GET_MOVIE_BY_ID, method = RequestMethod.GET)
+    @RequestMapping(value = "/rest/movieTime/movie/byId/{id}", method = RequestMethod.GET)
     public @ResponseBody
     HttpEntity<FullMovieWrapper> getMovieById(@PathVariable("id") int movieId) {
         FullMovieWrapper movie = movieDataProvider.getMovieById(movieId);
@@ -43,7 +43,7 @@ public class MovieRestController {
      * @param pageSize size of pages
      * @return a page of movies
      */
-    @RequestMapping(value = RestUriConstants.GET_MOVIES_BY_TITLE, method = RequestMethod.GET)
+    @RequestMapping(value = "/rest/movieTime/movie/byTitle/{title}/{page}/{pageSize}", method = RequestMethod.GET)
     public @ResponseBody HttpEntity<MoviePage> getMoviesByTitle(@PathVariable("title") String movieTitle,
                                                              @PathVariable("page") int page,
                                                              @PathVariable("pageSize") int pageSize) {
@@ -61,7 +61,7 @@ public class MovieRestController {
      * @param pageSize size of pages
      * @return a page of movies
      */
-    @RequestMapping(value = RestUriConstants.GET_MOVIES_BY_PART_TITLE, method = RequestMethod.GET)
+    @RequestMapping(value = "/rest/movieTime/movie/byPartTitle/{title}/{page}/{pageSize}", method = RequestMethod.GET)
     public @ResponseBody HttpEntity<MoviePage> getMoviesByPartTitle(@PathVariable("title") String movieTitle,
                                                                 @PathVariable("page") int page,
                                                                 @PathVariable("pageSize") int pageSize) {
@@ -74,22 +74,11 @@ public class MovieRestController {
 
 
     /**
-     * Returns with the plot of the desired movie.
-     * @param movieId ID of the movie who's plot is needed.
-     * @return Http response containing the plot in json format.
-     */
-    @RequestMapping(value = RestUriConstants.GET_PLOT, method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<PlotsEntity> getPlotForMovie(@PathVariable("id") int movieId) {
-        return new ResponseEntity<PlotsEntity>(movieDataProvider.getPlotForMovie(movieId), HttpStatus.OK);
-    }
-
-
-    /**
      * A movie can be posted to be saved in the database as a new movie.
      * @param movie The movie to be saved.
      * @return The saved / unsaved movie.
      */
-    @RequestMapping(value = RestUriConstants.POST_MOVIE, method = RequestMethod.POST)
+    @RequestMapping(value = "/rest/movieTime/movie", method = RequestMethod.POST)
     public ResponseEntity<SubmittedMovie> postMovie(@RequestBody SubmittedMovie movie) {
         try{
             movieDataProvider.saveNewMovie(movie);

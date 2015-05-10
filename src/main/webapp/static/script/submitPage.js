@@ -27,7 +27,7 @@ function submitMovActSrchBtnClicked() {
     if(firstName && lastName) {
         var pageLabel = $('#submit_mov_act_page_l');
         var page = parseInt(pageLabel.text());
-        var url = '/rest/actor/byName/' + firstName + '/' + lastName + '/' + page + '/' + 30;
+        var url = '/rest/movieTime/actor/byName/' + firstName + '/' + lastName + '/' + page + '/' + 30;
         var $loading = $('#loadingDiv');
         $loading.show('fast');
         $.ajax({
@@ -241,7 +241,8 @@ function submitMovieClicked() {
     }
     movie.taglines = taglines.split(';');
     console.log(movie);
-    var url = '/rest/movie';
+    var url = '/rest/movieTime/movie';
+    url = url + '?access_token=' + Cookies.get('accessToken');
 
     $.ajax({
         type: 'POST',

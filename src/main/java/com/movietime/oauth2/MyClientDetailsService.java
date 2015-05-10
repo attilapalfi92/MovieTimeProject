@@ -57,9 +57,9 @@ public class MyClientDetailsService implements ClientDetailsService {
             clientDetails.setAuthorizedGrantTypes(authorizedGrantTypes);
             clientDetails.setAuthorities(authorities);
             clientDetails.setScope(scopes);
-            // AccesToken lasts for 1 day: 1*24*60*60 = 86400 seconds
+            // AccessToken lasts for 1 day: 1*24*60*60 = 86400 seconds
             clientDetails.setAccessTokenValiditySeconds(86400);
-            // RefresToken lasts for 1 month: 30*24*60*60 = 2592000 seconds
+            // RefreshToken lasts for 1 month: 30*24*60*60 = 2592000 seconds
             clientDetails.setRefreshTokenValiditySeconds(2592000);
 
             return clientDetails;
