@@ -19,7 +19,7 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>
             /WEB-INF/root-context.xml
-            /WEB-INF/spring-context.xml
+            /WEB-INF/spring-context-security.xml
         </param-value>
     </context-param>
 
