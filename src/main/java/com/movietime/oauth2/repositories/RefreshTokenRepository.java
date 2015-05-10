@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 /**
  * Created by Attila on 2015-05-06.
  */
-@Repository
+//@Repository
 public class RefreshTokenRepository {
 
     public RefreshToken findByTokenId(String tokenId) {
