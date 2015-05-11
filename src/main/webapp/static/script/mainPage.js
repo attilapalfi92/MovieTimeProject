@@ -20,11 +20,13 @@ $(document).ready(function(){
     var pSize = $('#pageSize_i').val();
     $('#pSize_label').text(pSize);
 
-    // hide buttons
+    // disable buttons
     $('#next_btn').prop('disabled', true);
     $('#prev_btn').prop('disabled', true);
     $('#submit_mov_prev_act_btn').prop('disabled', true);
     $('#submit_mov_next_act_btn').prop('disabled', true);
+    $('#actors_prev_act_btn').prop('disabled', true);
+    $('#actors_next_act_btn').prop('disabled', true);
 
     // hide movie details table
     $('#movie_details_div').hide();
@@ -32,7 +34,7 @@ $(document).ready(function(){
     $('#movie_list_div').hide();
     $('#actors_div').hide();
     $('#submitData_div').hide();
-    $('#actors_div_hideable').hide();
+    $('#actors_div_details').hide();
     $('#submitActor_div').hide();
     $('#submitOther_div').hide();
 
@@ -120,8 +122,3 @@ function saveAccessToken(accessToken) {
     console.log('accessToken: ');
     console.log(accessToken);
 }
-
-
-
-
-

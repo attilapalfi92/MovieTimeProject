@@ -21,6 +21,12 @@ function submitOtherBtnClicked() {
 }
 
 function submitMovActSrchBtnClicked() {
+    $('#submit_mov_act_page_l').text('1');
+    submitMovActorsSearch();
+}
+
+
+function submitMovActorsSearch() {
     var firstName = $('#submit_mov_actor_firstName').val();
     var lastName = $('#submit_mov_actor_lastName').val();
 
@@ -28,13 +34,18 @@ function submitMovActSrchBtnClicked() {
         var pageLabel = $('#submit_mov_act_page_l');
         var page = parseInt(pageLabel.text());
         var url = '/rest/movieTime/actor/byName/' + firstName + '/' + lastName + '/' + page + '/' + 30;
+        url = url + '?access_token=' + Cookies.get('accessToken');
         var $loading = $('#loadingDiv');
-        $loading.show('fast');
+        $loading.show();
         $.ajax({
-            url: url
-        }).then(function(data){
-            loadSubmitMovActorTable(data)>
-            $loading.hide('fast');
+            url: url,
+            success: function(data) {
+                loadSubmitMovActorTable(data)>
+                $loading.hide();
+            },
+            error: function(data) {
+                $loading.hide();
+            }
         });
 
     } else if (!firstName && !lastName) {
@@ -43,6 +54,7 @@ function submitMovActSrchBtnClicked() {
         $('#submit_mov_prev_act_btn').prop('disabled', true);
     }
 }
+
 
 
 function loadSubmitMovActorTable(data) {
@@ -117,7 +129,7 @@ function submitMovPrevActors() {
     console.log(pNum);
     pageLabel.text(pNum.toString());
 
-    submitMovActSrchBtnClicked();
+    submitMovActorsSearch();
 }
 
 
@@ -128,7 +140,7 @@ function submitMovNextActors() {
     console.log(pNum);
     pageLabel.text(pNum.toString());
 
-    submitMovActSrchBtnClicked();
+    submitMovActorsSearch();
 }
 
 
@@ -251,10 +263,38 @@ function submitMovieClicked() {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function(msg) {
+            alert('Movie added!');
+            clearSubmitInputs();
             console.log(msg);
         },
         error: function(msg) {
+            alert(msg);
             console.log(msg);
         }
     });
+}
+
+
+
+function clearSubmitInputs() {
+    //"submit_mov_title"
+    $('#submit_mov_title').val('');
+    //"submit_mov_releaseDate"
+    $('#submit_mov_releaseDate').val('');
+    //"submit_mov_country"
+    $('#submit_mov_country').val('');
+    //"submit_mov_genres"
+    $('#submit_mov_genres').val('');
+    //"submit_mov_taglines"
+    $('#submit_mov_taglines').val('');
+    //"submit_mov_added_actors_t"
+    $('#submit_mov_added_actors_t').empty();
+    //"submit_mov_act_page_l"
+    $('#submit_mov_act_page_l').text('1');
+    //"submit_mov_prev_act_btn"
+    $('#submit_mov_prev_act_btn').prop('disabled', true);
+    //"submit_mov_next_act_btn"
+    $('#submit_mov_next_act_btn').prop('disabled', true);
+    //"submit_mov_actor_t"
+    $('#submit_mov_actor_t').empty();
 }

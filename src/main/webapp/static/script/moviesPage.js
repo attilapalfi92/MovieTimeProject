@@ -213,7 +213,6 @@ function movieShowPlotBtnClicked(event) {
         plotPar.empty();
         var movieId = event.target.name;
         var url = '/rest/movieTime/plot/byMovieId/' + movieId;
-        url = url + '?access_token=' + Cookies.get('accessToken');
         plotPar.hide();
         $.ajax({
             url: url,
