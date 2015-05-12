@@ -82,7 +82,7 @@ function loadSubmitMovActorTable(data) {
 
             var addBtn = document.createElement('input');
             addBtn.setAttribute('type', 'button');
-            addBtn.setAttribute('class', 'btn btn-default');
+            //addBtn.setAttribute('class', 'btn btn-default');
             addBtn.setAttribute('value', 'Add');
             var btnName = 'actorId= ' + actor.actorId + '; name= ' + actor.name;
             addBtn.setAttribute('name', btnName);
@@ -181,7 +181,7 @@ function addActorToMovie(event) {
 
     var cancelBtn = document.createElement('input');
     cancelBtn.setAttribute('type', 'button');
-    cancelBtn.setAttribute('class', 'btn btn-default');
+    //cancelBtn.setAttribute('class', 'btn btn-default');
     cancelBtn.setAttribute('value', 'Cancel');
     cancelBtn.setAttribute('name', actorId);
     $(cancelBtn).click(cancelActorFromMovieSubmit);

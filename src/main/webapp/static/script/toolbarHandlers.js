@@ -37,7 +37,7 @@ function tbMustBtnClicked() {
     $('#haveseen_div').hide('fast');
     $('#submitData_div').hide('fast');
     $('#mustsee_div').show('fast');
-    $('body').css('background-color', '#FF6961');
+    $('body').css('background-color', '#BB7971');
 }
 
 

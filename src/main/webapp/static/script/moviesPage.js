@@ -88,7 +88,7 @@ function loadMovieDetails(event) {
             var movId = url.substring(startIndex + 6);
             var plotBtn = document.createElement('input');
             plotBtn.setAttribute('type', 'button');
-            plotBtn.setAttribute('class', 'btn btn-default');
+            //plotBtn.setAttribute('class', 'btn btn-default');
             plotBtn.setAttribute('value', 'Plot');
             plotBtn.setAttribute('name', movId);
             $(plotBtn).click(movieShowPlotBtnClicked);
@@ -193,7 +193,7 @@ function loadActorsTable(actors) {
 
         var detailsBtn = document.createElement('input');
         detailsBtn.setAttribute('type', 'button');
-        detailsBtn.setAttribute('class', 'btn btn-default');
+        //detailsBtn.setAttribute('class', 'btn btn-default');
         detailsBtn.setAttribute('value', 'Show details');
         detailsBtn.setAttribute('name', actor.links[0].href);
         $(detailsBtn).click(loadActorDetails);
@@ -437,7 +437,7 @@ function updateMovieListTable(data) {
 
         var detailsBtn = document.createElement('input');
         detailsBtn.setAttribute('type', 'button');
-        detailsBtn.setAttribute('class', 'btn btn-default');
+        //detailsBtn.setAttribute('class', 'btn btn-default');
         detailsBtn.setAttribute('value', 'Show details');
         detailsBtn.setAttribute('name', link1);
         $(detailsBtn).click(loadMovieDetails);

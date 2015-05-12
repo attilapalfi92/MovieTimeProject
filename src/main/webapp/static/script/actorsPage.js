@@ -151,8 +151,7 @@ function loadActorsActorTable(data) {
 
             var detailsBtn = document.createElement('input');
             detailsBtn.setAttribute('type', 'button');
-
-            detailsBtn.setAttribute('class', 'btn btn-default');
+            //detailsBtn.setAttribute('class', 'btn btn-default');
             detailsBtn.setAttribute('value', 'Show details');
             detailsBtn.setAttribute('name', actor.links[0].href);
             $(detailsBtn).click(loadActorDetails);
