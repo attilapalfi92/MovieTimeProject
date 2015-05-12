@@ -98,21 +98,28 @@ function searchActors() {
     var firstName = $('#actors_actor_firstName').val();
     var lastName = $('#actors_actor_lastName').val();
 
-    if(firstName && lastName) {
+    if(firstName || lastName) {
+        if(!firstName) {
+            firstName = "_";
+        }
+        if(!lastName) {
+            lastName = "_";
+        }
         var pageLabel = $('#actors_act_page_l');
         var page = parseInt(pageLabel.text());
         var url = '/rest/movieTime/actor/byName/' + firstName + '/' + lastName + '/' + page + '/' + 30;
         url = url + '?access_token=' + Cookies.get('accessToken');
         var $loading = $('#loadingDiv');
-        $loading.show();
+        //$loading.show();
         $.ajax({
             url: url,
             success: function(data) {
-                loadActorsActorTable(data)>
-                $loading.hide();
+                loadActorsActorTable(data);
+                //$loading.hide();
             },
             error: function(data) {
-                $loading.hide();
+                //$loading.hide();
+                ajaxFailedHandler(data, searchActors, logOut, undefined);
             }
         });
 

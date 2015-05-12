@@ -8,20 +8,38 @@ import javax.persistence.*;
 @Entity
 @Table(name = "users", schema = "", catalog = "movietime2")
 public class UsersEntity {
-    private int user_id;
+    private int userId;
     private String userName;
     private String password;
     private String email;
     private String role;
 
-    @Id
-    @Column(name = "user_id", nullable = false, insertable = true, updatable = true)
-    public int getUser_id() {
-        return user_id;
+    public UsersEntity() {
     }
 
-    public void setUser_id(int userId) {
-        this.user_id = userId;
+    public UsersEntity(int userId, String userName, String password, String email, String role) {
+        this.userId = userId;
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
+
+    public UsersEntity(String userName, String password, String email, String role) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
+
+    @Id
+    @Column(name = "user_id", nullable = false, insertable = true, updatable = true)
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     @Basic
@@ -72,7 +90,7 @@ public class UsersEntity {
 
         UsersEntity that = (UsersEntity) o;
 
-        if (user_id != that.user_id) return false;
+        if (userId != that.userId) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
         if (role != null ? !role.equals(that.role) : that.role != null) return false;
@@ -83,7 +101,7 @@ public class UsersEntity {
 
     @Override
     public int hashCode() {
-        int result = user_id;
+        int result = userId;
         result = 31 * result + (userName != null ? userName.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);

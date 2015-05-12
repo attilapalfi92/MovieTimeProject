@@ -47,7 +47,19 @@
     <input type="text" placeholder="username" id="username_i">
     <input type="password" placeholder="password" id="password_i">
     <input type="button" value="Login" onclick="loginClicked()">
+    <hr/>
+    <h3>Or register.</h3>
+    <form id="reg_form" onsubmit="regFormSubmit(event)">
+        <input type="text" placeholder="username" id="reg_user_i"> <br/>
+        <input type="email" placeholder="email address" id="reg_email1_i"> <br/>
+        <input type="email" placeholder="repeat email address" id="reg_email2_i"> <br/>
+        <input type="password" placeholder="password" id="reg_pwd1_i"> <br/>
+        <input type="password" placeholder="repeat password" id="reg_pwd2_i"> <br/>
+        <input type="submit" value="Ok!">
+    </form>
 </div>
+
+
 
 <div id="protectedDiv">
     <h3 id="welcomeHeader"></h3>
@@ -103,7 +115,7 @@
                 </div>
                 <div id="actors_list">
                     <h3>Actors</h3>
-                    <table id="movie_actorTable" class="table-striped"></table>
+                    <table id="movie_actorTable" class="table"></table>
                 </div>
             </div>
 
@@ -111,7 +123,7 @@
         </div>
         <div id="movie_list_div">
             <h2>Movies found</h2>
-            <table id="moviesTable" class="table-striped">
+            <table id="moviesTable" class="table">
                 <tr>
                     <th>Title</th>
                     <th>Tagline</th>
@@ -141,8 +153,10 @@
         <input class="btn btn-default" type="button" value="Next" class="btn btn-default"
                id="actors_next_act_btn" onclick="actorsNextActors()">
 
+        <br/><br/>
 
         <div id="actors_div_details">
+
             <h2 id="actor_name_h2"></h2>
             <input type="button" value="Details" class="btn btn-default" onclick="actorDetailsBtnClicked()" />
             <div id="actors_div_details_hideable">
@@ -150,7 +164,7 @@
                            onclick="actorBioBtnClicked()"></h4>
                 <pre id="actor_bio"></pre>
                 <h3>Roles</h3>
-                <table id="actors_movies_table" class="table-striped">
+                <table id="actors_movies_table" class="table">
                 </table>
             </div>
         </div>
@@ -195,20 +209,34 @@
         <div id="submitMovie_div">
             <h3>Movie</h3>
             <input id="submit_movie_btn" type="button" value="Submit" class="btn btn-default"
-                   onclick="submitMovieClicked()"> <br/>
-            <label for="submit_mov_title">Title: </label>
-            <input id="submit_mov_title" type="text" placeholder="title"> <br/>
+                   onclick="submitMovieClicked()">
 
-            <label>Release: </label>
-            <input id="submit_mov_releaseDate" type="date">
-            <input id="submit_mov_country" type="text" placeholder="country"> <br/>
+            <hr/>
 
-            <label for="submit_mov_genres">Genres: </label>
-            <input id="submit_mov_genres" type="text" placeholder="genres">
+            <label for="submit_mov_title" style="width: 120px"
+                   class="col-sm-2 control-label">Title: </label>
+            <input id="submit_mov_title" type="text" style="width: 200px; height: 25px"
+                   placeholder="title"> <br/>
+
+            <br/>
+            <label style="width: 120px" class="col-sm-2 control-label"
+                    for="submit_mov_releaseDate">Release: </label>
+            <input id="submit_mov_releaseDate"  type="date" style="width: 200px; height: 25px">
+            <input id="submit_mov_country" type="text" placeholder="country"
+                   style="width: 200px; height: 25px"> <br/>
+            <br/>
+
+            <label for="submit_mov_genres" style="width: 120px"
+                   class="col-sm-2 control-label">Genres: </label>
+            <input id="submit_mov_genres" type="text" placeholder="genres"
+                   style="width: 200px; height: 25px">
             <label for="submit_mov_genres">(; separated)</label> <br/>
+            <br/>
 
-            <label for="submit_mov_taglines">Taglines: </label>
-            <input id="submit_mov_taglines" type="text" placeholder="taglines">
+            <label for="submit_mov_taglines" style="width: 120px"
+                   class="col-sm-2 control-label">Taglines: </label>
+            <input id="submit_mov_taglines" type="text" placeholder="taglines"
+                   style="width: 200px; height: 25px">
             <label for="submit_mov_taglines">(; separated)</label> <hr/>
 
             <div id="submit_mov_actor_adder">
@@ -238,7 +266,7 @@
                    onclick="submitMovPrevActors()">
             <input type="button" value="Next" id="submit_mov_next_act_btn" class="btn btn-default"
                    onclick="submitMovNextActors()">
-
+            <br/><br/>
             <div class="table-responsive">
                 <table id="submit_mov_actor_t" class="table"></table>
             </div>
@@ -261,6 +289,8 @@
 
 </div>
 
+<br/><br/><br/><br/>
+<input id="logout_btn" type="button" class="btn btn-default" value="Log out" onclick="logOut()">
 
 
 <div id="loadingDiv" class="loading">

@@ -1,7 +1,9 @@
 package com.movietime.businesslogic;
 
 import com.movietime.controllers.movieTimeApp.ActorRestController;
+import com.movietime.dataservices.ActorDao;
 import com.movietime.dataservices.MovieDao;
+import com.movietime.dataservices.OthersDao;
 import com.movietime.entitywrappers.ActorPage;
 import com.movietime.entitywrappers.ActorWrapper;
 import com.movietime.entitywrappers.LightMovieWrapper;
@@ -21,23 +23,25 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * Created by Attila on 2015-05-02.
  */
 @Service
-public class ActorDataProvider {
+public class ActorBusinessLogic {
     @Autowired
-    private MovieDao movieDao;
+    private ActorDao actorDao;
+    @Autowired
+    private OthersDao othersDao;
 
     /**
      * Finds and actor by it's ID.
      * @param actorId ID of the desired actor.
      * @return The desired Actor.
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public ActorWrapper getActorById(int actorId) {
-        List<Movies2ActorsEntity> result = movieDao.findMovies2ActorsByActorId(actorId);
+        List<Movies2ActorsEntity> result = othersDao.findMovies2ActorsByActorId(actorId);
         ActorWrapper actorWrapper = new ActorWrapper();
         // setting the actor
-        actorWrapper.setActor(movieDao.findActorById(actorId));
+        actorWrapper.setActor(actorDao.findActorById(actorId));
         actorWrapper.getActor().add(linkTo(methodOn(ActorRestController.class).getActorById(actorId)).withRel("actor"));
-        BiographiesEntity biography = movieDao.findBioByName(actorWrapper.getActor().getName());
+        BiographiesEntity biography = othersDao.findBioByName(actorWrapper.getActor().getName());
         actorWrapper.setBiography(biography);
         // setting the roles of the actor
         for(Movies2ActorsEntity i : result) {
@@ -55,10 +59,12 @@ public class ActorDataProvider {
      * @param lastName
      * @return
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public ActorPage getActorsByName(String firstName, String lastName, int page, int pageSize) {
-        List<ActorsEntity> actors = movieDao.findActorsByName(firstName, lastName, page, pageSize);
+        String name = lastName.trim() + "%" + firstName.trim() + "%";
+        List<ActorsEntity> actors = actorDao.findActorsByName(name, page, pageSize);
         ActorPage actorPage = new ActorPage(actors, 1, 30);
+
 
         // adding links to the actors
         for (ActorsEntity actor : actors) {

@@ -1,17 +1,16 @@
 /**
  * Created by Attila on 2015-04-30.
  */
-
 // when ajax is loading
-$(document)
-    .ajaxStart(function () {
-        //var $loading = $('#loadingDiv').hide();
-        //$loading.show();
-    })
-    .ajaxStop(function () {
-        //var $loading = $('#loadingDiv').hide();
-        //$loading.hide();
-    });
+//$(document)
+//    .ajaxStart(function () {
+//        //var $loading = $('#loadingDiv').hide();
+//        //$loading.show();
+//    })
+//    .ajaxStop(function () {
+//        //var $loading = $('#loadingDiv').hide();
+//        //$loading.hide();
+//    });
 
 
 // when document is ready, set the slider's label
@@ -40,6 +39,7 @@ $(document).ready(function(){
     $('#actors_div_details').hide();
     $('#submitActor_div').hide();
     $('#submitOther_div').hide();
+    $('#logout_btn').hide();
 
     // hide the protected div by default
     $('#protectedDiv').hide();
@@ -80,6 +80,7 @@ $(document).ready(function(){
 function logOut(reason) {
     $('#protectedDiv').hide('fast');
     $('#loginDiv').show('fast');
+    $('#logout_btn').hide();
     Cookies.remove('userName');
     Cookies.remove('password');
     Cookies.remove('accessToken');
@@ -90,6 +91,7 @@ function logIn() {
     $('#welcomeHeader').text('Welcome ' + userName + '!');
     $('#protectedDiv').show('fast');
     $('#loginDiv').hide('fast');
+    $('#logout_btn').show();
 }
 
 
@@ -145,6 +147,11 @@ function ajaxFailedHandler(response, successHandler, errorHandler, successHandle
         return;
     }
 
+    if (response.statusText == 'Not Found') {
+        alert('Resource not found.')
+        return;
+    }
+
     $.ajax({
         type: 'POST',
         contentType: 'application/json; charset=utf-8',
@@ -165,3 +172,68 @@ function ajaxFailedHandler(response, successHandler, errorHandler, successHandle
         }
     });
 }
+
+
+//$('#reg_form').submit(function () {
+function regFormSubmit(e) {
+    e.preventDefault();
+
+    var regUsername = $('#reg_user_i').val();
+    var regEmail1 = $('#reg_email1_i').val();
+    var regEmail2 = $('#reg_email2_i').val();
+    var regPwd1 = $('#reg_pwd1_i').val();
+    var regPwd2 = $('#reg_pwd2_i').val();
+
+    if (!regUsername.replace(/\s/g, '').length) {
+        alert('Username cannot be empty.');
+        return false;
+    }
+
+    if (!regEmail1.replace(/\s/g, '').length) {
+        alert('Email cannot be empty.');
+        return false;
+    }
+
+    if (!regPwd1.replace(/\s/g, '').length) {
+        alert('Password cannot be empty.');
+        return false;
+    }
+
+    if (regEmail1 != regEmail2) {
+        alert('Emails must be the same.')
+        return false;
+    }
+
+    if (regPwd1 != regPwd2) {
+        alert('Passwords must be the same.')
+        return false;
+    }
+
+    var user = new Object();
+
+    user.userName = regUsername;
+    user.password = regPwd1;
+    user.email = regEmail1;
+    user.role = 'U';
+
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        url: '/rest/movieTimeRegister',
+        data: JSON.stringify(user),
+        success: function(response) {
+            alert('Account created! Logging you in.');
+            $('#username_i').val(regUsername);
+            $('#password_i').val(regPwd1);
+            loginClicked();
+            return false;
+        },
+        error: function(response) {
+            alert('An error occurred: ' + response);
+            return false;
+        }
+    });
+
+    return false;
+};

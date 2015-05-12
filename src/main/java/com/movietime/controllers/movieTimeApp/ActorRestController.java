@@ -1,6 +1,6 @@
 package com.movietime.controllers.movieTimeApp;
 
-import com.movietime.businesslogic.ActorDataProvider;
+import com.movietime.businesslogic.ActorBusinessLogic;
 import com.movietime.entitywrappers.ActorPage;
 import com.movietime.entitywrappers.ActorWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ActorRestController {
 
     @Autowired
-    ActorDataProvider actorDataProvider;
+    ActorBusinessLogic actorBusinessLogic;
 
     /**
      * Returns with an actor determined by it's ID.
@@ -30,7 +30,7 @@ public class ActorRestController {
     @RequestMapping(value = "/rest/movieTime/actor/byId/{id}", method = RequestMethod.GET)
     public @ResponseBody
     HttpEntity<ActorWrapper> getActorById(@PathVariable("id") int actorId) {
-        return new ResponseEntity<ActorWrapper>(actorDataProvider.getActorById(actorId), HttpStatus.OK);
+        return new ResponseEntity<>(actorBusinessLogic.getActorById(actorId), HttpStatus.OK);
     }
 
 
@@ -44,6 +44,8 @@ public class ActorRestController {
     public @ResponseBody HttpEntity<ActorPage>
     getActorsByName(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName
         ,@PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
-        return new ResponseEntity<ActorPage>(actorDataProvider.getActorsByName(firstName, lastName, page, pageSize), HttpStatus.OK);
+        firstName = firstName.replaceAll("_", "");
+        lastName = lastName.replaceAll("_", "");
+        return new ResponseEntity<ActorPage>(actorBusinessLogic.getActorsByName(firstName, lastName, page, pageSize), HttpStatus.OK);
     }
 }

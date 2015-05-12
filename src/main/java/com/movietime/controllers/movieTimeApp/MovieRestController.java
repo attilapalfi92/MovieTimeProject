@@ -1,11 +1,10 @@
 package com.movietime.controllers.movieTimeApp;
 
-import com.movietime.businesslogic.MovieDataProvider;
+import com.movietime.businesslogic.MovieBusinessLogic;
 import com.movietime.entitywrappers.FullMovieWrapper;
 import com.movietime.entitywrappers.MoviePage;
 import com.movietime.entitywrappers.SubmittedMovie;
 import com.movietime.exceptions.PersistingFailedException;
-import com.movietime.model.PlotsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class MovieRestController {
 
     @Autowired
-    private MovieDataProvider movieDataProvider;
+    private MovieBusinessLogic movieBusinessLogic;
 
     /**
      * searches for a movie by id and returns with a http response containing the movie
@@ -30,9 +29,9 @@ public class MovieRestController {
     @RequestMapping(value = "/rest/movieTime/movie/byId/{id}", method = RequestMethod.GET)
     public @ResponseBody
     HttpEntity<FullMovieWrapper> getMovieById(@PathVariable("id") int movieId) {
-        FullMovieWrapper movie = movieDataProvider.getMovieById(movieId);
+        FullMovieWrapper movie = movieBusinessLogic.getMovieById(movieId);
 
-        return new ResponseEntity<FullMovieWrapper>(movie, HttpStatus.OK);
+        return new ResponseEntity<>(movie, HttpStatus.OK);
     }
 
 
@@ -48,9 +47,9 @@ public class MovieRestController {
                                                              @PathVariable("page") int page,
                                                              @PathVariable("pageSize") int pageSize) {
         movieTitle = movieTitle.replaceAll("_", " ");
-        MoviePage moviePage = movieDataProvider.getMoviesByTitle(movieTitle, page, pageSize);
+        MoviePage moviePage = movieBusinessLogic.getMoviesByTitle(movieTitle, page, pageSize);
 
-        return new ResponseEntity<MoviePage>(moviePage, HttpStatus.OK);
+        return new ResponseEntity<>(moviePage, HttpStatus.OK);
     }
 
 
@@ -66,9 +65,9 @@ public class MovieRestController {
                                                                 @PathVariable("page") int page,
                                                                 @PathVariable("pageSize") int pageSize) {
         movieTitle = movieTitle.replaceAll("_", " ");
-        MoviePage moviePage = movieDataProvider.getMoviesByPartTitle(movieTitle, page, pageSize);
+        MoviePage moviePage = movieBusinessLogic.getMoviesByPartTitle(movieTitle, page, pageSize);
 
-        return new ResponseEntity<MoviePage>(moviePage, HttpStatus.OK);
+        return new ResponseEntity<>(moviePage, HttpStatus.OK);
     }
 
 
@@ -79,9 +78,10 @@ public class MovieRestController {
      * @return The saved / unsaved movie.
      */
     @RequestMapping(value = "/rest/movieTime/movie", method = RequestMethod.POST)
-    public @ResponseBody HttpEntity<SubmittedMovie> postMovie(@RequestBody SubmittedMovie movie) {
+    public @ResponseBody
+    HttpEntity<SubmittedMovie> postMovie(@RequestBody SubmittedMovie movie) {
         try{
-            movieDataProvider.saveNewMovie(movie);
+            movieBusinessLogic.saveSubmittedMovie(movie);
         } catch (PersistingFailedException e) {
             return new ResponseEntity<>(movie, HttpStatus.BAD_REQUEST);
         }

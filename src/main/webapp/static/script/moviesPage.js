@@ -297,15 +297,15 @@ function titleChanged(value) {
     enterPressed = false;
     $('#pageNum_label').text('1');
 
-    $('#movie_list_div').hide(50);
+    //$('#movie_list_div').hide(10);
     // if the input is not empty
     if(value) {
         initMoviesTable();
         searchMoviesFast(value);
-        $('#movie_list_div').show(50);
+        //$('#movie_list_div').show(10);
 
     } else {
-        $('#movie_list_div').hide(50);
+        //$('#movie_list_div').hide(10);
         $('#next_btn').prop('disabled', true);
         $('#prev_btn').prop('disabled', true);
     }

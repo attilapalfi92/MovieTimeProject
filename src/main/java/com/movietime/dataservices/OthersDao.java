@@ -1,15 +1,21 @@
 package com.movietime.dataservices;
 
+import com.movietime.exceptions.EmailUsedException;
 import com.movietime.exceptions.PersistingFailedException;
+import com.movietime.exceptions.UsernameUsedException;
 import com.movietime.model.*;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import org.hibernate.dialect.function.SQLFunctionRegistry;
 
 /**
  * Created by Attila on 2015-05-05.
@@ -17,12 +23,15 @@ import java.util.List;
 @Repository
 public class OthersDao {
     @PersistenceContext
-    EntityManager em;
+    private EntityManager em;
 
     @Autowired
-    MovieDao movieDao;
+    private ActorDao actorDao;
 
-    public void saveNewGenre(GenresEntity genresEntity) throws PersistingFailedException {
+    @Autowired
+    private MovieDao movieDao;
+
+    public void persistNewGenre(GenresEntity genresEntity) throws PersistingFailedException {
         if (genresEntity.getMovie() == null) {
             if (genresEntity.getMovieId() == 0) {
                 throw new PersistingFailedException("Both movie and movieId cannot be null and 0.");
@@ -37,7 +46,7 @@ public class OthersDao {
         em.persist(genresEntity);
     }
 
-    public void saveNewM2aEntity(Movies2ActorsEntity m2aEntity) throws PersistingFailedException {
+    public void persistNewM2aEntity(Movies2ActorsEntity m2aEntity) throws PersistingFailedException {
         if (m2aEntity.getAsCharacter().isEmpty()) {
             throw new PersistingFailedException("asCharacter cannot be empty.");
         }
@@ -46,7 +55,7 @@ public class OthersDao {
             if (m2aEntity.getActorId() == 0) {
                 throw new PersistingFailedException("Both actor and actorId cannot be null and 0.");
             }
-            m2aEntity.setActor(movieDao.findActorById(m2aEntity.getActorId()));
+            m2aEntity.setActor(actorDao.findActorById(m2aEntity.getActorId()));
         }
 
         if (m2aEntity.getMovie() == null) {
@@ -61,7 +70,7 @@ public class OthersDao {
 
 
 
-    public void saveNewReleaseDate(ReleasedatesEntity releasedatesEntity) throws PersistingFailedException {
+    public void persistNewReleaseDate(ReleasedatesEntity releasedatesEntity) throws PersistingFailedException {
         if (releasedatesEntity.getReleaseDate() == null) {
             throw new PersistingFailedException("Release date cannot be null.");
         }
@@ -87,7 +96,7 @@ public class OthersDao {
 
 
 
-    public void saveNewTagline(TaglinesEntity taglinesEntity) throws PersistingFailedException {
+    public void persistNewTagline(TaglinesEntity taglinesEntity) throws PersistingFailedException {
         if (taglinesEntity.getMovie() == null) {
             if (taglinesEntity.getMovieId() == 0) {
                 throw new PersistingFailedException("Both movie and movieId cannot be null and 0.");
@@ -103,24 +112,50 @@ public class OthersDao {
     }
 
 
-
-    public void saveNewUser(UsersEntity user) throws PersistingFailedException {
-        List<UsersEntity> otherUsers = em.createQuery("SELECT UsersEntity FROM UsersEntity u WHERE " +
-                "u.userName = :username")
-                .setParameter("username", user.getUserName())
+    /**
+     * finder method for actor's biography
+     * @param name name of the actor who's biography is wanted
+     * @return biography of the actor
+     */
+    public BiographiesEntity findBioByName(String name) {
+        List<BiographiesEntity> biographies = em.createQuery("select b from BiographiesEntity  b where b.name = :name", BiographiesEntity.class)
+                .setParameter("name", name)
                 .getResultList();
 
-        for (UsersEntity otherUser : otherUsers) {
-            if (otherUser.getUserName().equals(user.getUserName())) {
-                throw new PersistingFailedException("Username '" + otherUser.getUserName() + "' is already in use.");
-            }
+        if (biographies.size() == 0)
+            return null;
 
-            if (otherUser.getEmail().equals(user.getEmail())) {
-                throw new PersistingFailedException("A user already using the email address '"
-                        + otherUser.getEmail() + "'");
-            }
-        }
-
-        if(user.getEmail() == null || user.getEmail().contains())
+        return biographies.get(0);
     }
+
+
+    /**
+     * Finder method for the switching table between actors and movies.
+     * Most important role of this is to return with the roles of the actor.
+     * @param actorId the actor who's roles in movies are desired.
+     * @return list of movies - actors connecting entity: movies and roles in which the actor played.
+     */
+    public List<Movies2ActorsEntity> findMovies2ActorsByActorId(int actorId) {
+        List<Movies2ActorsEntity> result = em.createQuery("select m2a from Movies2ActorsEntity m2a where m2a.actorId = :actorId", Movies2ActorsEntity.class)
+                .setParameter("actorId", actorId)
+                .getResultList();
+
+        return result;
+    }
+
+
+    /**
+     * finder method for plots
+     * @param movieId the id of the movie of the desired movie plot
+     * @return the plot entity of the movie
+     */
+    public PlotsEntity findPlotByMovieId(int movieId) {
+
+        PlotsEntity result = em.createQuery("SELECT p FROM PlotsEntity p WHERE p.movieId = :movieId", PlotsEntity.class)
+                .setParameter("movieId", movieId)
+                .getSingleResult();
+        return result;
+    }
+
+
 }

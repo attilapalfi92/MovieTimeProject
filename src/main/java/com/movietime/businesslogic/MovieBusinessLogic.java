@@ -24,7 +24,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * Created by Attila on 2015-05-02.
  */
 @Service
-public class MovieDataProvider {
+public class MovieBusinessLogic {
 
     @Autowired
     private MovieDao movieDao;
@@ -99,9 +99,10 @@ public class MovieDataProvider {
      * @param pageSize Size of each pages.
      * @return A page (list) of movies with the given title beginning.
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public MoviePage getMoviesByTitle(String movieTitle, int page, int pageSize) {
-        List<MoviesEntity> movies = movieDao.findMoviesByTitle(movieTitle, page, pageSize);
+
+        List<MoviesEntity> movies = movieDao.findMoviesByTitle(movieTitle + "%", page, pageSize);
 
         for(MoviesEntity movie : movies) {
             movie.add(linkTo(methodOn(MovieRestController.class).getMovieById(movie.getMovieId())).withRel("movie"));
@@ -124,9 +125,16 @@ public class MovieDataProvider {
      * @param pageSize Size of each pages.
      * @return A page (list) of movies with the given title part.
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public MoviePage getMoviesByPartTitle(String movieTitle, int page, int pageSize) {
-        List<MoviesEntity> movies = movieDao.findMoviesByPartTitle(movieTitle, page, pageSize);
+
+        String[] splitTitle = movieTitle.split("\\s+");
+        StringBuilder searchTitle = new StringBuilder("%");
+        for (String titlePart : splitTitle) {
+            searchTitle.append(titlePart).append("%");
+        }
+
+        List<MoviesEntity> movies = movieDao.findMoviesByTitle(searchTitle.toString(), page, pageSize);
 
         for(MoviesEntity movie : movies) {
             movie.add(linkTo(methodOn(MovieRestController.class).getMovieById(movie.getMovieId())).withRel("movie"));
@@ -141,17 +149,6 @@ public class MovieDataProvider {
         return moviePage;
     }
 
-    /**
-     * Returns with the plot of the movie given by it's ID.
-     * @param movieId ID of the movie who's plots is wanted.
-     * @return Plot of the movie.
-     */
-    @Transactional
-    public PlotsEntity getPlotForMovie(int movieId) {
-        PlotsEntity plot = movieDao.findPlotByMovieId(movieId);
-
-        return plot;
-    }
 
 
     /**
@@ -160,7 +157,7 @@ public class MovieDataProvider {
      * @throws PersistingFailedException When persisting is failed, this exception is thrown.
      */
     @Transactional
-    public void saveNewMovie(SubmittedMovie movie) throws PersistingFailedException {
+    public void saveSubmittedMovie(SubmittedMovie movie) throws PersistingFailedException {
         MoviesEntity moviesEntity = new MoviesEntity();
 
         // setting the movie title
@@ -169,7 +166,7 @@ public class MovieDataProvider {
         DateFormat df = new SimpleDateFormat("yyyy");
         moviesEntity.setYear(df.format(movie.getRelease().getReleaseDate()));
         // saving the MoviesEntity to the database
-        movieDao.saveNewMovie(moviesEntity);
+        movieDao.persistNewMovie(moviesEntity);
 
         // saving the ReleaseDate
         ReleasedatesEntity rde = new ReleasedatesEntity();
@@ -177,12 +174,12 @@ public class MovieDataProvider {
         rde.setReleaseDate(movie.getRelease().getReleaseDate());
         rde.setCountry(movie.getRelease().getCountry());
         rde.setAddition(movie.getRelease().getAddition());
-        othersDao.saveNewReleaseDate(rde);
+        othersDao.persistNewReleaseDate(rde);
 
         // saving roles
         for (Movies2ActorsEntity m2a : movie.getRoles()) {
             m2a.setMovie(moviesEntity);
-            othersDao.saveNewM2aEntity(m2a);
+            othersDao.persistNewM2aEntity(m2a);
         }
 
         // saving genres
@@ -190,7 +187,7 @@ public class MovieDataProvider {
             GenresEntity genresEntity = new GenresEntity();
             genresEntity.setMovie(moviesEntity);
             genresEntity.setGenre(genre);
-            othersDao.saveNewGenre(genresEntity);
+            othersDao.persistNewGenre(genresEntity);
         }
 
         // saving taglines
@@ -198,10 +195,7 @@ public class MovieDataProvider {
             TaglinesEntity taglinesEntity = new TaglinesEntity();
             taglinesEntity.setMovie(moviesEntity);
             taglinesEntity.setTaglineText(tagline);
-            othersDao.saveNewTagline(taglinesEntity);
+            othersDao.persistNewTagline(taglinesEntity);
         }
-
-        int i = 0;
-        i = i + 1;
     }
 }

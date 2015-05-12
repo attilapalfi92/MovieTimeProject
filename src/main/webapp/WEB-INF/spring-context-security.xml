@@ -35,8 +35,8 @@
         <anonymous enabled="false"/>
         <intercept-url pattern="/rest/movieTime/movie" method="POST"
                        access="ROLE_ADMIN"/>
-        <intercept-url pattern="/rest/movieTime/register" method="POST"
-                       access="IS_AUTHENTICATED_FULLY"/>
+        <!--<intercept-url pattern="/rest/movieTime/register" method="POST"
+                       access="permitAll"/>-->
         <custom-filter ref="resourceServerFilter"
                        before="PRE_AUTH_FILTER"/>
         <access-denied-handler

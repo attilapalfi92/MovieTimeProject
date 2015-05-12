@@ -4,11 +4,12 @@
 // when the user clicks on movies, that div shows up
 // and the others hide
 function tbMovBtnClicked() {
+
+    $('#actors_div').hide('fast');
+    $('#mustsee_div').hide('fast');
+    $('#haveseen_div').hide('fast');
+    $('#submitData_div').hide('fast');
     $('#movies_div').show('fast');
-    $('#actors_div').hide();
-    $('#mustsee_div').hide();
-    $('#haveseen_div').hide();
-    $('#submitData_div').hide();
     $('body').css('background-color', '#779ECB');
 }
 
@@ -17,11 +18,12 @@ function tbMovBtnClicked() {
 // and the others hide
 function tbActBtnClicked() {
     //$('#actors_div_details').show();
+
+    $('#movies_div').hide('fast');
+    $('#mustsee_div').hide('fast');
+    $('#haveseen_div').hide('fast');
+    $('#submitData_div').hide('fast');
     $('#actors_div').show('fast');
-    $('#movies_div').hide();
-    $('#mustsee_div').hide();
-    $('#haveseen_div').hide();
-    $('#submitData_div').hide();
     $('body').css('background-color', '#77DD77');
 }
 
@@ -29,11 +31,12 @@ function tbActBtnClicked() {
 // when the user clicks on movies, that div shows up
 // and the others hide
 function tbMustBtnClicked() {
+
+    $('#movies_div').hide('fast');
+    $('#actors_div').hide('fast');
+    $('#haveseen_div').hide('fast');
+    $('#submitData_div').hide('fast');
     $('#mustsee_div').show('fast');
-    $('#movies_div').hide();
-    $('#actors_div').hide();
-    $('#haveseen_div').hide();
-    $('#submitData_div').hide();
     $('body').css('background-color', '#FF6961');
 }
 
@@ -41,11 +44,12 @@ function tbMustBtnClicked() {
 // when the user clicks on movies, that div shows up
 // and the others hide
 function tbHaveBtnClicked() {
+
+    $('#movies_div').hide('fast');
+    $('#mustsee_div').hide('fast');
+    $('#actors_div').hide('fast');
+    $('#submitData_div').hide('fast');
     $('#haveseen_div').show('fast');
-    $('#movies_div').hide();
-    $('#mustsee_div').hide();
-    $('#actors_div').hide();
-    $('#submitData_div').hide();
     $('body').css('background-color', '#FFB347');
 }
 
@@ -53,10 +57,11 @@ function tbHaveBtnClicked() {
 // when the user clicks on Upload Movies, that div shows up
 // and the others hide
 function tbUploadDataBtnClicked(){
+
+    $('#haveseen_div').hide('fast');
+    $('#movies_div').hide('fast');
+    $('#mustsee_div').hide('fast');
+    $('#actors_div').hide('fast');
     $('#submitData_div').show('fast');
-    $('#haveseen_div').hide();
-    $('#movies_div').hide();
-    $('#mustsee_div').hide();
-    $('#actors_div').hide();
     $('body').css('background-color', '#B19CD9');
 }

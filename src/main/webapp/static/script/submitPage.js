@@ -30,21 +30,27 @@ function submitMovActorsSearch() {
     var firstName = $('#submit_mov_actor_firstName').val();
     var lastName = $('#submit_mov_actor_lastName').val();
 
-    if(firstName && lastName) {
+    if(firstName || lastName) {
+        if(!firstName) {
+            firstName = "_";
+        }
+        if(!lastName) {
+            lastName = "_";
+        }
         var pageLabel = $('#submit_mov_act_page_l');
         var page = parseInt(pageLabel.text());
         var url = '/rest/movieTime/actor/byName/' + firstName + '/' + lastName + '/' + page + '/' + 30;
         url = url + '?access_token=' + Cookies.get('accessToken');
         var $loading = $('#loadingDiv');
-        $loading.show();
+        //$loading.show();
         $.ajax({
             url: url,
             success: function(data) {
-                loadSubmitMovActorTable(data)>
-                $loading.hide();
+                loadSubmitMovActorTable(data);
+                //$loading.hide();
             },
             error: function(data) {
-                $loading.hide();
+                //$loading.hide();
                 ajaxFailedHandler(data, submitMovActorsSearch, logOut, undefined);
             }
         });
@@ -253,7 +259,7 @@ function submitMovieClicked() {
         return;
     }
     movie.taglines = taglines.split(';');
-    console.log(movie);
+    console.log(JSON.stringify(movie));
     var url = '/rest/movieTime/movie';
     url = url + '?access_token=' + Cookies.get('accessToken');
 
