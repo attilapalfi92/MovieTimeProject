@@ -9,17 +9,20 @@ function tbMovBtnClicked() {
     $('#mustsee_div').hide();
     $('#haveseen_div').hide();
     $('#submitData_div').hide();
+    $('body').css('background-color', '#779ECB');
 }
 
 
 // when the user clicks on movies, that div shows up
 // and the others hide
 function tbActBtnClicked() {
+    //$('#actors_div_details').show();
     $('#actors_div').show('fast');
     $('#movies_div').hide();
     $('#mustsee_div').hide();
     $('#haveseen_div').hide();
     $('#submitData_div').hide();
+    $('body').css('background-color', '#77DD77');
 }
 
 
@@ -31,6 +34,7 @@ function tbMustBtnClicked() {
     $('#actors_div').hide();
     $('#haveseen_div').hide();
     $('#submitData_div').hide();
+    $('body').css('background-color', '#FF6961');
 }
 
 
@@ -42,6 +46,7 @@ function tbHaveBtnClicked() {
     $('#mustsee_div').hide();
     $('#actors_div').hide();
     $('#submitData_div').hide();
+    $('body').css('background-color', '#FFB347');
 }
 
 
@@ -53,4 +58,5 @@ function tbUploadDataBtnClicked(){
     $('#movies_div').hide();
     $('#mustsee_div').hide();
     $('#actors_div').hide();
+    $('body').css('background-color', '#B19CD9');
 }

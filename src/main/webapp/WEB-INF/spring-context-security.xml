@@ -14,7 +14,9 @@
        http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
     <!-- Definition of the Authentication Service -->
-    <http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="clientAuthenticationManager"
+    <http pattern="/oauth/token"
+          create-session="stateless"
+          authentication-manager-ref="clientAuthenticationManager"
           xmlns="http://www.springframework.org/schema/security">
         <intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_FULLY"/>
         <anonymous enabled="false"/>
@@ -33,6 +35,8 @@
         <anonymous enabled="false"/>
         <intercept-url pattern="/rest/movieTime/movie" method="POST"
                        access="ROLE_ADMIN"/>
+        <intercept-url pattern="/rest/movieTime/register" method="POST"
+                       access="IS_AUTHENTICATED_FULLY"/>
         <custom-filter ref="resourceServerFilter"
                        before="PRE_AUTH_FILTER"/>
         <access-denied-handler

@@ -4,6 +4,7 @@ import com.movietime.businesslogic.ActorDataProvider;
 import com.movietime.entitywrappers.ActorPage;
 import com.movietime.entitywrappers.ActorWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,7 @@ public class ActorRestController {
      */
     @RequestMapping(value = "/rest/movieTime/actor/byId/{id}", method = RequestMethod.GET)
     public @ResponseBody
-    ResponseEntity<ActorWrapper> getActorById(@PathVariable("id") int actorId) {
+    HttpEntity<ActorWrapper> getActorById(@PathVariable("id") int actorId) {
         return new ResponseEntity<ActorWrapper>(actorDataProvider.getActorById(actorId), HttpStatus.OK);
     }
 
@@ -40,7 +41,7 @@ public class ActorRestController {
      * @return
      */
     @RequestMapping(value = "/rest/movieTime/actor/byName/{firstName}/{lastName}/{page}/{pageSize}", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<ActorPage>
+    public @ResponseBody HttpEntity<ActorPage>
     getActorsByName(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName
         ,@PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
         return new ResponseEntity<ActorPage>(actorDataProvider.getActorsByName(firstName, lastName, page, pageSize), HttpStatus.OK);

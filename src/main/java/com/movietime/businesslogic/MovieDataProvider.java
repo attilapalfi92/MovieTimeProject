@@ -29,13 +29,8 @@ public class MovieDataProvider {
     @Autowired
     private MovieDao movieDao;
     @Autowired
-    private ReleaseDao releaseDao;
-    @Autowired
-    private M2aDao m2aDao;
-    @Autowired
-    private GenreDao genreDao;
-    @Autowired
-    private TaglineDao taglineDao;
+    private OthersDao othersDao;
+
 
     /**
      * Finds a movie by it's ID.
@@ -182,12 +177,12 @@ public class MovieDataProvider {
         rde.setReleaseDate(movie.getRelease().getReleaseDate());
         rde.setCountry(movie.getRelease().getCountry());
         rde.setAddition(movie.getRelease().getAddition());
-        releaseDao.saveNewReleaseDate(rde);
+        othersDao.saveNewReleaseDate(rde);
 
         // saving roles
         for (Movies2ActorsEntity m2a : movie.getRoles()) {
             m2a.setMovie(moviesEntity);
-            m2aDao.saveNewM2aEntity(m2a);
+            othersDao.saveNewM2aEntity(m2a);
         }
 
         // saving genres
@@ -195,7 +190,7 @@ public class MovieDataProvider {
             GenresEntity genresEntity = new GenresEntity();
             genresEntity.setMovie(moviesEntity);
             genresEntity.setGenre(genre);
-            genreDao.saveNewGenre(genresEntity);
+            othersDao.saveNewGenre(genresEntity);
         }
 
         // saving taglines
@@ -203,7 +198,7 @@ public class MovieDataProvider {
             TaglinesEntity taglinesEntity = new TaglinesEntity();
             taglinesEntity.setMovie(moviesEntity);
             taglinesEntity.setTaglineText(tagline);
-            taglineDao.saveNewTagline(taglinesEntity);
+            othersDao.saveNewTagline(taglinesEntity);
         }
 
         int i = 0;

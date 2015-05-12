@@ -45,6 +45,7 @@ function submitMovActorsSearch() {
             },
             error: function(data) {
                 $loading.hide();
+                ajaxFailedHandler(data, submitMovActorsSearch, logOut, undefined);
             }
         });
 
@@ -75,7 +76,7 @@ function loadSubmitMovActorTable(data) {
 
             var addBtn = document.createElement('input');
             addBtn.setAttribute('type', 'button');
-            addBtn.setAttribute('class', 'add_actor_to_movie_btn');
+            addBtn.setAttribute('class', 'btn btn-default');
             addBtn.setAttribute('value', 'Add');
             var btnName = 'actorId= ' + actor.actorId + '; name= ' + actor.name;
             addBtn.setAttribute('name', btnName);
@@ -174,7 +175,7 @@ function addActorToMovie(event) {
 
     var cancelBtn = document.createElement('input');
     cancelBtn.setAttribute('type', 'button');
-    cancelBtn.setAttribute('class', 'add_actor_to_movie_btn');
+    cancelBtn.setAttribute('class', 'btn btn-default');
     cancelBtn.setAttribute('value', 'Cancel');
     cancelBtn.setAttribute('name', actorId);
     $(cancelBtn).click(cancelActorFromMovieSubmit);
@@ -268,8 +269,7 @@ function submitMovieClicked() {
             console.log(msg);
         },
         error: function(msg) {
-            alert(msg);
-            console.log(msg);
+            ajaxFailedHandler(msg, submitMovieClicked, logOut, undefined);
         }
     });
 }

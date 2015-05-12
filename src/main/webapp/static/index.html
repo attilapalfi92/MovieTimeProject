@@ -45,7 +45,7 @@
 <div id="loginDiv">
     <h3>Please, log in.</h3>
     <input type="text" placeholder="username" id="username_i">
-    <input type="text" placeholder="password" id="password_i">
+    <input type="password" placeholder="password" id="password_i">
     <input type="button" value="Login" onclick="loginClicked()">
 </div>
 
@@ -53,11 +53,16 @@
     <h3 id="welcomeHeader"></h3>
     <div id="toolbar">
         <hr/>
-        <input type="button" value="Movies" id="tb_mov_btn" onclick="tbMovBtnClicked()">
-        <input type="button" value="Actors" id="tb_act_btn" onclick="tbActBtnClicked()">
-        <input type="button" value="Must see" id="tb_must_btn" onclick="tbMustBtnClicked()">
-        <input type="button" value="Have seen" id="tb_have_btn" onclick="tbHaveBtnClicked()">
-        <input type="button" value="Submit data" id="tb_upload_mov_btn" onclick="tbUploadDataBtnClicked()">
+        <input type="button" value="Movies" id="tb_mov_btn" onclick="tbMovBtnClicked()"
+               class="btn btn-default" style="background-color: #779ECB">
+        <input type="button" value="Actors" id="tb_act_btn" onclick="tbActBtnClicked()"
+               class="btn btn-default" style="background-color: #77DD77">
+        <input type="button" value="Must see" id="tb_must_btn" onclick="tbMustBtnClicked()"
+               class="btn btn-default" style="background-color: #FF6961">
+        <input type="button" value="Have seen" id="tb_have_btn" onclick="tbHaveBtnClicked()"
+               class="btn btn-default" style="background-color: #FFB347">
+        <input type="button" value="Submit data" id="tb_upload_mov_btn" onclick="tbUploadDataBtnClicked()"
+               class="btn btn-default" style="background-color: #B19CD9">
         <hr/>
     </div>
 
@@ -66,21 +71,24 @@
 
         <label for="mTitle_input">Title: </label>
         <input id="mTitle_input" type="text" placeholder="movie title" oninput="titleChanged(value)" />
-        <input id="mTitle_submit" type="button" value="Go!" onclick="titleEnterPressed()" /> <br/>
+        <input id="mTitle_submit" type="button" value="Deep search" onclick="titleEnterPressed()" class="btn btn-default" /> <br/>
 
         <label for="pageSize_i">Page size: </label>
         <input id="pageSize_i" type="range" min="10" max="100" step="1" class="bar"
                value="30" oninput="sliderChanged(value)">
         <label id="pSize_label"></label> <br/>
         <label>page: </label><label id="pageNum_label">1</label>
-        <input class="btn btn-default" id="prev_btn" type="button" name="previous" value="previous" onclick="prevClicked()">
-        <input class="btn btn-default" id="next_btn" type="button" name="next" value="next" onclick="nextClicked()">
+        <input class="btn btn-default" id="prev_btn" type="button" class="btn btn-default"
+               name="previous" value="previous" onclick="prevClicked()">
+        <input class="btn btn-default" id="next_btn" type="button" class="btn btn-default"
+               name="next" value="next" onclick="nextClicked()">
 
         <hr/>
 
         <div id="movie_details_div">
             <h2 id="movie_title_h2"></h2>
-            <h4><input id="movie_details_hider" type="button" value="Details" onclick="toggleMovieDetails()"/></h4>
+            <h4><input id="movie_details_hider" type="button" value="Details" class="btn btn-default"
+                       onclick="toggleMovieDetails()"/></h4>
             <div id="movie_details_hideable">
                 <div id="movie_plot_btn_div"></div>
                 <pre id="movie_plot_p"></pre>
@@ -118,11 +126,28 @@
 
     <div id="actors_div">
 
+        <h2>Search for actors</h2>
+        <label for="actors_actor_firstName">Name: </label>
+        <input id="actors_actor_firstName" type="text" placeholder="first name">
+        <input id="actors_actor_lastName" type="text" placeholder="last name">
+        <input type="button" value="Go!" id="actor_search_btn" class="btn btn-default"
+               onclick="searchActorsBtnClicked()">
+
+        <br/>
+
+        <label>page: </label><label id="actors_act_page_l">1</label>
+        <input class="btn btn-default" type="button" value="Previous" class="btn btn-default"
+               id="actors_prev_act_btn" onclick="actorsPrevActors()">
+        <input class="btn btn-default" type="button" value="Next" class="btn btn-default"
+               id="actors_next_act_btn" onclick="actorsNextActors()">
+
+
         <div id="actors_div_details">
             <h2 id="actor_name_h2"></h2>
-            <input type="button" value="Details" onclick="actorDetailsBtnClicked()" />
+            <input type="button" value="Details" class="btn btn-default" onclick="actorDetailsBtnClicked()" />
             <div id="actors_div_details_hideable">
-                <h4><input type="button" value="Bio" id="actor_bio_btn" onclick="actorBioBtnClicked()"></h4>
+                <h4><input type="button" value="Bio" id="actor_bio_btn" class="btn btn-default"
+                           onclick="actorBioBtnClicked()"></h4>
                 <pre id="actor_bio"></pre>
                 <h3>Roles</h3>
                 <table id="actors_movies_table" class="table-striped">
@@ -131,16 +156,9 @@
         </div>
 
 
-        <h2>Search for actors</h2>
-        <label for="actors_actor_firstName">Name: </label>
-        <input id="actors_actor_firstName" type="text" placeholder="first name">
-        <input id="actors_actor_lastName" type="text" placeholder="last name">
-        <input type="button" value="Go!" id="actor_search_btn" onclick="searchActorsBtnClicked()">
 
         <br/>
-        <label>page: </label><label id="actors_act_page_l">1</label>
-        <input class="btn btn-default" type="button" value="Previous" id="actors_prev_act_btn" onclick="actorsPrevActors()">
-        <input class="btn btn-default" type="button" value="Next" id="actors_next_act_btn" onclick="actorsNextActors()">
+
 
         <div class="table-responsive">
             <table id="actors_actor_t" class="table"></table>
@@ -167,13 +185,17 @@
     <div id="submitData_div">
         <h2>Submit data</h2>
 
-        <input id="submitMovBtn" type="button" value="Movie" onclick="submitMovBtnClicked()">
-        <input id="submitActBtn" type="button" value="Actor" onclick="submitActBtnClicked()">
-        <input id="submitOtherBtn" type="button" value="Other" onclick="submitOtherBtnClicked()">
+        <input id="submitMovBtn" type="button" value="Movie" class="btn btn-default"
+               onclick="submitMovBtnClicked()">
+        <input id="submitActBtn" type="button" value="Actor" class="btn btn-default"
+               onclick="submitActBtnClicked()">
+        <input id="submitOtherBtn" type="button" value="Other" class="btn btn-default"
+               onclick="submitOtherBtnClicked()">
 
         <div id="submitMovie_div">
             <h3>Movie</h3>
-            <input id="submit_movie_btn" type="button" value="Submit" onclick="submitMovieClicked()"> <br/>
+            <input id="submit_movie_btn" type="button" value="Submit" class="btn btn-default"
+                   onclick="submitMovieClicked()"> <br/>
             <label for="submit_mov_title">Title: </label>
             <input id="submit_mov_title" type="text" placeholder="title"> <br/>
 
@@ -208,11 +230,14 @@
             <h4>Add actors and their roles to the movie</h4> <br/>
             <input id="submit_mov_actor_firstName" type="text" placeholder="first name">
             <input id="submit_mov_actor_lastName" type="text" placeholder="last name">
-            <input id="submit_mov_actor_btn" type="button" value="Search" onclick="submitMovActSrchBtnClicked()">
+            <input id="submit_mov_actor_btn" type="button" value="Search" class="btn btn-default"
+                   onclick="submitMovActSrchBtnClicked()">
             <br/>
             <label>page: </label><label id="submit_mov_act_page_l">1</label>
-            <input class="btn btn-default" type="button" value="Previous" id="submit_mov_prev_act_btn" onclick="submitMovPrevActors()">
-            <input class="btn btn-default" type="button" value="Next" id="submit_mov_next_act_btn" onclick="submitMovNextActors()">
+            <input type="button" value="Previous" id="submit_mov_prev_act_btn" class="btn btn-default"
+                   onclick="submitMovPrevActors()">
+            <input type="button" value="Next" id="submit_mov_next_act_btn" class="btn btn-default"
+                   onclick="submitMovNextActors()">
 
             <div class="table-responsive">
                 <table id="submit_mov_actor_t" class="table"></table>

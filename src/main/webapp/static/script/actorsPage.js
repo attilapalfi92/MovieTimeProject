@@ -66,16 +66,15 @@ function loadActorDetails(event) {
 
 
             $('#loadingDiv').hide();
-            $('#mustsee_div').hide();
-            $('#haveseen_div').hide();
-            $('#actors_div_details').show();
-            $('#actors_div').show('fast');
+            tbActBtnClicked();
+            $('#actors_div_details_hideable').show();
+            $('#actors_div_details').show('fast');
             console.log(data);
         },
 
         error: function(data) {
             $('#loadingDiv').hide();
-            alert("actor error");
+            ajaxFailedHandler(data, loadActorDetails, logOut, event);
         }
     });
 }
@@ -88,6 +87,7 @@ function actorBioBtnClicked() {
 
 function searchActorsBtnClicked() {
     $('#actors_act_page_l').text('1');
+    $('#actors_div_details_hideable').hide('fast');
     searchActors();
 }
 
@@ -145,7 +145,7 @@ function loadActorsActorTable(data) {
             var detailsBtn = document.createElement('input');
             detailsBtn.setAttribute('type', 'button');
 
-            detailsBtn.setAttribute('class', 'actor_details_button');
+            detailsBtn.setAttribute('class', 'btn btn-default');
             detailsBtn.setAttribute('value', 'Show details');
             detailsBtn.setAttribute('name', actor.links[0].href);
             $(detailsBtn).click(loadActorDetails);

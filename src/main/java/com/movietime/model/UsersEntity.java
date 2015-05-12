@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "users", schema = "", catalog = "movietime2")
 public class UsersEntity {
     private int user_id;
-    private String user_name;
+    private String userName;
     private String password;
     private String email;
     private String role;
@@ -26,12 +26,12 @@ public class UsersEntity {
 
     @Basic
     @Column(name = "user_name", nullable = true, insertable = true, updatable = true, length = 64)
-    public String getUser_name() {
-        return user_name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser_name(String userName) {
-        this.user_name = userName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     @Basic
@@ -76,7 +76,7 @@ public class UsersEntity {
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
         if (role != null ? !role.equals(that.role) : that.role != null) return false;
-        if (user_name != null ? !user_name.equals(that.user_name) : that.user_name != null) return false;
+        if (userName != null ? !userName.equals(that.userName) : that.userName != null) return false;
 
         return true;
     }
@@ -84,7 +84,7 @@ public class UsersEntity {
     @Override
     public int hashCode() {
         int result = user_id;
-        result = 31 * result + (user_name != null ? user_name.hashCode() : 0);
+        result = 31 * result + (userName != null ? userName.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);

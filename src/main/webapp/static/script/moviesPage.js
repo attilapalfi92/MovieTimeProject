@@ -88,7 +88,7 @@ function loadMovieDetails(event) {
             var movId = url.substring(startIndex + 6);
             var plotBtn = document.createElement('input');
             plotBtn.setAttribute('type', 'button');
-            plotBtn.setAttribute('class', 'movie_toggle_plot_btn');
+            plotBtn.setAttribute('class', 'btn btn-default');
             plotBtn.setAttribute('value', 'Plot');
             plotBtn.setAttribute('name', movId);
             $(plotBtn).click(movieShowPlotBtnClicked);
@@ -97,13 +97,13 @@ function loadMovieDetails(event) {
             firstPlotClick = true;
 
             $('#movies_div').show('fast');
-            $('#movie_details_hideable').show();
+            $('#movie_details_div').show();
+            $('#movie_details_hideable').show('fast');
             $('#movie_plot_p').hide();
-            $('#movie_details_div').show('fast');
         },
         error: function(data) {
             $('#loadingDiv').hide();
-            alert('movie error');
+            ajaxFailedHandler(data, loadMovieDetails, logOut, event);
         }
     });
 }
@@ -193,7 +193,7 @@ function loadActorsTable(actors) {
 
         var detailsBtn = document.createElement('input');
         detailsBtn.setAttribute('type', 'button');
-        detailsBtn.setAttribute('class', 'actor_details_button');
+        detailsBtn.setAttribute('class', 'btn btn-default');
         detailsBtn.setAttribute('value', 'Show details');
         detailsBtn.setAttribute('name', actor.links[0].href);
         $(detailsBtn).click(loadActorDetails);
@@ -224,7 +224,7 @@ function movieShowPlotBtnClicked(event) {
                 }
             },
             error: function(data) {
-                alert('movie error');
+                ajaxFailedHandler(data, movieShowPlotBtnClicked, logOut, event);
             }
         });
 
@@ -259,7 +259,7 @@ $('#mTitle_input').keypress(function (e){
 // this function initializes the movies table
 // in the movies section
 function initMoviesTable() {
-    $('#movie_details_div').hide('fast');
+    $('#movie_details_hideable').hide('fast');
 
     $('#moviesTable').empty().append(
         "<tr> " +
@@ -340,7 +340,7 @@ function searchMoviesFast(mTitle) {
             }
         },
         error: function(data) {
-            alert('movie error');
+            ajaxFailedHandler(data, searchMoviesFast, logOut, mTitle);
         }
     });
 }
@@ -376,7 +376,7 @@ function searchMoviesMore(mTitle) {
         },
         error: function(data) {
             $loading.hide();
-            alert("movie error");
+            ajaxFailedHandler(data, searchMoviesMore, logOut, mTitle);
         }
     });
 }
@@ -437,7 +437,7 @@ function updateMovieListTable(data) {
 
         var detailsBtn = document.createElement('input');
         detailsBtn.setAttribute('type', 'button');
-        detailsBtn.setAttribute('class', 'movie_details_button');
+        detailsBtn.setAttribute('class', 'btn btn-default');
         detailsBtn.setAttribute('value', 'Show details');
         detailsBtn.setAttribute('name', link1);
         $(detailsBtn).click(loadMovieDetails);

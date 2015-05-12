@@ -79,7 +79,7 @@ public class MovieRestController {
      * @return The saved / unsaved movie.
      */
     @RequestMapping(value = "/rest/movieTime/movie", method = RequestMethod.POST)
-    public ResponseEntity<SubmittedMovie> postMovie(@RequestBody SubmittedMovie movie) {
+    public @ResponseBody HttpEntity<SubmittedMovie> postMovie(@RequestBody SubmittedMovie movie) {
         try{
             movieDataProvider.saveNewMovie(movie);
         } catch (PersistingFailedException e) {

@@ -26,6 +26,7 @@ function getRefreshToken(userName, pwd, refreshTokenHandler, errorHandler) {
 
 }
 
+
 function getAccessToken(refreshToken, accessTokenHandler, errorHandler) {
     var refreshGrantUrl = '/oauth/token?client_id=MovieTime&client_secret=' +
         'MovieTimeSecretKey&grant_type=refresh_token&refresh_token=' +
@@ -46,3 +47,5 @@ function getAccessToken(refreshToken, accessTokenHandler, errorHandler) {
         }
     });
 }
+
+

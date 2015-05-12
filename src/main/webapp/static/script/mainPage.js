@@ -16,6 +16,9 @@ $(document)
 
 // when document is ready, set the slider's label
 $(document).ready(function(){
+    // init background-color
+    $('body').css('background-color', '#779ECB');
+
     // init pageSize paragraph
     var pSize = $('#pageSize_i').val();
     $('#pSize_label').text(pSize);
@@ -64,7 +67,7 @@ $(document).ready(function(){
             }
 
             // else we can get access token and the user is logged in
-            getAccessToken(refreshToken.refresh_token, saveAccessToken, logOut);
+            getAccessToken(refreshToken, saveAccessToken, logOut);
             logIn();
         }
 
@@ -103,14 +106,14 @@ var userName;
 var password;
 
 
-function userLoggedIn(refreshToken) {
-    Cookies.set('refreshToken', refreshToken.refresh_token, { expires: 30 });
+function userLoggedIn(token) {
+    Cookies.set('refreshToken', token.refresh_token, { expires: 30 });
 
-    var tokenLife = refreshToken.expires_in / 60 / 60 / 24;
-    Cookies.set('accessToken', refreshToken.access_token, { expires: tokenLife });
+    var tokenLife = token.expires_in / 60 / 60 / 24;
+    Cookies.set('accessToken', token.access_token, { expires: tokenLife });
 
     console.log('Token: ');
-    console.log(refreshToken);
+    console.log(token);
 
     logIn();
 }
@@ -121,4 +124,44 @@ function saveAccessToken(accessToken) {
     Cookies.set('accessToken', accessToken.access_token, { expires: tokenLife });
     console.log('accessToken: ');
     console.log(accessToken);
+}
+
+
+/**
+ * Difference to getAccessToken: it saves the accessToken to the cookies.
+ * @param response The response of the original error
+ * @param successHandler The function to be called when the new AccessToken arrived successfully. Should be to function it is called from.
+ * @param errorHandler Should be the logOut function
+ * @param successHandlerParameter The parameter of the original function
+ */
+function ajaxFailedHandler(response, successHandler, errorHandler, successHandlerParameter) {
+    var refreshToken = Cookies.get('refreshToken');
+    var refreshGrantUrl = '/oauth/token?client_id=MovieTime&client_secret=' +
+        'MovieTimeSecretKey&grant_type=refresh_token&refresh_token=' +
+        refreshToken;
+
+    if (response.statusText == 'Forbidden') {
+        alert('You have no right for this.');
+        return;
+    }
+
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        url: refreshGrantUrl,
+        success: function(response) {
+            var tokenLife = response.expires_in / 60 / 60 / 24;
+            Cookies.set('accessToken', response.access_token, { expires: tokenLife });
+            if (successHandlerParameter === 'undefined') {
+                successHandler();
+
+            } else {
+                successHandler(successHandlerParameter);
+            }
+        },
+        error: function(response) {
+            errorHandler();
+        }
+    });
 }

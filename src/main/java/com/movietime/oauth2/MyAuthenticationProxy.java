@@ -2,7 +2,6 @@ package com.movietime.oauth2;
 
 import com.movietime.model.UsersEntity;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -27,24 +26,28 @@ public class MyAuthenticationProxy {
     private EntityManager em;
 
     public boolean isValidUser(String principal, String creditentials) {
-        try {
-            UsersEntity user = em.createQuery("SELECT u FROM UsersEntity u WHERE user_name = :userName", UsersEntity.class)
-                    .setParameter("userName", principal)
-                    .getSingleResult();
 
-            if (creditentials.equals(user.getPassword())) {
-                return true;
-            }
+        List<UsersEntity> users = em.createQuery("SELECT u FROM UsersEntity u WHERE userName = :userName", UsersEntity.class)
+                .setParameter("userName", principal)
+                .getResultList();
 
-            return false;
-
-        } catch (NoResultException e) {
+        if (users.isEmpty()) {
             return false;
         }
+
+        for(UsersEntity user : users) {
+            if (creditentials.equals(user.getPassword()) && principal.equals(user.getUserName())) {
+                return true;
+            }
+        }
+
+        return false;
+
+
     }
 
     public MyUserDetails detailsOfUser(String username) {
-        UsersEntity user = em.createQuery("SELECT u FROM UsersEntity u WHERE user_name = :userName", UsersEntity.class)
+        UsersEntity user = em.createQuery("SELECT u FROM UsersEntity u WHERE userName = :userName", UsersEntity.class)
                 .setParameter("userName", username)
                 .getSingleResult();
 
@@ -65,7 +68,7 @@ public class MyAuthenticationProxy {
             });
         }
 
-        MyUserDetails userDetails = new MyUserDetails(user.getUser_name(),
+        MyUserDetails userDetails = new MyUserDetails(user.getUserName(),
                 user.getPassword(), user.getEmail(), authorities);
 
         return userDetails;
