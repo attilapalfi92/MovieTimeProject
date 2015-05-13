@@ -302,10 +302,10 @@ function titleChanged(value) {
     if(value) {
         initMoviesTable();
         searchMoviesFast(value);
-        //$('#movie_list_div').show(10);
+        $('#movie_list_div').show();
 
     } else {
-        //$('#movie_list_div').hide(10);
+        $('#movie_list_div').hide();
         $('#next_btn').prop('disabled', true);
         $('#prev_btn').prop('disabled', true);
     }
