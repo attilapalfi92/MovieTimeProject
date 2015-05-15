@@ -1,12 +1,11 @@
-package com.movietime.dataservices;
+package com.movietime.dataAccessLayer;
 
 import com.movietime.exceptions.PersistingFailedException;
-import com.movietime.model.*;
+import com.movietime.entities.*;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
 import java.util.List;
 
 

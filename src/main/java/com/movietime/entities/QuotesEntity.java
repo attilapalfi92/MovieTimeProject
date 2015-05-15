@@ -1,4 +1,4 @@
-package com.movietime.model;
+package com.movietime.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -8,11 +8,11 @@ import javax.persistence.*;
  * Created by Attila on 2015-04-17.
  */
 @Entity
-@Table(name = "keywords", schema = "", catalog = "movietime2")
-public class KeywordsEntity {
+@Table(name = "quotes", schema = "", catalog = "movietime2")
+public class QuotesEntity {
     private int movieId;
-    private String keyword;
-    private int keywordId;
+    private String quoteText;
+    private int quoteId;
     @JsonIgnore
     private MoviesEntity movie;
 
@@ -27,23 +27,23 @@ public class KeywordsEntity {
     }
 
     @Basic
-    @Column(name = "keyword", nullable = false, insertable = true, updatable = true, length = 125)
-    public String getKeyword() {
-        return keyword;
+    @Column(name = "quotetext", nullable = true, insertable = true, updatable = true, columnDefinition = "mediumtext", length = 16777215)
+    public String getQuoteText() {
+        return quoteText;
     }
 
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
+    public void setQuoteText(String quotetext) {
+        this.quoteText = quotetext;
     }
 
     @Id
-    @Column(name = "keyword_id", nullable = false, insertable = true, updatable = true)
-    public int getKeywordId() {
-        return keywordId;
+    @Column(name = "quote_id", nullable = false, insertable = true, updatable = true)
+    public int getQuoteId() {
+        return quoteId;
     }
 
-    public void setKeywordId(int keywordId) {
-        this.keywordId = keywordId;
+    public void setQuoteId(int quoteId) {
+        this.quoteId = quoteId;
     }
 
     @Override
@@ -51,11 +51,11 @@ public class KeywordsEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        KeywordsEntity that = (KeywordsEntity) o;
+        QuotesEntity that = (QuotesEntity) o;
 
-        if (keywordId != that.keywordId) return false;
         if (movieId != that.movieId) return false;
-        if (keyword != null ? !keyword.equals(that.keyword) : that.keyword != null) return false;
+        if (quoteId != that.quoteId) return false;
+        if (quoteText != null ? !quoteText.equals(that.quoteText) : that.quoteText != null) return false;
 
         return true;
     }
@@ -63,12 +63,12 @@ public class KeywordsEntity {
     @Override
     public int hashCode() {
         int result = movieId;
-        result = 31 * result + (keyword != null ? keyword.hashCode() : 0);
-        result = 31 * result + keywordId;
+        result = 31 * result + (quoteText != null ? quoteText.hashCode() : 0);
+        result = 31 * result + quoteId;
         return result;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movieid", referencedColumnName = "movieid", nullable = false)
     public MoviesEntity getMovie() {
         return movie;

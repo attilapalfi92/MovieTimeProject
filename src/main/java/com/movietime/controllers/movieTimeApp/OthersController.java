@@ -1,10 +1,7 @@
 package com.movietime.controllers.movieTimeApp;
 
-import com.movietime.businesslogic.MovieBusinessLogic;
-import com.movietime.businesslogic.OthersBusinessLogic;
-import com.movietime.exceptions.PersistingFailedException;
-import com.movietime.model.PlotsEntity;
-import com.movietime.model.UsersEntity;
+import com.movietime.businessLogicLayer.OthersBusinessLogic;
+import com.movietime.entities.PlotsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;

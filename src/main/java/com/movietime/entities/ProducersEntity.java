@@ -1,4 +1,4 @@
-package com.movietime.model;
+package com.movietime.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -9,21 +9,22 @@ import java.util.List;
  * Created by Attila on 2015-04-06.
  */
 @Entity
-@Table(name = "writers", schema = "", catalog = "movietime2")
-public class WritersEntity {
-    private int writerId;
+@Table(name = "producers", schema = "", catalog = "movietime2")
+public class ProducersEntity {
+    private int producerId;
     private String name;
     @JsonIgnore
     private List<MoviesEntity> movies;
 
+
     @Id
-    @Column(name = "writerid", nullable = false, insertable = true, updatable = true)
-    public int getWriterId() {
-        return writerId;
+    @Column(name = "producerid", nullable = false, insertable = true, updatable = true)
+    public int getProducerId() {
+        return producerId;
     }
 
-    public void setWriterId(int writerid) {
-        this.writerId = writerid;
+    public void setProducerId(int producerid) {
+        this.producerId = producerid;
     }
 
     @Basic
@@ -41,9 +42,9 @@ public class WritersEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        WritersEntity that = (WritersEntity) o;
+        ProducersEntity that = (ProducersEntity) o;
 
-        if (writerId != that.writerId) return false;
+        if (producerId != that.producerId) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
@@ -51,12 +52,13 @@ public class WritersEntity {
 
     @Override
     public int hashCode() {
-        int result = writerId;
+        int result = producerId;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
-    
-    @ManyToMany(mappedBy = "writers", fetch = FetchType.LAZY)
+
+    //@JsonIgnore
+    @ManyToMany(mappedBy = "producers", fetch = FetchType.LAZY)
     public List<MoviesEntity> getMovies() {
         return movies;
     }

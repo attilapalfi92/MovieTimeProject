@@ -1,8 +1,8 @@
 package com.movietime.controllers.movieTimeApp;
 
-import com.movietime.businesslogic.ActorBusinessLogic;
-import com.movietime.entitywrappers.ActorPage;
-import com.movietime.entitywrappers.ActorWrapper;
+import com.movietime.businessLogicLayer.ActorBusinessLogic;
+import com.movietime.entityWrappers.ActorPage;
+import com.movietime.entityWrappers.ActorWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;

@@ -1,11 +1,10 @@
 package com.movietime.oauth2;
 
-import com.movietime.model.UsersEntity;
+import com.movietime.entities.UsersEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;

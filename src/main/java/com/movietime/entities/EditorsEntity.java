@@ -1,4 +1,4 @@
-package com.movietime.model;
+package com.movietime.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -6,25 +6,24 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * Created by Attila on 2015-04-06.
+ * Created by Attila on 2015-04-17.
  */
 @Entity
-@Table(name = "producers", schema = "", catalog = "movietime2")
-public class ProducersEntity {
-    private int producerId;
+@Table(name = "editors", schema = "", catalog = "movietime2")
+public class EditorsEntity {
+    private int editorId;
     private String name;
     @JsonIgnore
     private List<MoviesEntity> movies;
 
-
     @Id
-    @Column(name = "producerid", nullable = false, insertable = true, updatable = true)
-    public int getProducerId() {
-        return producerId;
+    @Column(name = "editorid", nullable = false, insertable = true, updatable = true)
+    public int getEditorId() {
+        return editorId;
     }
 
-    public void setProducerId(int producerid) {
-        this.producerId = producerid;
+    public void setEditorId(int editorId) {
+        this.editorId = editorId;
     }
 
     @Basic
@@ -42,9 +41,9 @@ public class ProducersEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ProducersEntity that = (ProducersEntity) o;
+        EditorsEntity that = (EditorsEntity) o;
 
-        if (producerId != that.producerId) return false;
+        if (editorId != that.editorId) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
@@ -52,13 +51,13 @@ public class ProducersEntity {
 
     @Override
     public int hashCode() {
-        int result = producerId;
+        int result = editorId;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 
-    //@JsonIgnore
-    @ManyToMany(mappedBy = "producers", fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "movies2editors", catalog = "movietime2", schema = "", joinColumns = @JoinColumn(name = "editorid", referencedColumnName = "editorid", nullable = false), inverseJoinColumns = @JoinColumn(name = "movieid", referencedColumnName = "movieid", nullable = false))
     public List<MoviesEntity> getMovies() {
         return movies;
     }

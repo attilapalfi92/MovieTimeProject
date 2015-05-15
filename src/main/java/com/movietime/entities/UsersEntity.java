@@ -1,4 +1,4 @@
-package com.movietime.model;
+package com.movietime.entities;
 
 import javax.persistence.*;
 

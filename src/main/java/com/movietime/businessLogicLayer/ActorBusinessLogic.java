@@ -1,15 +1,14 @@
-package com.movietime.businesslogic;
+package com.movietime.businessLogicLayer;
 
 import com.movietime.controllers.movieTimeApp.ActorRestController;
-import com.movietime.dataservices.ActorDao;
-import com.movietime.dataservices.MovieDao;
-import com.movietime.dataservices.OthersDao;
-import com.movietime.entitywrappers.ActorPage;
-import com.movietime.entitywrappers.ActorWrapper;
-import com.movietime.entitywrappers.LightMovieWrapper;
-import com.movietime.model.ActorsEntity;
-import com.movietime.model.BiographiesEntity;
-import com.movietime.model.Movies2ActorsEntity;
+import com.movietime.dataAccessLayer.ActorDao;
+import com.movietime.dataAccessLayer.OthersDao;
+import com.movietime.entityWrappers.ActorPage;
+import com.movietime.entityWrappers.ActorWrapper;
+import com.movietime.entityWrappers.LightMovieWrapper;
+import com.movietime.entities.ActorsEntity;
+import com.movietime.entities.BiographiesEntity;
+import com.movietime.entities.Movies2ActorsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

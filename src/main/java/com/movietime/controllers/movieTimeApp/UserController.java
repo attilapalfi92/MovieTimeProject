@@ -1,11 +1,10 @@
 package com.movietime.controllers.movieTimeApp;
 
-import com.movietime.businesslogic.OthersBusinessLogic;
-import com.movietime.businesslogic.UserBusinessLogic;
+import com.movietime.businessLogicLayer.UserBusinessLogic;
 import com.movietime.exceptions.EmailUsedException;
 import com.movietime.exceptions.PersistingFailedException;
 import com.movietime.exceptions.UsernameUsedException;
-import com.movietime.model.UsersEntity;
+import com.movietime.entities.UsersEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;

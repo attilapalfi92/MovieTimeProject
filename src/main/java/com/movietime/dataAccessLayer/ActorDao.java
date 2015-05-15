@@ -1,6 +1,6 @@
-package com.movietime.dataservices;
+package com.movietime.dataAccessLayer;
 
-import com.movietime.model.ActorsEntity;
+import com.movietime.entities.ActorsEntity;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

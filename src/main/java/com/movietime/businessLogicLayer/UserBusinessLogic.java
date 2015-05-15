@@ -1,11 +1,10 @@
-package com.movietime.businesslogic;
+package com.movietime.businessLogicLayer;
 
-import com.movietime.dataservices.OthersDao;
-import com.movietime.dataservices.UserDao;
+import com.movietime.dataAccessLayer.UserDao;
 import com.movietime.exceptions.EmailUsedException;
 import com.movietime.exceptions.PersistingFailedException;
 import com.movietime.exceptions.UsernameUsedException;
-import com.movietime.model.UsersEntity;
+import com.movietime.entities.UsersEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

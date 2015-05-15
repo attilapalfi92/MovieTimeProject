@@ -1,9 +1,9 @@
 package com.movietime.controllers.movieTimeApp;
 
-import com.movietime.businesslogic.MovieBusinessLogic;
-import com.movietime.entitywrappers.FullMovieWrapper;
-import com.movietime.entitywrappers.MoviePage;
-import com.movietime.entitywrappers.SubmittedMovie;
+import com.movietime.businessLogicLayer.MovieBusinessLogic;
+import com.movietime.entityWrappers.FullMovieWrapper;
+import com.movietime.entityWrappers.MoviePage;
+import com.movietime.entityWrappers.SubmittedMovie;
 import com.movietime.exceptions.PersistingFailedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;

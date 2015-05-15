@@ -1,13 +1,13 @@
-package com.movietime.businesslogic;
+package com.movietime.businessLogicLayer;
 
 import com.movietime.controllers.movieTimeApp.ActorRestController;
 import com.movietime.controllers.movieTimeApp.MovieRestController;
-import com.movietime.dataservices.*;
-import com.movietime.entitywrappers.FullMovieWrapper;
-import com.movietime.entitywrappers.MoviePage;
-import com.movietime.entitywrappers.SubmittedMovie;
+import com.movietime.dataAccessLayer.*;
+import com.movietime.entityWrappers.FullMovieWrapper;
+import com.movietime.entityWrappers.MoviePage;
+import com.movietime.entityWrappers.SubmittedMovie;
 import com.movietime.exceptions.PersistingFailedException;
-import com.movietime.model.*;
+import com.movietime.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

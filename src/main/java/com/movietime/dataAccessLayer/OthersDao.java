@@ -1,21 +1,15 @@
-package com.movietime.dataservices;
+package com.movietime.dataAccessLayer;
 
-import com.movietime.exceptions.EmailUsedException;
 import com.movietime.exceptions.PersistingFailedException;
-import com.movietime.exceptions.UsernameUsedException;
-import com.movietime.model.*;
-import org.hibernate.exception.ConstraintViolationException;
+import com.movietime.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import org.hibernate.dialect.function.SQLFunctionRegistry;
 
 /**
  * Created by Attila on 2015-05-05.

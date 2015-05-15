@@ -1,9 +1,9 @@
-package com.movietime.dataservices;
+package com.movietime.dataAccessLayer;
 
 import com.movietime.exceptions.EmailUsedException;
 import com.movietime.exceptions.PersistingFailedException;
 import com.movietime.exceptions.UsernameUsedException;
-import com.movietime.model.UsersEntity;
+import com.movietime.entities.UsersEntity;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
